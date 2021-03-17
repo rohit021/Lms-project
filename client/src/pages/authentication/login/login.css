@@ -32,6 +32,21 @@
     padding: 80px 100px;
   }
 
+  .reset-wrap{
+    width: 460px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;  
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 70px;
+  }
+
   .login-pic{
     width: 316px;
   }
@@ -54,6 +69,17 @@
     display: block;
     padding-bottom: 54px;
 }
+.reset-form-title{
+  font-family: Poppins-Bold;
+  font-size: 16px;
+  color: red;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  display: block;
+  padding-bottom: 54px;
+}
+
 .error-msg{
   text-align: center;
   width: 100%;

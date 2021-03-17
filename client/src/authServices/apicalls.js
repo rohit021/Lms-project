@@ -1,13 +1,25 @@
 import axios from "axios";
-import cookie from 'js-cookie';
+import { setCookie, getCookie, deleteCookie } from '../helpers/cookies';
+import {
+    setLocalStorage,
+    getLocalStorage,
+    deleteLocalStorage,
+} from '../helpers/localStorage';
+
 const API_URL = "http://localhost:5000" || process.env.REACT_APP_BASE_URL ;
 
 const config = {
   header: {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
+    'Content-Type': 'application/json',  
+  }
 };
+
+const setAuthentication = (token, user) => {
+  setCookie('authToken', token);
+  setLocalStorage('authUser', user);
+};
+
 
 const login = (email, password) => {
   return axios
@@ -17,8 +29,7 @@ const login = (email, password) => {
     },config)
     .then((response) => {
       if (response.data) {
-        cookie.set('authUser', JSON.stringify(response.data.user), { expires: 1 })
-        cookie.set('authToken', JSON.stringify(response.data.token), { expires: 1 })    
+        setAuthentication(response.data.token, response.data.user)        
       }  
       return response.data;
     });
@@ -34,36 +45,45 @@ const register = (username, email, password) => {
       config)
     .then((response) => {
       if (response.data) {
-        cookie.set('authUser', JSON.stringify(response.data.user), { expires: 1 })
-        cookie.set('authToken', JSON.stringify(response.data.token), { expires: 1 })            
+        setAuthentication(response.data.token, response.data.user)               
       }  
       return response.data;
     });
 };
 
+const reset = (email) => {
+  return axios
+    .get(API_URL + "/auth/reset-password", {
+        email,
+      },
+      config)
+    .then((response) => {      
+      return response.data;
+    });
+};
+
 // checking user is loggeg in
-const isAuthenticated = () => {
+const isAuthenticated = function () {
   if (typeof window == "undefined") {
       return false;
   }
-  if (cookie.get("authToken")) {
-      return JSON.stringify(cookie.get("authUser"));
+  if (getCookie('authToken') && getLocalStorage('authUser')) {
+    return getLocalStorage('authUser');
   } else {
       return false;
   }
 };
-  
+
 const signout = function (next) {
   if (typeof window !== "undefined") {
-      cookie.remove('authUser');
-      cookie.set('authToken');      
-      next();
-
-      return fetch(`${API_URL}/auth/signout`, {
-          method: "GET"
-      })
-          .then(response => console.log("signout success"))
-          .catch(err => console.log(err));
+    deleteCookie('authToken');
+    deleteLocalStorage('authUser');
+    next();
+    return fetch(`${API_URL}/auth/signout`, {
+      method: "GET"
+    })
+    .then(response => console.log("signout success"))
+    .catch(err => console.log(err));
   }
 };
 

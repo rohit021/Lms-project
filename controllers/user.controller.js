@@ -6,6 +6,7 @@
 var User = require('../models/User.model'),
     mongoose = require('mongoose'),
     async = require('async'), 
+    crypto = require('crypto'),
     config = require('../config/config'),
     jwt = require('jsonwebtoken'),
     bcrypt = require("bcryptjs");
@@ -46,7 +47,7 @@ exports.createUser = function(req, res) {
                                     userId:result._id,
                                     email: result.email
                                 }
-                                jwt.sign(payload, config.secretKey, { expiresIn: 3600 }, (err, token) => {
+                                jwt.sign(payload, config.jwtSecret, { expiresIn: 3600 }, (err, token) => {
                                     // console.log(token);
                                     res.cookie("token", token, {
                                         httpOnly: true,
@@ -99,7 +100,7 @@ exports.loginUser = function(req, res) {
                                 userId:user.id,
                                 email: user.email
                             }
-                            jwt.sign(payload, config.secretKey, { expiresIn: 3600 }, (err, token) => {
+                            jwt.sign(payload, config.jwtSecret, { expiresIn: 3600 }, (err, token) => {
                                 res.cookie("token", token, {
                                     httpOnly:true,
                                     expire: new Date() + 9999
@@ -139,12 +140,13 @@ exports.logOutUser = function (req, res) {
 
 // Method to verify the User
 exports.loggedIn = function (req, res) {
+    const token = req.headers.authorization.split(" ")[1];
     try {
-      const token = req.cookies.token;
+    //   const token = req.body.token;
       console.log(token);
       if (!token) return res.json(false);
   
-      jwt.verify(token, config.secretKey);
+      jwt.verify(token, config.jwtSecret);
       res.send(true);
     } catch (err) {
       res.json(false);
@@ -188,3 +190,54 @@ exports.deleteAllUsers = function (req, res) {
         })
     })
 }
+
+exports.resetPassword = function (req, res) {
+    crypto.randomBytes(32,(err,buffer)=>{
+        if(err){
+            console.log(err)
+        }
+        const token = buffer.toString("hex")
+        User.findOne({email:req.body.email})
+        .then(user=>{
+            if(!user){
+                return res.status(422).json({error:"User dont exists with that email"})
+            }
+            user.resetToken = token
+            user.expireToken = Date.now() + 3600000
+            user.save().then((result)=>{
+                transporter.sendMail({
+                    to:user.email,
+                    from:"no-replay@insta.com",
+                    subject:"password reset",
+                    html:`
+                    <p>You requested for password reset</p>
+                    <h5>click in this <a href="${EMAIL}/reset/${token}">link</a> to reset password</h5>
+                    `
+                })
+                res.json({message:"check your email"})
+            })
+
+        })
+    })
+};
+
+exports.newPassword = function (req, res) {
+   const newPassword = req.body.password
+   const sentToken = req.body.token
+   User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
+   .then(user=>{
+       if(!user){
+           return res.status(422).json({error:"Try again session expired"})
+       }
+       bcrypt.hash(newPassword,12).then(hashedpassword=>{
+          user.password = hashedpassword
+          user.resetToken = undefined
+          user.expireToken = undefined
+          user.save().then((saveduser)=>{
+              res.json({message:"password updated success"})
+          })
+       })
+   }).catch(err=>{
+       console.log(err)
+   })
+};
