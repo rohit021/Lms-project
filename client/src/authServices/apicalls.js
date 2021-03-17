@@ -1,6 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:5000"
-// https://formbackend11.herokuapp.com";
+import cookie from 'js-cookie';
+const API_URL = "http://localhost:5000" || process.env.REACT_APP_BASE_URL ;
 
 const config = {
   header: {
@@ -17,8 +17,8 @@ const login = (email, password) => {
     },config)
     .then((response) => {
       if (response.data) {
-        localStorage.setItem("authUser", JSON.stringify(response.data.user));
-        localStorage.setItem("authToken", JSON.stringify(response.data.token));
+        cookie.set('authUser', JSON.stringify(response.data.user), { expires: 1 })
+        cookie.set('authToken', JSON.stringify(response.data.token), { expires: 1 })    
       }  
       return response.data;
     });
@@ -34,8 +34,8 @@ const register = (username, email, password) => {
       config)
     .then((response) => {
       if (response.data) {
-        localStorage.setItem("authUser", JSON.stringify(response.data.user));
-        localStorage.setItem("authToken", JSON.stringify(response.data.token));
+        cookie.set('authUser', JSON.stringify(response.data.user), { expires: 1 })
+        cookie.set('authToken', JSON.stringify(response.data.token), { expires: 1 })            
       }  
       return response.data;
     });
@@ -46,8 +46,8 @@ const isAuthenticated = () => {
   if (typeof window == "undefined") {
       return false;
   }
-  if (localStorage.getItem("authToken")) {
-      return JSON.stringify(localStorage.getItem("authUser"));
+  if (cookie.get("authToken")) {
+      return JSON.stringify(cookie.get("authUser"));
   } else {
       return false;
   }
@@ -55,8 +55,8 @@ const isAuthenticated = () => {
   
 const signout = function (next) {
   if (typeof window !== "undefined") {
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("authName");
+      cookie.remove('authUser');
+      cookie.set('authToken');      
       next();
 
       return fetch(`${API_URL}/auth/signout`, {

@@ -25,8 +25,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(
     cors({
       origin: [
-        "http://localhost:3000",
-        "https://formfrontend.netlify.app"
+        "http://localhost:3000",        
       ],
       credentials: true,
     })
