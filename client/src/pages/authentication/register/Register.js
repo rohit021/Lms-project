@@ -13,8 +13,9 @@ function RegisterPage() {
     const history = useHistory();
     
     useEffect(() => {
-        if (localStorage.getItem("authToken")) {
-          history.push("/");
+        if (AuthService.isAuthenticated()) {
+            console.log('Redirecting to admin dashboard');
+            history.push('/');
         }
       }, [history]);
 
@@ -31,8 +32,10 @@ function RegisterPage() {
       
         AuthService.register(username, email, password).then(
             () => {
-            history.push("/");
-            window.location.reload();
+            if (AuthService.isAuthenticated()) {
+                    console.log('Redirecting to admin dashboard');
+                    history.push('/');
+                }
             },
             (error) => {
             setError(error.response.data.error);
@@ -57,7 +60,7 @@ function RegisterPage() {
                     </span>
                     
                     <div className="wrap-input" >
-						<input className="inputField" type="text" name="text" placeholder="Username" value={username}
+						<input className="inputField" type="text" name="text" placeholder="Full Name" value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required/>
 						<span className="focus-input"></span>

@@ -8,6 +8,12 @@ router.route('/register')
 router.route('/login')
       .post(usercontroller.loginUser)
 
+router.route('/reset-password')
+      .post(usercontroller.resetPassword)
+      
+router.route('/new-Password')
+      .post(usercontroller.newPassword)
+
 router.route('/logout')
       .get(usercontroller.logOutUser)
 

@@ -1,11 +1,13 @@
 const jwt = require("jsonwebtoken");
+const config = require('../config/config');
 
-function auth(req, res, next) {
+exports.authenticatateJWT = (req, res, next) => {
   try {
     const token = req.cookies.token;
+    console.log(token);
     if (!token) return res.status(401).json({ errorMessage: "Unauthorized" });
 
-    const verified = jwt.verify(token, process.env.secretKey);
+    const verified = jwt.verify(token, config.jwtSecret);
     req.user = verified.user;
 
     next();
@@ -14,5 +16,3 @@ function auth(req, res, next) {
     res.status(401).json({ errorMessage: "Unauthorized" });
   }
 }
-
-module.exports = auth;

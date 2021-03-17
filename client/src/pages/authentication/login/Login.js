@@ -2,9 +2,51 @@ import React,{useState,useEffect} from 'react';
 import './login.css';
 import { useHistory} from "react-router-dom";
 import AuthService from "../../../authServices/apicalls";
+import { Grid, Card, Typography, ButtonGroup, Button, makeStyles, Paper } from '@material-ui/core';
 import PcImg from '../../../assets/images/img-01.png';
 
+const useStyles = makeStyles(theme => ({
+    gridContainer: {
+        width: "100%", 
+        minHeight: "100vh",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "15px",
+        background: "linear-gradient(-135deg, #fa09ea, #4158d0)",
+    },
+    WrapBlock: {
+        width: "960px",
+        background: "#fff",
+        borderRadius: "10px",
+        overflow: "hidden",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between", 
+        padding:"80px 100px"
+    },
+        // margin: "0 auto",        
+        // width: "70%",
+        // padding: 12,
+        // border: "1px solid",
+        // marginTop: 8,
+        // marginBottom: 18,
+        // justifyContent:"center",
+        // boxShadow: '1px 3px 5px 3px #d4d0d0',
+        // "align-items": "center",
+    // },
+    dateBox: {
+        border: "1px solid",        
+    },
+    datePick: {
+        margin:"0 5px",
+        width:"40%"
+    }
+}))
+
 const LoginPage =()=> {
+    const classes = useStyles();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -14,8 +56,10 @@ const LoginPage =()=> {
         e.preventDefault();
         AuthService.login(email, password).then(
             () => {
-            history.push("/");
-            window.location.reload();
+                if (AuthService.isAuthenticated()) {
+                    console.log('Redirecting to admin dashboard');
+                    history.push('/');
+                }
             },
             (error) => {
             setError(error.response.data.error);
@@ -27,15 +71,16 @@ const LoginPage =()=> {
     };
 
     useEffect(() => {
-        if (localStorage.getItem("authToken")) {
-          history.push("/");
+        if (AuthService.isAuthenticated()) {
+            console.log('Redirecting to admin dashboard');
+            history.push('/');
         }
       }, [history]);
       
     return (
         <React.Fragment>
-            <div className = "container-login">
-            <div className="wrap-login">
+            <Card container spacing= {1} className ={classes.gridContainer}>
+                <Grid item className ={classes.WrapBlock}>
                 <div className="login-pic" >
 					<img src={PcImg} alt="IMG"/>
                 </div>
@@ -76,14 +121,15 @@ const LoginPage =()=> {
 						<span className="txt1">
 							Forgot   
 						</span>
-						<a className="txt2" href="#">
+						<a className="txt2" href="./reset-password">
 							Password?
 						</a>
 					</div>
                 </form>
-            </div>
-        </div>
-    
+     
+                </Grid>
+     
+            </Card>    
         </React.Fragment>
     )
 }
