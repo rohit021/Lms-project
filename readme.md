@@ -2,8 +2,16 @@
 
 - Step 1: install the dependencies using
 
+- for server
+
 ```bash
 npm install
+```
+
+- for client side
+
+```bash
+npm install client-install
 ```
 
 - Step 2: Now run the Project by cmd
