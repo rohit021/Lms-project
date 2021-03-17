@@ -1,6 +1,6 @@
 # Steps to Run this code in local
 
-- Step 1: install the dependencies using
+## Step 1: install the dependencies
 
 - for server
 
@@ -11,10 +11,10 @@ npm install
 - for client side
 
 ```bash
-npm install client-install
+npm run client-install
 ```
 
-- Step 2: Now run the Project by cmd
+## Step 2: Now run the Project by cmd
 
 - for server
 
