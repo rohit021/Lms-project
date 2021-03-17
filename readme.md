@@ -8,7 +8,7 @@ npm install
 
 - Step 2: Now run the Project by cmd
 
-* for server
+- for server
 
 ```bash
 npm run server
