@@ -4,7 +4,7 @@ module.exports = {
     'mongodb://localhost:27017/lms-dev',
     options: {useNewUrlParser: true, useUnifiedTopology:true, useCreateIndex: true},
     // Enable mongoose debug mode
-    debug: process.env.MONGODB_DEBUG || true
+    debug: false
   },
   env: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || 3000,
