@@ -198,7 +198,7 @@ exports.updateForm = function (req, res) {
     })
 }
 
-// Method to delete a particlular Form
+// Method to delete a particular Form
 exports.deleteForm = function (req, res) {
     var formID = req.body.id;
     Form.findOneAndDelete({ _id: formID }).exec(function (err, form) {
