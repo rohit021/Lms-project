@@ -7,7 +7,10 @@ var User = require('../models/User.model'),
     mongoose = require('mongoose'),
     async = require('async'), 
     crypto = require('crypto'),
+    path = require('path'),
     config = require('../config/config'),
+    nodemailer = require('nodemailer'),
+    smtpTransport = nodemailer.createTransport(config.smtp),
     jwt = require('jsonwebtoken'),
     bcrypt = require("bcryptjs");
     
@@ -205,25 +208,38 @@ exports.resetPassword = function (req, res) {
             user.resetToken = token
             user.expireToken = Date.now() + 3600000
             user.save().then((result)=>{
-                transporter.sendMail({
-                    to:user.email,
-                    from:"no-replay@insta.com",
-                    subject:"password reset",
-                    html:`
-                    <p>You requested for password reset</p>
-                    <h5>click in this <a href="${EMAIL}/reset/${token}">link</a> to reset password</h5>
+                var emailArgs = {
+                    url: config.clienthost + '/auth/reset/' + token,
+                    name: user.username,                    
+                };   
+                var mailOptions = {
+                    to: user.email,
+                    from: config.email.service,
+                    subject: "Password reset? ",
+                    html: `
+                    <p>Hello <strong>${emailArgs.name}</strong></p>
+                    <div>
+                        <p>You requested for password reset</p>
+                        <h5>click in this <a href="${emailArgs.url}">link</a> to reset password</h5>
+                    </div>
                     `
-                })
-                res.json({message:"check your email"})
+                };        
+                smtpTransport.sendMail(mailOptions, function(err) {
+                    if(err){
+                        console.log('Error while sending user email ' + JSON.stringify(err));
+                    }
+                    else{
+                        res.json({message:"check your email"})
+                    }
+                });
             })
-
         })
     })
 };
 
 exports.newPassword = function (req, res) {
    const newPassword = req.body.password
-   const sentToken = req.body.token
+   const sentToken = req.params.token
    User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
    .then(user=>{
        if(!user){
@@ -240,4 +256,19 @@ exports.newPassword = function (req, res) {
    }).catch(err=>{
        console.log(err)
    })
+};
+
+exports.validateResetToken = function(req, res) {
+    User.findOne({
+        resetToken: req.params.token,
+        expireToken: {
+            $gt: Date.now()
+        }
+    }, function(err, user) {
+        if (!user) {
+            // return res.redirect('/password/reset/invalid');
+        }
+
+        res.redirect('/login');
+    });
 };

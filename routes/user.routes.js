@@ -11,9 +11,12 @@ router.route('/login')
 router.route('/reset-password')
       .post(usercontroller.resetPassword)
       
-router.route('/new-Password')
-      .post(usercontroller.newPassword)
+router.route('/reset/:token').
+      get(usercontroller.validateResetToken);
 
+router.route('/reset/:token').
+      post(usercontroller.newPassword);
+      
 router.route('/logout')
       .get(usercontroller.logOutUser)
 
