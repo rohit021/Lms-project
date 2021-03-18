@@ -34,13 +34,13 @@ const useStyles = makeStyles(theme => ({
     MainButton:{
         background:theme.palette.primary.blue,
         color:theme.palette.primary.light,
-        fontWeight:500,
+        fontWeight:600,
         fontSize:"16px"
     },
     NameCap:{
         fontFamily: "Poppins-Bold",
         textTransform: "capitalize",
-        color:  theme.palette.light,        
+        color:  theme.palette.primary.light,        
     },
     title: {
         display: 'none',
@@ -113,7 +113,6 @@ const PrimaryAppBar = () => {
     const menuId = 'primary-search-account-menu';
     const [open, setOpen] = React.useState(false);
     // const [openMobileMenu, setOpenMobileMenu] = React.useState(false);
-    const [scrolling, setScrolling] = useState(false);
     const anchorRef = React.useRef(null);
 
     const handleToggle = () => {
@@ -158,19 +157,10 @@ const PrimaryAppBar = () => {
     useEffect(() => {
         if (AuthService.isAuthenticated()) {
             console.log('Redirecting to admin dashboard');           
-            history.push('/');
+            history.push('/login');
         }
       }, [history]);
 
-    useEffect(() => {
-        window.addEventListener('scroll', function() {
-            setScrolling(true);
-
-            if(window.pageYOffset === 0) {
-                setScrolling(false);
-            }
-        })
-    }, []);
     const renderLogoutMenu = (
         <React.Fragment>            
             <Button href={'/login'}  variant="contained" className={classes.MainButton}>Login</Button>
@@ -271,7 +261,7 @@ const PrimaryAppBar = () => {
     if (AuthService.isAuthenticated()) {
         return(
             <div className={classes.grow}>
-                <AppBar position={scrolling ? "fixed" : "static"} className={classes.navbar}>
+                <AppBar position="fixed" className={classes.navbar}>
                     <Toolbar>
                         {renderCommonMenu}
                         <Hidden mdUp >                      
@@ -296,7 +286,7 @@ const PrimaryAppBar = () => {
     } else{
         return(
             <div className={classes.grow}>
-                <AppBar position={scrolling ? "fixed" : "static"} className={classes.navbar}>
+                <AppBar position="fixed" className={classes.navbar}>
                     <Toolbar>
                         {renderCommonMenu}
                         <Hidden mdUp >
