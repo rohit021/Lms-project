@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import './login.css';
 import { useHistory} from "react-router-dom";
 import AuthService from "../../../authServices/apicalls";
-import { Grid, Card, Typography, ButtonGroup, Button, makeStyles, Paper } from '@material-ui/core';
+import { Grid, Card, Box, Typography, ButtonGroup, Button, makeStyles, Paper } from '@material-ui/core';
 import PcImg from '../../../assets/images/img-01.png';
 
 const useStyles = makeStyles(theme => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         padding: "15px",
-        background: "linear-gradient(-135deg, #fa09ea, #4158d0)",
+        background: theme.palette.backgroundGradient,
     },
     WrapBlock: {
         width: "960px",
@@ -26,22 +26,41 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "space-between", 
         padding:"80px 100px"
     },
-        // margin: "0 auto",        
-        // width: "70%",
-        // padding: 12,
-        // border: "1px solid",
-        // marginTop: 8,
-        // marginBottom: 18,
-        // justifyContent:"center",
-        // boxShadow: '1px 3px 5px 3px #d4d0d0',
-        // "align-items": "center",
-    // },
-    dateBox: {
-        border: "1px solid",        
+    loginPic: {
+        width: "316px",
     },
-    datePick: {
-        margin:"0 5px",
-        width:"40%"
+    imgWidth:{
+        maxWidth:"100%",
+    },
+    loginForm:{
+        width: "320px"
+    },
+    loginFormTitle:{
+        fontFamily: "Poppins-Bold",
+        fontSize: "24px",
+        color:  theme.palette.openTitle,
+        lineHeight: "1.2",
+        textAlign: "center",
+        width: "100%",
+        display: "block",
+        paddingBottom: "54px"
+    },
+    wrapInput: {
+        position: "relative",
+        zIndex: "1",
+        marginBottom: "15px"
+    },
+    inputField:{
+        fontFamily: "Poppins-Medium",
+        fontSize: "15px",
+        width: "100%",
+        height:"50px",
+        color:  theme.palette.primary.contrastText,
+        lineHeight: "1.5",
+        background: theme.palette.primary.dark,
+        display: "block",
+        borderRadius: "25px",
+        padding:"0 30px 0 68px"
     }
 }))
 
@@ -80,25 +99,28 @@ const LoginPage =()=> {
     return (
         <React.Fragment>
             <Card container spacing= {1} className ={classes.gridContainer}>
-                <Grid item className ={classes.WrapBlock}>
-                <div className="login-pic" >
-					<img src={PcImg} alt="IMG"/>
-                </div>
-                <form onSubmit={loginHandler} className="login-form">
-               
-                    <span className="login-form-title">
-                        Member Login
-                    </span>
+                <Grid container className ={classes.WrapBlock}>
+                    <Grid item md={7} xs={12} sm={12} >
+                        <img className={classes.imgWidth} src={PcImg} alt="IMG"/>
+                    </Grid>
                     
-                    <div className="wrap-input" >
-						<input className="inputField" type="email" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}
+                    <Grid item md={5} xs={12} sm={12} >
+                        <form onSubmit={loginHandler} className={classes.loginForm}>
+                            <Typography className={classes.loginFormTitle}>
+                                Member Login
+                            </Typography>
+                    
+                    
+                    <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >
+						<input className={classes.inputField} type="email" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}
                         value={email}
                         required/>
 						<span className="focus-input"></span>
 						<span className="symbol-input">
 							<i className="fa fa-envelope" aria-hidden="true"></i>
 						</span>
-					</div>
+                    </Grid>
+					{/* </div> */}
 
 					<div className="wrap-input" >
 						<input className="inputField" type="password" name="pass" placeholder="Password"
@@ -127,6 +149,12 @@ const LoginPage =()=> {
 					</div>
                 </form>
      
+                    <Box mt={2} width={1} >
+                    </Box>
+                    </Grid>                
+
+               
+               
                 </Grid>
      
             </Card>    

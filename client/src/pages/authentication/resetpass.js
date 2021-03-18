@@ -13,10 +13,7 @@ const ResetPassword =()=> {
         e.preventDefault();
         AuthService.reset(email).then(
             () => {
-                if (AuthService.isAuthenticated()) {
-                    console.log('Redirecting to admin dashboard');
-                    history.push('/');
-                }
+                history.push('/');                
             },
             (error) => {
             setError(error.response.data.error);
