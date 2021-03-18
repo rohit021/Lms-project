@@ -1,18 +1,24 @@
 const jwt = require("jsonwebtoken");
 const config = require('../config/config');
+const mongoose = require('mongoose')
+const User = require('../models/User.model');
 
 exports.authenticatateJWT = (req, res, next) => {
-  try {
-    const token = req.cookies.token;
-    console.log(token);
-    if (!token) return res.status(401).json({ errorMessage: "Unauthorized" });
+    const {authorization} = req.headers
+    //authorization === Bearer ewefwegwrherhe
+    if(!authorization){
+       return res.status(401).json({error:"Unauthorized"})
+    }
+    const token = authorization.replace("Bearer ","")
+    jwt.verify(token,config.jwtSecret,(err,payload)=>{
+        if(err){
+         return   res.status(401).json({error:"you must be logged in"})
+        }
 
-    const verified = jwt.verify(token, config.jwtSecret);
-    req.user = verified.user;
-
-    next();
-  } catch (err) {
-    console.error(err);
-    res.status(401).json({ errorMessage: "Unauthorized" });
-  }
-}
+        const {_id} = payload
+        User.findById(_id).then(userdata=>{
+            req.user = userdata
+            next()
+        }) 
+    })
+};

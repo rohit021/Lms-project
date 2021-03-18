@@ -97,8 +97,19 @@ const signout = function (next) {
   }
 };
 
+const getLeads = function (filterValue){
+  axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
+  return axios
+  .get(API_URL + "/api/leads/datas", {
+      filterValue,
+    },
+    config)
+  .then((response) => {      
+    return response.data;
+  });
 
+};
   export default {
-    login,register,isAuthenticated, reset,newpassword,
+    login,register,isAuthenticated, reset,newpassword,getLeads,
     signout
   }
