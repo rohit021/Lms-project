@@ -6,9 +6,10 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      light: "#4f83cc",
+      light: "#fff",
       main: "#01579b",
-      dark: "#e6e6e6",
+      dark: "#2d2727",
+      blue: "#1178ee", //blue
       contrastText: "#666666",
     },
     secondary: {
@@ -17,7 +18,7 @@ const theme = createMuiTheme({
       dark: "#2bbd7e",
       contrastText: "#000",
     },
-    openTitle: "#333333",
+    openTitle: "#333333", // dark color
     backgroundGradient: "linear-gradient(-135deg, #fa09ea, #4158d0)",
     protectedTitle: "#2bbd7e",
     type: "light",
