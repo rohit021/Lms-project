@@ -89,8 +89,7 @@ const signout = function (next) {
   if (typeof window !== "undefined") {
     deleteCookie('authToken');
     deleteLocalStorage('authUser');
-    next();
-    return fetch(`${API_URL}/auth/signout`, {
+    return fetch(`${API_URL}/auth/logout`, {
       method: "GET"
     })
     .then(response => console.log("signout success"))
