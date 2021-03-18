@@ -53,7 +53,7 @@ const register = (username, email, password) => {
 
 const reset = (email) => {
   return axios
-    .get(API_URL + "/auth/reset-password", {
+    .post(API_URL + "/auth/reset-password", {
         email,
       },
       config)
@@ -61,6 +61,17 @@ const reset = (email) => {
       return response.data;
     });
 };
+
+const newpassword =(password, token) =>{
+  return axios
+  .post(API_URL + "/auth/reset/"+token, {
+      password,
+    },
+    config)
+  .then((response) => {      
+    return response.data;
+  });
+}
 
 // checking user is loggeg in
 const isAuthenticated = function () {
@@ -89,6 +100,6 @@ const signout = function (next) {
 
 
   export default {
-    login,register,isAuthenticated, 
+    login,register,isAuthenticated, reset,newpassword,
     signout
   }
