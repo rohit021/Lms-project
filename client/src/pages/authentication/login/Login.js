@@ -140,7 +140,7 @@ const LoginPage =()=> {
                 if (AuthService.isAuthenticated()) {
                     console.log('Redirecting to admin dashboard');
                     window.location.reload();
-                    history.push('/');
+                    history.push('/dashboard');
                 }
             },
             (error) => {
@@ -155,7 +155,7 @@ const LoginPage =()=> {
     useEffect(() => {
         if (AuthService.isAuthenticated()) {
             console.log('Redirecting to admin dashboard');
-            history.push('/');
+            history.push('/dashboard');
         }
       }, [history]);
       
@@ -203,7 +203,7 @@ const LoginPage =()=> {
                                 <span className={classes.txt1}>
                                     Forgot   
                                 </span>
-                                <Link className={classes.txt2} to="./reset-password">
+                                <Link className={classes.txt2} to="/reset-password">
                                     Password?
                                 </Link>
                             </Grid>            

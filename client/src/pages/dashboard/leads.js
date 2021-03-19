@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Button, CircularProgress, Avatar } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import AdminSidebar from '../../components/layout/adminSidebar'
 import AuthService from "../../authServices/apicalls";
-import leadFilter from "../../components/leads/lead-filter";
-import leadTable from "../../components/leads/leadtable";
+import LeadFilter from "../../components/leads/lead-filter";
+import LeadTable from "../../components/leads/leadtable";
 // import FormModal from '../modals/form-modal'
 import moment from "moment";
 const defaultData = {
@@ -17,7 +18,7 @@ const defaultData = {
 const LeadsHome = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(false);
+  const [leadData, setleadData] = useState(false);
   const [openmodal, setOpenModal] = useState(false);
 
   const handleChange = () => {
@@ -39,8 +40,8 @@ const LeadsHome = () => {
     // console.log(filterValue);
     setLoading(true);
     AuthService.getAllLeads(filterValue).then(
-      (response) => {
-        setFormData(response.forms);
+      (data) => {
+        setleadData(data.leads);
       },
       (error) => {
         console.log(error);
@@ -49,30 +50,31 @@ const LeadsHome = () => {
     setLoading(false);
   };
   return (
-    <React.Fragment>
+    <React.Fragment><AdminSidebar page={"Leads"} />
       <Grid item md={12} xs={12} sm={12}>
-        <leadFilter filterValue={filterValue} updateData={updateData} />
+        
+        {/* <leadFilter filterValue={filterValue} updateData={updateData} /> */}
         <Button
           variant="contained"
           color="primary"
-          style={{ margin: "0 50px" }}
+          // style={{ margin: "0 50px" }}
           onClick={handleChange}
         >
           Add Data
         </Button>
         {/* {openmodal? <FormModal  openModal={openmodal} closeModal = {handleChange} />:''}        */}
-        {!loading && formData && <leadTable tableData={formData} />}
+        {!loading && leadData && <LeadTable tableData={leadData} />}
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}
 
-        {!loading && !formData && (
+        {/* {!loading && !leadData && (
           <Avatar
             src="https://cdn.dribbble.com/users/1449854/screenshots/4136663/no_data_found.png"
             alt="no data found"
             style={{ width: "40%", height: "30%", margin: "auto" }}
           />
-        )}
+        )} */}
       </Grid>
     </React.Fragment>
   );

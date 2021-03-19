@@ -76,8 +76,7 @@ exports.getAllLeads = function (req, res) {
     var matchQuery = {};
     if(data.organization)
     matchQuery.organization = data.organization;
-    if(data.source)
-    matchQuery.source = data.source;
+    
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     // console.log(matchQuery);

@@ -9,6 +9,8 @@ const useStyles = makeStyles(theme => ({
 }))
 const FormTable = (props) => {
     const formData = props.tableData;
+    console.log(formData);
+
     const classes = useStyles();
     return(
         <Box m={3}>

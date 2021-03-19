@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory} from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {AppBar,Toolbar,IconButton,Grow, Typography, Paper, ClickAwayListener, Button,Avatar, Popper, MenuItem, MenuList, Box, Hidden, Collapse} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -223,12 +223,19 @@ const PrimaryAppBar = () => {
     //         </div>
     //     </React.Fragment>
     // )
-
+    const renderlogoLogin = (
+        <React.Fragment>          
+           <Link to="/dashboard" ><img src={Logo} height="34" alt="" /></Link>
+        </React.Fragment>
+    )
+    const renderlogoLogout = (
+        <React.Fragment>          
+           <Link to="/login" ><img src={Logo} height="34" alt="" /></Link>
+        </React.Fragment>
+    )
     const renderCommonMenu = (
         <React.Fragment>
-            <a href="/">
-                <img src={Logo} height="34" alt="" />
-            </a>
+            { AuthService.isAuthenticated() ? renderlogoLogin: renderlogoLogout}
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
             { AuthService.isAuthenticated() ? renderLogInMenu : renderLogoutMenu }
@@ -261,7 +268,7 @@ const PrimaryAppBar = () => {
     if (AuthService.isAuthenticated()) {
         return(
             <div className={classes.grow}>
-                <AppBar position="fixed" className={classes.navbar}>
+                <AppBar position="absolute" className={classes.navbar}>
                     <Toolbar>
                         {renderCommonMenu}
                         <Hidden mdUp >                      
