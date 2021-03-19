@@ -1,6 +1,6 @@
 import React ,{useEffect, useState} from 'react';
 import { Grid, Paper} from '@material-ui/core';
-import AdminDashboardnav from '../../components/layout/adminnav'
+import AdminSidebar from '../../components/layout/adminSidebar'
 import LeadsHome from './leads';
 const Home = () => {
     const [loading, setloading] = useState(false);
@@ -11,11 +11,11 @@ const Home = () => {
         {
           <Grid item md={2}>
             <Paper>
-              {/* <AdminDashboardnav page="projectList"/> */}
+              <AdminSidebar page="projectList"/>
             </Paper>
           </Grid>
         }
-        <LeadsHome/>
+        {/* <LeadsHome/> */}
 
           {/* <Grid item md={10} xs={12} sm={12}>
             <PageTitle isMobile={isMobile} mobileMenu={menu} selected={"Projects"} title={'Posted Projects'}/>

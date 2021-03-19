@@ -138,7 +138,7 @@ function RegisterPage() {
     useEffect(() => {
         if (AuthService.isAuthenticated()) {
             console.log('Redirecting to admin dashboard');
-            history.push('/');
+            history.push('/dashboard');
         }
       }, [history]);
 
@@ -157,7 +157,7 @@ function RegisterPage() {
             () => {
             if (AuthService.isAuthenticated()) {
                     console.log('Redirecting to admin dashboard');
-                    history.push('/');
+                    history.push('/dashboard');
                 }
             },
             (error) => {

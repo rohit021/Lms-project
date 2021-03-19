@@ -4,15 +4,15 @@ const { authenticatateJWT } = require('../middleware/auth');
 
 // Single event Routes
 router.route('/data')
-      .post(leadcontroller.createLead)
-      .get(leadcontroller.getLead)       
-      .put(leadcontroller.updateLead)     
-      .delete(leadcontroller.deleteLead)       
+      .post(authenticatateJWT, leadcontroller.createLead)
+      .get(authenticatateJWT, leadcontroller.getLead)       
+      .put(authenticatateJWT, leadcontroller.updateLead)     
+      .delete(authenticatateJWT, leadcontroller.deleteLead)       
 
 //Multiple Events Routes
 router.route('/datas')
       .get(authenticatateJWT,leadcontroller.getAllLeads)       
-      .delete(leadcontroller.deleteAllLeads)       
+      .delete(authenticatateJWT, leadcontroller.deleteAllLeads)       
 
 module.exports = router;
 
