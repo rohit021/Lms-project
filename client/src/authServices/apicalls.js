@@ -5,8 +5,7 @@ import {
     getLocalStorage,
     deleteLocalStorage,
 } from '../helpers/localStorage';
-
-const API_URL = "http://localhost:5000" || process.env.REACT_APP_BASE_URL ;
+const API_URL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BASE_URL :"https://leads-v1.herokuapp.com" ;
 
 const config = {
   header: {

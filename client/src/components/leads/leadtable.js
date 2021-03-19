@@ -18,7 +18,9 @@ const FormTable = (props) => {
                 <Table>
                     <TableHead>
                         <TableRow>
+                            <TableCell className={classes.bold}>S.No</TableCell>
                             <TableCell className={classes.bold}>Name</TableCell>
+                            <TableCell className={classes.bold}>Date</TableCell>
                             <TableCell className={classes.bold}>Email</TableCell>
                             <TableCell className={classes.bold}>Phone</TableCell>
                             <TableCell className={classes.bold}>Organization</TableCell>
@@ -31,8 +33,9 @@ const FormTable = (props) => {
                         formData.map((data, index) => (
                             <TableRow key={index}>
                                 <TableCell>{data.name}</TableCell>
+                                <TableCell>{data.name}</TableCell>
+                                <TableCell>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
                                 <TableCell>{data.email}</TableCell>
-                                {/* <TableCell>{moment(data.date).format('DD-MM-YYYY')}</TableCell> */}
                                 <TableCell>{data.phone}</TableCell>
                                 <TableCell>{data.organization}</TableCell>
                                 <TableCell>{data.source}</TableCell>

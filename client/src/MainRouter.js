@@ -12,6 +12,7 @@ const MainRouter = () => {
     return (<div>
       {/* <TopNavbar/> */}
       <Switch>
+        <PrivateRoute  exact path="/" component={Home}/>
         <PrivateRoute  exact path="/dashboard" component={Home}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>        
