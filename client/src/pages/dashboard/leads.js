@@ -38,7 +38,7 @@ const LeadsHome = () => {
   const fetchData = async () => {
     // console.log(filterValue);
     setLoading(true);
-    AuthService.getLeads(filterValue).then(
+    AuthService.getAllLeads(filterValue).then(
       (response) => {
         setFormData(response.forms);
       },

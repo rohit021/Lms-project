@@ -7,9 +7,9 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 /**
- * FormSchema
+ * LeadSchema
  */
-const FormSchema = new Schema({
+const LeadSchema = new Schema({
     name: {
         type: String, 
         lowercase: true, 
@@ -53,8 +53,8 @@ const FormSchema = new Schema({
     },
 })
 
-FormSchema.pre('save', function(next) {
+LeadSchema.pre('save', function(next) {
     this.updated_at = new Date;
     next();
 });
-module.exports = mongoose.model('Form', FormSchema);
+module.exports = mongoose.model('Lead', LeadSchema);
