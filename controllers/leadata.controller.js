@@ -3,12 +3,12 @@
 /**
  * Module dependencies.
  */
-var Form = require('../models/Form.model'),
-    errorHandler = require('./../helpers/dbErrorHandler'),
+var Lead = require('../models/Lead.model'),
+    errorHandler = require('../helpers/dbErrorHandler'),
     async = require('async');
 
 // Method to Create Form
-exports.createForm = function (req, res) {
+exports.createLead = function (req, res) {
     var data = req.body;
     // console.log(req.body)
     var errorResult = {
@@ -39,8 +39,8 @@ exports.createForm = function (req, res) {
             else done(null, data)
         },
         function (data) {
-            var formdata = new Form(data);
-            formdata.save(function (err, result) {
+            var leaddata = new Lead(data);
+            leaddata.save(function (err, result) {
                 if (err) {
                     // console.log("error----------", err);
                     return res.status(400).json({
@@ -54,7 +54,7 @@ exports.createForm = function (req, res) {
                     }
                     res.json({
                         success: 1,
-                        "message": "Form Added Successfully",
+                        "message": "Lead Added Successfully",
                         outputResult
                     });
                 }
@@ -70,7 +70,7 @@ exports.createForm = function (req, res) {
 }
 
 // Method to Get all Forms
-exports.getAllForms = function (req, res) {
+exports.getAllLeads = function (req, res) {
     var data = req.body;
     // console.log(data);
     var matchQuery = {};
@@ -81,7 +81,7 @@ exports.getAllForms = function (req, res) {
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     // console.log(matchQuery);
-    Form.find(matchQuery).sort({date:-1}).exec(function (err, forms) {
+    Lead.find(matchQuery).sort({date:-1}).exec(function (err, leads) {
     // Form.aggregate(
     //     [
     //     //     {
@@ -109,11 +109,11 @@ exports.getAllForms = function (req, res) {
                     message: "Something went wrong"
                 })
             }
-            if (forms.length) {
+            if (leads.length) {
                 return res.json({
                     status: 1,
-                    "Total Records": forms.length,
-                    forms
+                    "Total Records": leads.length,
+                    leads
                 });
             }
             return res.status(200).send({
@@ -124,17 +124,17 @@ exports.getAllForms = function (req, res) {
 }
 
 // Method to Get a particlular Form By ID
-exports.getForm = function (req, res) {
-    var formID = req.query.id;
-    Form.findOne({ _id: formID }).exec(function (err, form) {
+exports.getLead = function (req, res) {
+    var leadID = req.query.id;
+    Lead.findOne({ _id: leadID }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,
                 message: 'Something went wrong'
             })
         }
-        if (form) {
-            return res.json(form);
+        if (lead) {
+            return res.json(lead);
         }
         return res.status(200).send({
             status: 1,
@@ -144,32 +144,32 @@ exports.getForm = function (req, res) {
 }
 
 // Method to Update Form By ID
-exports.updateForm = function (req, res) {
+exports.updateLead = function (req, res) {
     var data = req.body;
-    Form.findOne({ _id: data.id }).exec(function (err, form) {
+    Lead.findOne({ _id: data.id }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,
                 message: 'Form Id is not correct'
             })
         }
-        if (form) {
+        if (lead) {
             if (data.name) {
-                form.name = data.name
+                lead.name = data.name
             }
             if (data.date) {
-                form.date = data.date;
+                lead.date = data.date;
             }
             if (data.phone) {
-                form.phone = data.phone;
+                lead.phone = data.phone;
             }
             if (data.organization) {
-                form.organization = data.organization;
+                lead.organization = data.organization;
             }
             if (data.source) {
-                form.source = data.source;
+                lead.source = data.source;
             }
-            form.save(function (err, result) {
+            lead.save(function (err, result) {
                 if (err) {
                     console.log("error----------", err);
                     return res.status(400).send({
@@ -182,7 +182,7 @@ exports.updateForm = function (req, res) {
                     }
                     res.json({
                         success: 1,
-                        "message": "Form Updated Successfully",
+                        "message": "Lead Updated Successfully",
                         outputResult
                     });
                 }
@@ -191,28 +191,28 @@ exports.updateForm = function (req, res) {
         else {
             return res.json({
                 status: 0,
-                message: 'No Form Stored with this Id '
+                message: 'No Lead Stored with this Id '
             })
         }
 
     })
 }
 
-// Method to delete a particular Form
-exports.deleteForm = function (req, res) {
-    var formID = req.body.id;
-    Form.findOneAndDelete({ _id: formID }).exec(function (err, form) {
+// Method to delete a particular Lead
+exports.deleteLead = function (req, res) {
+    var leadID = req.body.id;
+    Lead.findOneAndDelete({ _id: leadID }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,
                 message: 'something went wrong'
             })
         }
-        if (form) {
+        if (lead) {
             res.json({
                 status: 1,
                 message: "Successfully Deleted",
-                "Form Detail": form
+                "lead Detail": lead
             })
         }
         else {
@@ -222,8 +222,8 @@ exports.deleteForm = function (req, res) {
 }
 
 // Method to Delete all Forms
-exports.deleteAllForms = function (req, res) {
-    Form.deleteMany({}).exec(function (err, forms) {
+exports.deleteAllLeads = function (req, res) {
+    Lead.deleteMany({}).exec(function (err, leads) {
         if (err) {
             return res.status(400).send({
                 status: 0,
