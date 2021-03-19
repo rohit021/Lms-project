@@ -5,7 +5,7 @@
 - for server
 
 ```bash
-npm install
+ cd server && npm install
 ```
 
 - for client side
@@ -25,11 +25,5 @@ npm run server
 - for client
 
 ```bash
-npm run client
-```
-
-- for both server and client
-
-```bash
-npm run dev
+npm run start
 ```
