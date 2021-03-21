@@ -88,32 +88,30 @@ const FormTable = (props) => {
       });
     
     return(
-        <Box m={3} className={classes.li}>
-           
-          
+        <Box className={classes.li}>
 		<ListItem className={classes.listItem}>
 			<Grid container spacing={1}>
-				<Grid item md={1} xs={3} sm={1}>
+				<Grid item md={1} xs={1} sm={1}>
 					<Typography className={"textLabel"}>	
 						{index+1}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={3} sm={1}>
+                <Grid item md={2} xs={2} sm={1}>
 					<Typography className={"textLabel"}>	
 						{formData.name}
 					</Typography>
 				</Grid>
-                <Grid item md={1} xs={3} sm={1}>
+                <Grid item md={1} xs={4} sm={1}>
 					<Typography className={"textLabel"}>	
                     {moment(formData.date).format('DD-MM-YYYY')}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={3} sm={1}>
+                <Grid item md={2} xs={4} sm={1}>
 					<Typography className={"textLabel"}>	
 						{formData.email}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={3} sm={1}>
+                <Grid item md={2} xs={4} sm={1}>
 					<Typography className={"textLabel"}>	
 						{formData.phone}
 					</Typography>
@@ -123,12 +121,12 @@ const FormTable = (props) => {
 						{formData.organization}
 					</Typography>
 				</Grid>			
-                <Grid item md={1} xs={3} sm={1}>
+                <Grid item md={1} xs={2} sm={1}>
 					<Typography className={"textLabel"}>	
 						{formData.source}
 					</Typography>
 				</Grid>    
-                <Grid item md={1} xs={3} sm={1}>
+                <Grid item md={1} xs={1} sm={1}>
                     <IconButton
                         aria-owns="widget-menu"
                         aria-haspopup="true"

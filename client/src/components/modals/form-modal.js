@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormControl, MenuItem, DialogTitle, DialogContent, TextField, Checkbox, Button, FormControlLabel, Link, IconButton, makeStyles, Dialog, Typography, Box } from '@material-ui/core';
-import {Rating, Alert} from '@material-ui/lab';
+import {Alert} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
-import axios from "axios";
-import {OrganizationOptions} from '../../utils/list'
-
+import {OrganizationOptions, SourceOptions, DateFilterOptions} from "../../helpers/utils";
+import AuthService from "../../authServices/apicalls";
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -16,7 +15,16 @@ const useStyles = makeStyles((theme) => ({
     },
     dialogPaper: {
         position: 'absolute',
-        width: "30%",
+        width: "33%",
+        left: "65%",
+        top: "-5%",
+        minHeight: '101%',
+        [theme.breakpoints.down("xs")]: {
+            width: "80%",
+            top: "0",
+            left: "0%",
+            minHeight: '50%',
+      },
       },
       ratingStyle:{
         textAlign:"center"
@@ -27,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin:"20px auto",
+        background:"#01579b", 
+        color:"#fff" ,
+
     },
     selectStyle: {
         minWidth: '100%'
@@ -39,11 +50,11 @@ const FormModal = (props) => {
     const [Name, setName] = useState("");
     const [Date, setDate] = useState("");
     const [error, setError] = useState("");
+    const [Email, setEmail] = useState('')
+    const [Source, setSource] = useState("")
     const [Number, setNumber] = useState("");
     const [Organization, setOrganization] = useState("");
-    const [rating, setRating] = useState(0);
     const formattedTodayDate = moment().format("YYYY-MM-DD");
-    const API = "https://formbackend11.herokuapp.com";
 
     useEffect(() => {
         // console.log(formattedTodayDate);
@@ -56,21 +67,21 @@ const FormModal = (props) => {
             date:Date,
             phone:Number,
             organization:Organization,
-            rating:rating
+            email:Email,
+            source:Source
         }
-        // console.log(payload);
-        axios.post(`${API}/form/data`,payload)
-            .then(function (response) {
+        AuthService.createNewLead(payload).then(
+            () => {
                 props.closeModal();
                 window.location.reload();
-            })
-            .catch(function (error) {
+            },
+            (error) => {
+                setError(error.response.data.error);
                 setTimeout(() => {
                     setError("");
-                }, 5000);
-                return setError(error.response.data.message);   
-            })
-            event.preventDefault(event);        
+                }, 3000);
+            }
+        )    
     };
 
     return (
@@ -86,7 +97,7 @@ const FormModal = (props) => {
                 <DialogContent>
                     <form onSubmit={onSubmit}>
                         <Grid container spacing={2}>
-                            <Grid item md={12} xs={12} sm={6}>
+                            <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -99,24 +110,7 @@ const FormModal = (props) => {
                                     autoFocus
                                 />
                             </Grid>
-                            <Grid item md={12} xs={12} sm={6}>
-                            <TextField
-                                id="createdStartDate"
-                                label="Date"
-                                type="date"
-                                onChange={(e) => setDate(e.target.value)}
-                                defaultValue={formattedTodayDate}
-                                className={classes.datePick}
-                                fullWidth
-                                InputLabelProps={{
-                                shrink: true,
-                                }}
-                                format="DD/MM/YYYY"
-                            />
-                             
-                                    
-                            </Grid>
-                            <Grid item md={12} xs={12} sm={6}>
+                            <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
                                     fullWidth
@@ -130,7 +124,21 @@ const FormModal = (props) => {
                                     autoFocus
                                 />
                             </Grid>
-                            <Grid item md={12} xs={12} sm={6}>
+                            <Grid item md={12} xs={12} sm={12}>
+                                <TextField
+                                    variant="outlined"
+                                    fullWidth
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    id="email"
+                                    type="email"
+                                    label="Email"
+                                    name="email"
+                                    required
+                                    fullWidth
+                                    autoFocus
+                                />
+                            </Grid>
+                            <Grid item md={12} xs={12} sm={12}>
                                 <FormControl className={classes.selectStyle}>
                                     <TextField
                                         size="small"
@@ -144,20 +152,26 @@ const FormModal = (props) => {
                                     </TextField>
                                 </FormControl>
                             </Grid>
-                            <Grid item md={12} xs={12} sm={6} className={classes.ratingStyle}>
-                                <Rating 
-                                    name="simple-controlled"
-                                    value={rating}
-                                    size= 'large'
-                                    onChange={(e) => setRating(e.target.value)}
-                                />
+                            <Grid item md={12} xs={12} sm={12}>
+                                <FormControl className={classes.selectStyle}>
+                                    <TextField
+                                        size="small"
+                                        select
+                                        label="Source"
+                                        name="Source"
+                                        value={Source}
+                                        onChange={(e) => setSource(e.target.value)}
+                                        defaultValue="Choose any Value" >
+                                        {SourceOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+                                    </TextField>
+                                </FormControl>
                             </Grid>
+                            
                         </Grid>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            color="primary"
                             className={classes.submit}
                         >
                             Submit Data
