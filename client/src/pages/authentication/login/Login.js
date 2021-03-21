@@ -140,7 +140,7 @@ const LoginPage =()=> {
                 if (AuthService.isAuthenticated()) {
                     console.log('Redirecting to admin dashboard');
                     window.location.reload();
-                    history.push('/dashboard');
+                    history.push('/app/dashboard')
                 }
             },
             (error) => {
@@ -155,7 +155,7 @@ const LoginPage =()=> {
     useEffect(() => {
         if (AuthService.isAuthenticated()) {
             console.log('Redirecting to admin dashboard');
-            history.push('/dashboard');
+            history.push('/app/dashboard')
         }
       }, [history]);
       
