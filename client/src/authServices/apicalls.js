@@ -106,6 +106,19 @@ const getAllLeads = function (filterValue){
   });
 };
 
+const createNewLead = function (data){
+  axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
+  return axios
+  .post(API_URL + "/api/leads/data", {
+    data,
+    },
+    config)
+  .then((response) => {      
+    return response.data;
+  });
+
+};
+
 const deleteLeadbyId = function (data){
   axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
   return axios
@@ -120,6 +133,6 @@ const deleteLeadbyId = function (data){
 };
 
   export default {
-    login,register,isAuthenticated, reset,newpassword,getAllLeads,deleteLeadbyId, 
-    signout
+    login,register,isAuthenticated, reset,newpassword,getAllLeads,deleteLeadbyId, createNewLead
+    ,signout
   }

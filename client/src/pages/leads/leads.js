@@ -1,33 +1,40 @@
 import React, {useState, useEffect } from "react";
-import { Grid, Avatar, Button, CircularProgress } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { Grid, Avatar, Paper, CircularProgress,Button } from "@material-ui/core";
 import LeadTable from "../../components/leads/leadtable";
 import LeadFilter from "../../components/leads/lead-filter";
 import AuthService from "../../authServices/apicalls";
-import Widget from '../../components/widget/widget'
+import LeadModal from '../../components/modals/form-modal'
 import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles(theme=>({
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    boxShadow: '1px 3px 5px 3px #d4d0d0',
+    padding: 15,
+    margin: "50px auto",
+    flexGrow: 1,
+  },
+}));
+
 const defaultData = {
   startDate: moment().format("YYYY-MM-01"),
   endDate: moment().format("YYYY-MM-DD"),
   // rating:'',
   // minVal:'',
-  // maxVal:'',
+  source:'',
   organization: "",
 };
-const useStyles = makeStyles(theme => ({
-    tableOverflow: {
-      overflow: 'auto'
-    }
-  }))
-  
+
 const topBarValues = [
 	{text: 'S.No', md:1, xs:3, sm:1},
 	{text: 'Name', md:2, xs:3, sm:2},
 	{text: 'Date', md:1, xs:3, sm:2},
 	{text: 'Email', md:2, xs:3, sm:1},
-	{text: 'Phone', md:2, xs:5, sm:2},
-	{text: 'Organization', md:2, xs:4, sm:2},
+	{text: 'Phone', md:2, xs:2, sm:2},
+	{text: 'Organization', md:2, xs:3, sm:2},
 	{text: 'Source', md:1, xs:3, sm:2},
   {text: 'Actions', md:1, xs:3, sm:2},    
 ]
@@ -77,19 +84,23 @@ const Leads = () => {
         <Button
           variant="contained"
           color="primary"
-          style={{ float:"right",background:"#01579b", color:"#fff" }}
+          style={{ float:"right", margin:"5px auto",background:"#01579b", color:"#fff" }}
           onClick={handleChange}
         >
           Add Data
         </Button>
-        <ListTopBar data={topBarValues}/>
+        {openmodal ? <LeadModal openModal={openmodal} closeModal={handleChange} /> : ''}
         {/* {openmodal? <FormModal  openModal={openmodal} closeModal = {handleChange} />:''}        */}
+        {!loading && leadData && (
+        <Paper className={classes.paper}>
+        <ListTopBar data={topBarValues}/>
         {!loading && leadData && leadData.map((data, index)=>(
                 //  <Widget title="Material-UI Table" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
             <LeadTable tableData={data} key={index} index={index} fetchData={fetchData} />
               //  </Widget>
             
         )) }
+        </Paper>)}
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}
