@@ -5,7 +5,7 @@ import {
     getLocalStorage,
     deleteLocalStorage,
 } from '../helpers/localStorage';
-const API_URL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BASE_URL :"https://leads-v1.herokuapp.com" ;
+const API_URL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_BASE_URL :"http://localhost:5000";
 
 const config = {
   header: {
@@ -99,8 +99,18 @@ const signout = function (next) {
 const getAllLeads = function (filterValue){
   axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
   return axios
-  .get(API_URL + "/api/leads/datas", {
-      filterValue,
+  .post(API_URL + "/api/leads/datas",filterValue,
+    config)
+  .then((response) => {      
+    return response.data;
+  });
+};
+
+const deleteLeadbyId = function (data){
+  axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
+  return axios
+  .delete(API_URL + "/api/leads/data", {
+    data,
     },
     config)
   .then((response) => {      
@@ -108,7 +118,8 @@ const getAllLeads = function (filterValue){
   });
 
 };
+
   export default {
-    login,register,isAuthenticated, reset,newpassword,getAllLeads,
+    login,register,isAuthenticated, reset,newpassword,getAllLeads,deleteLeadbyId, 
     signout
   }
