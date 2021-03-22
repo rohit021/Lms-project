@@ -109,9 +109,7 @@ const getAllLeads = function (filterValue){
 const createNewLead = function (data){
   axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
   return axios
-  .post(API_URL + "/api/leads/data", {
-    data,
-    },
+  .post(API_URL + "/api/leads/data",data,
     config)
   .then((response) => {      
     return response.data;
