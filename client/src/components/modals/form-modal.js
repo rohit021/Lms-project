@@ -3,7 +3,7 @@ import { Grid, FormControl, MenuItem, DialogTitle, DialogContent, TextField, Che
 import {Alert} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
-import {OrganizationOptions, SourceOptions, DateFilterOptions} from "../../helpers/utils";
+import {OrganizationOptions, SourceOptions, DateFilterOptions, CenterOptions, PriorityOptions, DepartmentOptions} from "../../helpers/utils";
 import AuthService from "../../authServices/apicalls";
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -48,11 +48,16 @@ const useStyles = makeStyles((theme) => ({
 const FormModal = (props) => {
     const classes = useStyles();
     const [Name, setName] = useState("");
+    const [Number, setNumber] = useState("");
     const [Date, setDate] = useState("");
     const [error, setError] = useState("");
     const [Email, setEmail] = useState('')
+    const [Location, setLocation] = useState("")
+    const [Department, setDepartment] = useState("")
+    const [Center, setCenter] = useState("")
     const [Source, setSource] = useState("")
-    const [Number, setNumber] = useState("");
+    const [Amount, setAmount] = useState("")
+    const [Priority, setPriority] = useState("")
     const [Organization, setOrganization] = useState("");
     const formattedTodayDate = moment().format("YYYY-MM-DD");
 
@@ -66,9 +71,14 @@ const FormModal = (props) => {
             name:Name,
             date:Date,
             phone:Number,
-            organization:Organization,
+            organization:"RadiX healthcare",
             email:Email,
-            source:Source
+            source:Source,
+            amount:Amount,
+            center:Center,
+            department:Department,
+            priority:Priority
+
         }
         AuthService.createNewLead(payload)
             .then(function (response) {
@@ -130,10 +140,10 @@ const FormModal = (props) => {
                                     variant="outlined"
                                     fullWidth
                                     onChange={(e) => setNumber(e.target.value)}
-                                    id="phone"
+                                    id="Number"
                                     type="number"
                                     label="Phone Number"
-                                    name="phone"
+                                    name="Number"
                                     required
                                     fullWidth
                                     autoFocus
@@ -154,6 +164,20 @@ const FormModal = (props) => {
                                 />
                             </Grid>
                             <Grid item md={12} xs={12} sm={12}>
+                                <TextField
+                                    variant="outlined"
+                                    fullWidth
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    id="Location"
+                                    type="String"
+                                    label="Location"
+                                    name="Location"
+                                    required
+                                    fullWidth
+                                    autoFocus
+                                />
+                            </Grid>
+                            {/* <Grid item md={12} xs={12} sm={12}>
                                 <FormControl className={classes.selectStyle}>
                                     <TextField
                                         size="small"
@@ -166,6 +190,62 @@ const FormModal = (props) => {
                                         {OrganizationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
                                     </TextField>
                                 </FormControl>
+                            </Grid> */}
+                            <Grid item md={12} xs={12} sm={12}>
+                                <FormControl className={classes.selectStyle}>
+                                    <TextField
+                                        size="small"
+                                        select
+                                        label="Department"
+                                        name="Department"
+                                        value={Department}
+                                        onChange={(e) => setDepartment(e.target.value)}
+                                        defaultValue="Choose any Value" >
+                                        {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+                                    </TextField>
+                                </FormControl>
+                            </Grid>
+                            <Grid item md={12} xs={12} sm={12}>
+                                <FormControl className={classes.selectStyle}>
+                                    <TextField
+                                        size="small"
+                                        select
+                                        label="Center"
+                                        name="Center"
+                                        value={Center}
+                                        onChange={(e) => setCenter(e.target.value)}
+                                        defaultValue="Choose any Value" >
+                                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+                                    </TextField>
+                                </FormControl>
+                            </Grid>
+                            <Grid item md={12} xs={12} sm={12}>
+                                <FormControl className={classes.selectStyle}>
+                                    <TextField
+                                        size="small"
+                                        select
+                                        label="Priority"
+                                        name="Priority"
+                                        value={Priority}
+                                        onChange={(e) => setPriority(e.target.value)}
+                                        defaultValue="Choose any Value" >
+                                        {PriorityOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+                                    </TextField>
+                                </FormControl>
+                            </Grid>
+                            <Grid item md={12} xs={12} sm={12}>
+                                <TextField
+                                    variant="outlined"
+                                    fullWidth
+                                    onChange={(e) => setAmount(e.target.value)}
+                                    id="Amount"
+                                    type="number"
+                                    label="Amount"
+                                    name="Amount"
+                                    required
+                                    fullWidth
+                                    autoFocus
+                                />
                             </Grid>
                             <Grid item md={12} xs={12} sm={12}>
                                 <FormControl className={classes.selectStyle}>
