@@ -33,12 +33,35 @@ const LeadSchema = new Schema({
     },
     organization: {
         type: String, 
-        maxlength: 30
+        maxlength: 30,
+        required:true
+    },
+    center:{
+        type: String, 
+        maxlength: 30,
+        required:true
+    },
+    department:{
+        type: String, 
+        maxlength: 30,
+    },
+    location:{
+        type:String,
+        maxlength:30
+    },
+    amount:{
+        type:Number,
+        required:true
     },
     source: {
         type: String, 
-        maxlength: 30
-    },    
+        maxlength: 30,
+        required:true
+    }, 
+    priority:{
+        type:String,
+        required:true
+    },   
     created_at: {
         type: Date,
         default: Date.now
