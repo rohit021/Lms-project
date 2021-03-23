@@ -96,32 +96,32 @@ const FormTable = (props) => {
 						{index+1}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={2} sm={1}>
+                <Grid item md={2} xs={2} sm={2}>
 					<Typography className={"textLabel"}>	
 						{formData.name}
 					</Typography>
 				</Grid>
-                <Grid item md={1} xs={4} sm={1}>
+                <Grid item md={1} xs={4} sm={2}>
 					<Typography className={"textLabel"}>	
                     {moment(formData.date).format('DD-MM-YYYY')}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={4} sm={1}>
+                <Grid item md={3} xs={4} sm={4}>
 					<Typography className={"textLabel"}>	
 						{formData.email}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={4} sm={1}>
+                <Grid item md={1} xs={4} sm={2}>
 					<Typography className={"textLabel"}>	
 						{formData.phone}
 					</Typography>
 				</Grid>
-                <Grid item md={2} xs={3} sm={1}>
+                <Grid item md={2} xs={3} sm={3}>
 					<Typography className={"textLabel"}>	
 						{formData.organization}
 					</Typography>
 				</Grid>			
-                <Grid item md={1} xs={2} sm={1}>
+                <Grid item md={1} xs={2} sm={2}>
 					<Typography className={"textLabel"}>	
 						{formData.source}
 					</Typography>

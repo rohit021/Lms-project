@@ -70,24 +70,39 @@ const FormModal = (props) => {
             email:Email,
             source:Source
         }
-        AuthService.createNewLead(payload).then(
-            () => {
+        AuthService.createNewLead(payload)
+            .then(function (response) {
                 props.closeModal();
                 window.location.reload();
-            },
-            (error) => {
-                setError(error.response.data.error);
+            })
+            .catch(function (error) {
                 setTimeout(() => {
                     setError("");
-                }, 3000);
-            }
-        )    
+                }, 5000);
+                return setError(error.response.data.message);   
+            })
+        //     (response) => {
+        //         console.log(response);
+        //         return
+        //         console.log(response);
+        //         props.closeModal();
+        //         window.location.reload();
+        //     },
+        //     (error) => {
+        //         // console.log(error.response.data);
+        //         setError(error.response.data);
+        //         setTimeout(() => {
+        //             setError("");
+        //         }, 3000);
+        //     }
+        // )    
+        event.preventDefault(event);      
     };
 
     return (
         <React.Fragment>             
             <Dialog classes={{paper: classes.dialogPaper }}
-                open={props.openModal} onClose={props.closeModal} disableBackdropClick fullWidth maxWidth="md" >
+                open={props.openModal}  disableBackdropClick fullWidth maxWidth="md" >
                 <DialogTitle>
                     <IconButton style={{ backgroundColor: "#3f51b5",color:"#fff", float: "right" }} onClick={props.closeModal} >
                         <CloseIcon />
