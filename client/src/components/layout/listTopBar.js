@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import { Grid, Typography, makeStyles } from "@material-ui/core";
-import { BorderBottom } from "@material-ui/icons";
-
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 const useStyles = makeStyles(theme => ({
 title : {
   font: "Poppins-Regular",
@@ -10,18 +10,43 @@ title : {
  
 },
 tableHeader:{
-  borderBottom:"2px solid" 
+  borderBottom:"2px solid" ,
+
+},
+GridBlock: {
+    display:"flex",
+    alignItems:"center"
+},
+filterMenu: {
+  position:"relative",
+  display:"block",
+  "&:hover":{
+    
+    display:"none"
+  }
 }
 }));
 
-const TopBar = props => {
+const TopBar = ({Data, LeadsSort}) => {
+  const [ShowArrow, setShowArrow] = useState(false);
   const classes = useStyles();
+
+  const changeDropDown = () =>{
+    if(ShowArrow){
+      setShowArrow(false);
+    }
+    else{
+      setShowArrow(true);
+    }
+  }
+
   return (
     <Grid container spacing ={1} className={classes.tableHeader}>
             {
-              props.data.map((value, index) => (
-                <Grid key={index} item md={value.md} xs={value.xs} sm={value.sm} >
-                  <Typography className={classes.title} >{value.text}</Typography>
+              Data.map((value, index) => (
+                <Grid key={index} item md={value.md} xs={value.xs} sm={value.sm}  className={classes.GridBlock}>
+                  <Typography className={classes.title} onClick={()=> LeadsSort(value.text)} >{value.text}</Typography>
+                  <span className={classes.filterMenu} onClick={changeDropDown}>{ShowArrow ? <ArrowDropDownIcon/> :<ArrowDropUpIcon/>}</span>
                 </Grid>
               ))
             }
@@ -31,3 +56,4 @@ const TopBar = props => {
 };
 
 export default TopBar;
+

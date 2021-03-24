@@ -120,8 +120,8 @@ const createNewLead = function (data){
 const deleteLeadbyId = function (data){
   axios.defaults.headers.common = {'Authorization': "Bearer " +getCookie('authToken') }
   return axios
-  .delete(API_URL + "/api/leads/data",data,
-    config)
+  .delete(API_URL + "/api/leads/data",{data,
+    config})
   .then((response) => {      
     return response.data;
   });

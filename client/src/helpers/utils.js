@@ -35,3 +35,14 @@ export const DateFilterOptions = [
     { key: 'month', text: 'MONTHLY', value: 'month' },
     { key: 'year', text: 'YEARLY', value: 'year' },
   ]
+
+export const LeadHeadCells = [
+    { id: 'date', disablePadding: false, label: 'Date' },
+    { id: 'name', disablePadding: true, label: 'Name' },    
+    { id: 'email', disablePadding: false, label: 'Email' },
+    { id: 'phone', disablePadding: false, label: 'Phone' },
+    { id: 'center', disablePadding: false, label: 'Center' },
+    { id: 'status', disablePadding: false, label: 'Status' },
+    // { id: 'logs', disablePadding: false, label: 'Logs' },
+    // { id: 'actions', disablePadding: false, label: 'Actions' },
+  ];

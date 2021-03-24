@@ -1,227 +1,225 @@
-import React, { useState } from "react";
-import {Grid,ListItem, Link, Divider, Table,TableHead,makeStyles, TableRow,TableCell,TableBody, IconButton, Menu, MenuItem, Typography, Button} from '@material-ui/core';
-import {Box,Dialog,DialogContent, DialogContentText, DialogTitle, DialogActions} from '@material-ui/core';
+import React, {useState, useEffect} from 'react'
+import {Paper, Dialog,DialogContent, DialogContentText, DialogTitle, 
+    DialogActions,Slide,
+    IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
+import {lighten, makeStyles } from '@material-ui/core/styles';
+import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
-import Slide from '@material-ui/core/Slide'
-import moment from 'moment';
-const useStyles = makeStyles(theme => ({
-    listItem:{
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingBottom: 10
+import {LeadHeadCells} from '../../helpers/utils';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
     },
-      inlineStyle: {
-          display: 'inline-flex',
-          justifyContent: 'space-evenly'
-      },
-      li: {
-          '&:hover': {
-              backgroundColor: '#dcdcdc'
-          }
-      }
-  }))
-
+    paper: {
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: '1px 3px 5px 3px #d4d0d0',
+        padding: 15,
+        margin: "50px auto",
+        flexGrow: 1,
+    },
+    bold: {
+        fontFamily: "Poppins-Bold",
+    },
+    li: {
+        '&:hover': {
+            backgroundColor: lighten('#01579b', 0.85),
+        }
+    },
+    table: {
+      minWidth: 750,
+    },
+    visuallyHidden: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      top: 20,
+      width: 1,
+    },
+  }));
   
-const FormTable = (props) => {
+const LeadTable = ({fetchData, tableData, updateData}) => {
     const classes = useStyles();
-    const formData = props.tableData;
-    const index = props.index;
-    const [Open, setOpen] = useState(false)
-    var [moreButtonRef, setMoreButtonRef] = useState(null);
-    const [opendeleteModal, SetopendeleteModal] = React.useState(false);
-
-    const handleClickOpen = () => {
-        SetopendeleteModal(true);
-    };
-  
-    const handleClose = () => {
-        SetopendeleteModal(false);
+    const [Order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = React.useState('date');
+    // const [deleteModal, setdeleteModal] = useState(false)
+    const [filterData, setFilterData] = useState('');
+    var [ButtonRef, setButtonRef] = useState(null);
+    const open = Boolean(ButtonRef);
+    
+    const handleRequestSort = (property) =>(event) => {
+        const isAsc = orderBy === property && Order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+        setFilterData({order:Order, orderBy:orderBy});   
     };
     
+    useEffect(() => {
+        updateData(filterData);
+      }, [filterData]);
 
-    const handleDelete = () =>{
-        const data ={
-            id:formData._id
+    // const CloseDeleteModal = () => {
+    //     setdeleteModal(false);
+    // };
+    
+    // const OpenDeleteModal = (data) => {
+    //     console.log("check",data);
+    //     // setdeleteModal(true);
+    // };
+    const handleClick = (event) => {
+        setButtonRef(event.currentTarget);
+    };
+    const handleClose = () => {
+        setButtonRef(null);
+    };
+    
+    const deletehandler = (data) =>{
+        const payload ={
+            id:data
         }
-        AuthService.deleteLeadbyId(data).then(
+        AuthService.deleteLeadbyId(payload).then(
             (data) => {
-                props.fetchData();
-                SetopendeleteModal(false);
+                fetchData();
+                // setdeleteModal(false);
             },
             (error) => {
-                SetopendeleteModal(false);
+                // setdeleteModal(false);
             }
           );
     }
-    const DeleteDialog = () =>{
-        return(
-            <React.Fragment>
-                 <Dialog
-            open={opendeleteModal}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                once you delete the delete the lead details then you will not be able to see this in future.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Disagree
-              </Button>
-              <Button onClick={handleDelete} color="primary">
-                Agree
-              </Button>
-            </DialogActions>
-          </Dialog>
-            </React.Fragment>
-        )
-    }
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-      });
-    
-    return(
-        <Box className={classes.li}>
-		<ListItem className={classes.listItem}>
-			<Grid container spacing={1}>
-				<Grid item md={1} xs={1} sm={1}>
-					<Typography className={"textLabel"}>	
-						{index+1}
-					</Typography>
-				</Grid>
-                <Grid item md={2} xs={2} sm={2}>
-					<Typography className={"textLabel"}>	
-						{formData.name}
-					</Typography>
-				</Grid>
-                <Grid item md={1} xs={4} sm={2}>
-					<Typography className={"textLabel"}>	
-                    {moment(formData.date).format('DD-MM-YYYY')}
-					</Typography>
-				</Grid>
-                <Grid item md={3} xs={4} sm={4}>
-					<Typography className={"textLabel"}>	
-						{formData.email}
-					</Typography>
-				</Grid>
-                <Grid item md={1} xs={4} sm={2}>
-					<Typography className={"textLabel"}>	
-						{formData.phone}
-					</Typography>
-				</Grid>
-                <Grid item md={2} xs={3} sm={3}>
-					<Typography className={"textLabel"}>	
-						{formData.organization}
-					</Typography>
-				</Grid>			
-                <Grid item md={1} xs={2} sm={2}>
-					<Typography className={"textLabel"}>	
-						{formData.source}
-					</Typography>
-				</Grid>    
-                <Grid item md={1} xs={1} sm={1}>
-                    <IconButton
-                        aria-owns="widget-menu"
-                        aria-haspopup="true"
-                        onClick={() => setOpen(true)}
-                        buttonRef={setMoreButtonRef}
-                    >
-                        <MoreIcon />
-                    </IconButton>
-                    <Menu
-                    id="widget-menu"
-                    open={Open}
-                    anchorEl={moreButtonRef}
-                    onClose={() => setOpen(false)}
-                    disableAutoFocusItem
-                    >
-                        <MenuItem>
-                        <Button>Edit</Button>
-                        </MenuItem>
-                        <MenuItem>
-                        <Button onClick={handleClickOpen} >Delete</Button>
-                        </MenuItem>
-                        
-                    </Menu>
-                </Grid>            
-			</Grid>
-		</ListItem>
-		<Divider />
-        <DeleteDialog/>
-            {/* <TableContainer component={Paper} elevation={3}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.bold}></TableCell>
-                            <TableCell className={classes.bold}>Name</TableCell>
-                            <TableCell className={classes.bold}>Date</TableCell>
-                            <TableCell className={classes.bold}>Email</TableCell>
-                            <TableCell className={classes.bold}>Phone</TableCell>
-                            <TableCell className={classes.bold}>Organization</TableCell>
-                            <TableCell className={classes.bold}>Source</TableCell>
-                            <TableCell className={classes.bold}>Actions</TableCell>
 
+    // const DeleteDialog = (data) =>{
+    //     console.log(data);
+    //     return(
+    //         <React.Fragment>
+    //              <Dialog
+    //         open={deleteModal}
+    //         TransitionComponent={Transition}
+    //         keepMounted
+    //         onClose={CloseDeleteModal}
+    //         aria-labelledby="alert-dialog-slide-title"
+    //         aria-describedby="alert-dialog-slide-description"
+    //       >
+    //         <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
+    //         <DialogContent>
+    //           <DialogContentText id="alert-dialog-slide-description">
+    //             once you delete the delete the lead details then you will not be able to see this in future.
+    //           </DialogContentText>
+    //         </DialogContent>
+    //         <DialogActions>
+    //           <Button onClick={CloseDeleteModal} color="primary">
+    //             Disagree
+    //           </Button>
+    //           <Button onClick={handleClick11(name)} color="primary">
+    //             Agree
+    //           </Button>
+    //         </DialogActions>
+    //       </Dialog>
+    //         </React.Fragment>
+    //     )
+    // }
+    // const Transition = React.forwardRef(function Transition(props, ref) {
+    //     return <Slide direction="up" ref={ref} {...props} />;
+    // });
+    return (
+        <Paper className={classes.paper}>
+            <TableContainer>
+                <Table
+                    className={classes.table}
+                    aria-labelledby="tableTitle"
+                    size='medium'
+                    aria-label="enhanced table"
+                >
+                    <TableHead>                    
+                        <TableRow>
+                            <TableCell className={classes.bold}>S.No</TableCell>
+                            {LeadHeadCells.map((headCell)=>(
+                            <TableCell 
+                            className={classes.bold}
+                            key={headCell.id}
+                            align={headCell.numeric ? 'right' : 'left'}
+                            padding={headCell.disablePadding ? 'none' : 'default'}
+                            sortDirection={orderBy === headCell.id ? Order : false}
+                            >
+                                <TableSortLabel
+                                    active={orderBy === headCell.id}
+                                    direction={orderBy === headCell.id ? Order : 'asc'}
+                                    onClick={handleRequestSort(headCell.id)}
+                                    >
+                                    {headCell.label}
+                                    {orderBy === headCell.id ? (
+                                        <span className={classes.visuallyHidden}>
+                                        {Order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                        </span>
+                                    ) : null}
+                                    </TableSortLabel>
+                            </TableCell>
+                            ))                        
+                            }
+                            <TableCell className={classes.bold}>Logs</TableCell>
+                            <TableCell className={classes.bold}>Actions</TableCell>                        
                         </TableRow>
                     </TableHead>
                     <TableBody>
                     {
-                        formData.map((data, index) => (
-                            <TableRow key={index}>
+                        tableData.map((data, index) => (
+                            <TableRow key={index} className={classes.li}
+                            >
                                 <TableCell>{index+1}</TableCell>
-                                <TableCell>{data.name}</TableCell>
                                 <TableCell>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
+                                <TableCell>{data.name}</TableCell>
                                 <TableCell>{data.email}</TableCell>
                                 <TableCell>{data.phone}</TableCell>
                                 <TableCell>{data.organization}</TableCell>
                                 <TableCell>{data.source}</TableCell>
-                                
+                                <TableCell>
+                                    <Button
+                                     variant="contained"
+                                     color="primary"
+                                     style={{ margin:"5px auto",background:"#01579b", color:"#fff" }}
+                                    //  onClick={handleChange}
+                                     >
+                                         View Logs
+                                    </Button>
+                                </TableCell>
                                 <TableCell>
                                     <IconButton
                                         aria-owns="widget-menu"
                                         aria-haspopup="true"
-                                        onClick={() => setOpen(true)}
-                                        buttonRef={setMoreButtonRef}
+                                        onClick={handleClick}
                                     >
                                         <MoreIcon />
                                     </IconButton>
                                     <Menu
-                                    id="widget-menu"
-                                    open={Open}
-                                    anchorEl={moreButtonRef}
-                                    onClose={() => setOpen(false)}
-                                    disableAutoFocusItem
-                                >
-                                    <MenuItem>
-                                    <Typography>Edit</Typography>
-                                    </MenuItem>
-                                    <MenuItem>
-                                    <Typography>Copy</Typography>
-                                    </MenuItem>
-                                    <MenuItem>
-                                    <Typography>Delete</Typography>
-                                    </MenuItem>
-                                    <MenuItem>
-                                    <Typography>Print</Typography>
-                                    </MenuItem>
-                                </Menu>
+                                        id="widget-menu"
+                                        open={open}
+                                        anchorEl={ButtonRef}
+                                        keepMounted
+                                        onClose={handleClose}
+                                        disableAutoFocusItem
+                                        >
+                                            <MenuItem>
+                                            <Button>Edit</Button>
+                                            </MenuItem>
+                                            <MenuItem>
+                                            <Button onClick={(event) => deletehandler(data._id)}>Delete</Button>
+                                            </MenuItem>                                            
+                                        </Menu>
                                 </TableCell>
-                             
                             </TableRow>
                         ))
                     }
-                    
                     </TableBody>
                 </Table>
-            </TableContainer> */}
-            </Box>
+            </TableContainer>
+        </Paper>
     )
 }
 
-export default FormTable;
+export default LeadTable;
