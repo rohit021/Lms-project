@@ -162,7 +162,7 @@ const Filter = (props) => {
             format="DD/MM/YYYY"
           />
         </Grid>
-        <Grid item md={2} xs={6} sm={2}>
+        <Grid item md={2} xs={6} sm={1}>
           <Button onClick={resetFilterData} ><RotateLeftIcon/></Button>
         </Grid>
       </Grid>
