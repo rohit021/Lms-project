@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles, Paper } from '@material-ui/core';
 import {OrganizationOptions, SourceOptions, DateFilterOptions} from "../../helpers/utils";
 import Widget from './../widget/widget';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -61,7 +62,9 @@ const Filter = (props) => {
     setEndDate(formattedTodayDate);   
     setFilterData({...filterData, startDate:yearstartDate, endDate:formattedTodayDate});   
   }
-
+  const resetFilterData =(props)=>{
+    setFilterData({filterData:props.defaultData})
+  }
   const onSortFilterChange = (value) => {
     switch(value){
         case 'week':
@@ -158,6 +161,9 @@ const Filter = (props) => {
             InputProps={{inputProps: {max: formattedTodayDate} }}
             format="DD/MM/YYYY"
           />
+        </Grid>
+        <Grid item md={2} xs={6} sm={2}>
+          <Button onClick={resetFilterData} ><RotateLeftIcon/></Button>
         </Grid>
       </Grid>
     </Widget>    

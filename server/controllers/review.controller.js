@@ -241,3 +241,32 @@ exports.deleteAllReviews = function (req, res) {
         })
     })
 }
+
+exports.getratingReviews= function(req,res){
+    Review.find({}).exec(function(err,review){
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: err
+            })
+        }
+        if (review) {
+            let posCount = 0 , negCount = 0, nps = 0 ;
+            for(let i= 0; i< review.length; i++){
+                if(review[i].rating == 4 || review[i].rating == 5){
+                    posCount++;
+                }
+                if(review[i].rating == 1 || review[i].rating == 2){
+                    negCount++;
+                }                
+            }
+            nps =( posCount - negCount)/review.length *100;
+            // return res.json(review);
+            return res.json({posCount, negCount, nps})
+        }
+        return res.status(200).send({
+            status: 1,
+            message: 'No review found'
+        })
+    })
+}

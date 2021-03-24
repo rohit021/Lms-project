@@ -80,7 +80,7 @@ const Leads = () => {
        <Grid container spacing={4}>
           <Grid item md={12} xs={12} sm={12}>
         
-        <LeadFilter filterValue={filterValue} updateData={updateData} />
+        <LeadFilter filterValue={filterValue} updateData={updateData} defaultData={defaultData} />
         <Button
           variant="contained"
           color="primary"
