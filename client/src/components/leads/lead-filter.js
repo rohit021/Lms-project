@@ -85,7 +85,7 @@ const Filter = (props) => {
   return (
     <Widget header="Search Filters">
       <Grid container spacing={1} className={classes.gridContainer}>
-        <Grid item md={2} xs={6} sm={2}>
+        <Grid item md={2} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -98,7 +98,7 @@ const Filter = (props) => {
             </TextField>
           </FormControl>
         </Grid>
-        <Grid item md={2} xs={6} sm={2}>
+        <Grid item md={2} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -111,7 +111,7 @@ const Filter = (props) => {
             </TextField>
           </FormControl>
         </Grid>
-        <Grid item md={3} xs={12} sm={3}>
+        <Grid item md={3} xs={12} sm={6}>
           <ButtonGroup color="primary" aria-label="outlined primary button group">
               {
                   DateFilterOptions.map((option) => (

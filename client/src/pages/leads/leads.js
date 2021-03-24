@@ -6,18 +6,6 @@ import AuthService from "../../authServices/apicalls";
 import LeadModal from '../../components/modals/form-modal'
 import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
-import { makeStyles } from "@material-ui/styles";
-
-const useStyles = makeStyles(theme=>({
-  paper: {
-    display: "flex",
-    flexDirection: "column",
-    boxShadow: '1px 3px 5px 3px #d4d0d0',
-    padding: 15,
-    margin: "50px auto",
-    flexGrow: 1,
-  },
-}));
 
 const defaultData = {
   startDate: moment().format("YYYY-MM-01"),
@@ -25,19 +13,21 @@ const defaultData = {
   // rating:'',
   // minVal:'',
   source:'',
+  orderBy:'date',
+  order: 'desc',
   organization: "",
 };
 
-const topBarValues = [
-	{text: 'S.No', md:1, xs:3, sm:1},
-	{text: 'Name', md:2, xs:3, sm:2},
-	{text: 'Date', md:1, xs:3, sm:2},
-	{text: 'Email', md:2, xs:3, sm:1},
-	{text: 'Phone', md:2, xs:2, sm:2},
-	{text: 'Organization', md:2, xs:3, sm:2},
-	{text: 'Source', md:1, xs:3, sm:2},
-  {text: 'Actions', md:1, xs:3, sm:2},    
-]
+// const topBarValues = [
+// 	{text: 'S.No', md:1, xs:3, sm:1},
+// 	{text: 'Name', md:2, xs:3, sm:2},
+// 	{text: 'Date', md:1, xs:3, sm:2},
+// 	{text: 'Email', md:2, xs:3, sm:1},
+// 	{text: 'Phone', md:2, xs:2, sm:2},
+// 	{text: 'Organization', md:2, xs:3, sm:2},
+// 	{text: 'Source', md:1, xs:3, sm:2},
+//   {text: 'Actions', md:1, xs:3, sm:2},    
+// ]
   
 const Leads = () => {
     const [filterValue, setFilterValue] = useState(defaultData);
@@ -59,9 +49,8 @@ const Leads = () => {
     useEffect(() => {
       fetchData();
     }, [filterValue]);
-                           
+          
     const fetchData = async () => {
-        console.log(filterValue);
         setLoading(true);
         AuthService.getAllLeads(filterValue).then(
           (data) => {
@@ -73,9 +62,7 @@ const Leads = () => {
         );
         setLoading(false);
       };
-      
-    const classes = useStyles();
-
+  
     return (
        <Grid container spacing={4}>
           <Grid item md={12} xs={12} sm={12}>
@@ -91,16 +78,10 @@ const Leads = () => {
         </Button>
         {openmodal ? <LeadModal openModal={openmodal} closeModal={handleChange} /> : ''}
         {/* {openmodal? <FormModal  openModal={openmodal} closeModal = {handleChange} />:''}        */}
-        {!loading && leadData && (
-        <Paper className={classes.paper}>
-        <ListTopBar data={topBarValues}/>
-        {!loading && leadData && leadData.map((data, index)=>(
-                //  <Widget title="Material-UI Table" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
-            <LeadTable tableData={data} key={index} index={index} fetchData={fetchData} />
-              //  </Widget>
-            
-        )) }
-        </Paper>)}
+        {
+          !loading && leadData &&
+            <LeadTable filterValue={filterValue} tableData={leadData} updateData={updateData} fetchData={fetchData} />
+        }
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}

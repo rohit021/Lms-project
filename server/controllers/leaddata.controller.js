@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Module dependencies.d
  */
 var Lead = require('../models/Lead.model'),
     errorHandler = require('../helpers/dbErrorHandler'),
@@ -81,7 +81,20 @@ exports.createLead = function (req, res) {
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    // console.log(data);
+    console.log(data);
+    var sort_parameter = '', order =''
+    if(data.orderBy)
+        sort_parameter = data.orderBy;
+    if(data.order)
+        order = data.order;
+    var sort_order = 1;
+    if (order == "desc") {
+        sort_order = -1;
+    }
+    var sort = {};
+    sort[sort_parameter] = sort_order;
+    sort['_id'] = sort_order ==1? -1 : 1;
+    
     var matchQuery = {};
     if(data.organization)
     matchQuery.organization = data.organization;
@@ -90,29 +103,29 @@ exports.getAllLeads = function (req, res) {
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     
-   
+   console.log(sort);
         // console.log(matchQuery);
-    Lead.find(matchQuery).sort({date:-1}).exec(function (err, leads) {
-    // Form.aggregate(
-    //     [
-    //     //     {
-    //     //     $match: ''
-    //     // },
-    //     // matchCheck,
-    //     {
-    //         "$project": {
-    //             "_id": "$_id",
-    //             "name": "$name",
-    //             "date": "$date",
-    //             "phone": "$phone",
-    //             "organization": "$organization",
-    //             "rating": "$rating",
-    //         }
-    //     }, {
-    //         "$sort": sort
-    //     },
+    // Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
+    Lead.aggregate(
+        [{
+            "$project": {
+                "_id": "$_id",
+                "name": "$name",
+                "date": "$date",
+                "phone": "$phone",
+                "organization": "$organization",
+                "email": "$email",    
+                "source": "$source",    
+            }
+        },
+        {
+            $match: matchQuery
+        },
+        {
+            "$sort": sort
+        },
 
-    //     ], function (err, forms) {
+        ], function (err, leads) {
         
             if (err) {
                 return res.status(400).send({
