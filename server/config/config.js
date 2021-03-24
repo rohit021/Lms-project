@@ -12,7 +12,7 @@ module.exports = {
     debug: false
   },
   env: process.env.NODE_ENV || 'development',
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT || 5000,
   jwtSecret: process.env.JWT_SECRET || "YOUR_secret_key",
   smtp: {
     "type": "smtp",

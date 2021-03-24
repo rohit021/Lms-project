@@ -5,7 +5,7 @@ const { authenticatateJWT } = require('../middleware/auth');
 // Single event Routes
 router.route('/data')
       .post(authenticatateJWT, leadcontroller.createLead)
-      .get(authenticatateJWT, leadcontroller.getLead)       
+      .get(authenticatateJWT, leadcontroller.getLead)        
       .put(authenticatateJWT, leadcontroller.updateLead)     
       .delete(authenticatateJWT, leadcontroller.deleteLead)       
 

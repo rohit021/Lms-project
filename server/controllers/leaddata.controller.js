@@ -32,6 +32,15 @@ exports.createLead = function (req, res) {
             if (!data.organization) {
                 errorResult.message += " organization is missing";
             }
+            if (!data.center) {
+                errorResult.message += " center is missing";
+            }
+            if (!data.amount) {
+                errorResult.message += " amount is missing";
+            }
+            if (!data.priority) {
+                errorResult.message += " priority is missing";
+            }
             if (!data.source) {
                 errorResult.message += " source is missing";
             }
