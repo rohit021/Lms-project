@@ -46,3 +46,21 @@ export const LeadHeadCells = [
     // { id: 'logs', disablePadding: false, label: 'Logs' },
     // { id: 'actions', disablePadding: false, label: 'Actions' },
   ];
+  export const CenterOptions = [
+    { "key": 'Delhi', "text": 'Delhi', "value": 'delhi' },
+    { "key": 'Chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
+    { "key": 'Nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
+    { "key": 'other', "text": 'Other', "value": 'other' },
+]
+export const DepartmentOptions = [
+    { "key": 'Corona', "text": 'Corona', "value": 'corona' },
+    { "key": 'Cardio', "text": 'Cardio', "value": 'cardio' },
+    { "key": 'Skin', "text": 'Skin', "value": 'skin' },
+    { "key": 'other', "text": 'Other', "value": 'other' },
+]
+export const PriorityOptions = [
+    { "key": 'Hot', "text": 'Hot', "value": 'hot' },
+    { "key": 'Cold', "text": 'Cold', "value": 'cold' },
+    { "key": 'Neutral', "text": 'Neutral', "value": 'neutral' },
+ 
+]
