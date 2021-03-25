@@ -1,19 +1,27 @@
-import { AssignmentOutlined, TrendingUp, ThumbUpAlt } from '@material-ui/icons';
+// import { AssignmentOutlined, TrendingUp, ThumbUpAlt } from '@material-ui/icons';
 import {
     Home as HomeIcon,
     AssignmentOutlined as AssignmentIcon,
-    FormatSize as TypographyIcon,
-    FilterNone as UIElementsIcon,
-    BorderAll as TableIcon,
-    QuestionAnswer as SupportIcon,
-    LibraryBooks as LibraryIcon,
-    HelpOutline as FAQIcon,
-    ArrowBack as ArrowBackIcon,
+    FiberManualRecord as DotIcon
+    // FormatSize as TypographyIcon,
+    // FilterNone as UIElementsIcon,
+    // BorderAll as TableIcon,
+    // QuestionAnswer as SupportIcon,
+    // LibraryBooks as LibraryIcon,
+    // HelpOutline as FAQIcon,
+    // ArrowBack as ArrowBackIcon,
   } from "@material-ui/icons";
-  
-export const mainListItems = [
+
+  export const mainListItems = [
     { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
-    { id: 1, label: "Lead Menu", link: "/app/leads", icon: <AssignmentIcon /> },
+    { id: 1, label: "Lead Menu", link: "/app/leads", icon: <AssignmentIcon /> ,children: [
+          { label: "Radix Leads", link: "/app/leads/radixLeads", icon: <DotIcon fontSize = "small" /> },
+          { label: "Anardana Leads", link: "/app/leads/anardanaLeads" , icon: <DotIcon fontSize="small"/> },
+          { label: "Woodapple Leads", link: "/app/leads/woodappleLeads" , icon: <DotIcon fontSize="small"/> },
+          { label: "Relp Leads", link: "/app/leads/relpLeads" , icon: <DotIcon fontSize="small" /> },
+          { label: "Harvin Leads", link: "/app/leads/harvinLeads" , icon: <DotIcon fontSize="small"/> },
+        ],
+    }
     // {'text': 'Lead Menu', 'link': '/viewleads', 'page': 'Leads', 'icon': <AssignmentOutlined />},
     // {'text': 'DateWise Status', 'link': '/datewiseStatus', 'page': 'datewiseStatus', 'icon': <TrendingUp />},
     // {'text': 'Reviews', 'link': '/reviews', 'page': 'review', 'icon': <ThumbUpAlt />},
@@ -43,24 +51,24 @@ export const LeadHeadCells = [
     { id: 'phone', disablePadding: false, label: 'Phone' },
     { id: 'center', disablePadding: false, label: 'Center' },
     { id: 'status', disablePadding: false, label: 'Status' },
-    // { id: 'logs', disablePadding: false, label: 'Logs' },
+    { id: 'source', disablePadding: false, label: 'Source' },
     // { id: 'actions', disablePadding: false, label: 'Actions' },
   ];
   export const CenterOptions = [
-    { "key": 'Delhi', "text": 'Delhi', "value": 'delhi' },
-    { "key": 'Chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
-    { "key": 'Nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
+    { "key": 'delhi', "text": 'Delhi', "value": 'delhi' },
+    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
+    { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
     { "key": 'other', "text": 'Other', "value": 'other' },
 ]
 export const DepartmentOptions = [
-    { "key": 'Corona', "text": 'Corona', "value": 'corona' },
-    { "key": 'Cardio', "text": 'Cardio', "value": 'cardio' },
-    { "key": 'Skin', "text": 'Skin', "value": 'skin' },
+    { "key": 'corona', "text": 'Corona', "value": 'corona' },
+    { "key": 'cardio', "text": 'Cardio', "value": 'cardio' },
+    { "key": 'skin', "text": 'Skin', "value": 'skin' },
     { "key": 'other', "text": 'Other', "value": 'other' },
 ]
 export const PriorityOptions = [
-    { "key": 'Hot', "text": 'Hot', "value": 'hot' },
-    { "key": 'Cold', "text": 'Cold', "value": 'cold' },
-    { "key": 'Neutral', "text": 'Neutral', "value": 'neutral' },
+    { "key": 'hot', "text": 'Hot', "value": 'hot' },
+    { "key": 'cold', "text": 'Cold', "value": 'cold' },
+    { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
  
 ]

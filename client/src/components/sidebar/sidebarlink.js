@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
         },
       },
       linkIcon: {
-        marginRight: theme.spacing(1),
         color: theme.palette.text.secondary + "99",
         transition: theme.transitions.create("color"),
         width: 24,
@@ -148,7 +147,7 @@ const SidebarLink = ({
                 [classes.linkIconActive]: isLinkActive,
               })}
             >
-              {/* {icon ? icon : <InboxIcon />} */}
+              {icon}
             </ListItemIcon>
             <ListItemText
               classes={{

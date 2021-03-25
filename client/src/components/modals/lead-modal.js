@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, FormControl, MenuItem, DialogTitle, DialogContent, TextField, Checkbox, Button, FormControlLabel, Link, IconButton, makeStyles, Dialog, Typography, Box } from '@material-ui/core';
+import { Grid, FormControl, MenuItem, DialogTitle, DialogContent, TextField, Button, IconButton, makeStyles, Dialog} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
-import {OrganizationOptions, SourceOptions, DateFilterOptions, CenterOptions, PriorityOptions, DepartmentOptions} from "../../helpers/utils";
+import { SourceOptions, CenterOptions, PriorityOptions, DepartmentOptions} from "../../helpers/utils";
 import AuthService from "../../authServices/apicalls";
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -58,7 +58,6 @@ const FormModal = (props) => {
     const [Source, setSource] = useState("")
     const [Amount, setAmount] = useState("")
     const [Priority, setPriority] = useState("")
-    const [Organization, setOrganization] = useState("");
     const formattedTodayDate = moment().format("YYYY-MM-DD");
 
     useEffect(() => {
@@ -68,16 +67,17 @@ const FormModal = (props) => {
     
     const onSubmit = async (event) => {
         let payload ={
-            name:Name,
-            date:Date,
-            phone:Number,
-            organization:"RadiX healthcare",
-            email:Email,
-            source:Source,
-            amount:Amount,
-            center:Center,
-            department:Department,
-            priority:Priority
+            name: Name,
+            date: Date,
+            phone: Number,
+            organization:props.organization,
+            email: Email,
+            source: Source,
+            amount: Amount,
+            location: Location,
+            center: Center,
+            department: Department,
+            priority: Priority
 
         }
         AuthService.createNewLead(payload)
@@ -90,22 +90,7 @@ const FormModal = (props) => {
                     setError("");
                 }, 5000);
                 return setError(error.response.data.message);   
-            })
-        //     (response) => {
-        //         console.log(response);
-        //         return
-        //         console.log(response);
-        //         props.closeModal();
-        //         window.location.reload();
-        //     },
-        //     (error) => {
-        //         // console.log(error.response.data);
-        //         setError(error.response.data);
-        //         setTimeout(() => {
-        //             setError("");
-        //         }, 3000);
-        //     }
-        // )    
+            })  
         event.preventDefault(event);      
     };
 
@@ -125,7 +110,6 @@ const FormModal = (props) => {
                             <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
-                                    fullWidth
                                     onChange={(e) => setName(e.target.value)}
                                     id="name"
                                     label="User Name"
@@ -138,7 +122,6 @@ const FormModal = (props) => {
                             <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
-                                    fullWidth
                                     onChange={(e) => setNumber(e.target.value)}
                                     id="Number"
                                     type="number"
@@ -152,7 +135,6 @@ const FormModal = (props) => {
                             <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
-                                    fullWidth
                                     onChange={(e) => setEmail(e.target.value)}
                                     id="email"
                                     type="email"
@@ -166,38 +148,23 @@ const FormModal = (props) => {
                             <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
-                                    fullWidth
                                     onChange={(e) => setLocation(e.target.value)}
                                     id="Location"
                                     type="String"
                                     label="Location"
                                     name="Location"
-                                    required
                                     fullWidth
                                     autoFocus
                                 />
-                            </Grid>
-                            {/* <Grid item md={12} xs={12} sm={12}>
-                                <FormControl className={classes.selectStyle}>
-                                    <TextField
-                                        size="small"
-                                        select
-                                        label="Organization"
-                                        name="Organization"
-                                        value={Organization}
-                                        onChange={(e) => setOrganization(e.target.value)}
-                                        defaultValue="Choose any Value" >
-                                        {OrganizationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-                                    </TextField>
-                                </FormControl>
-                            </Grid> */}
+                            </Grid>                           
                             <Grid item md={12} xs={12} sm={12}>
                                 <FormControl className={classes.selectStyle}>
                                     <TextField
                                         size="small"
                                         select
                                         label="Department"
-                                        name="Department"
+                                        name="Department"                                        
+                                        required
                                         value={Department}
                                         onChange={(e) => setDepartment(e.target.value)}
                                         defaultValue="Choose any Value" >
@@ -242,8 +209,8 @@ const FormModal = (props) => {
                                     type="number"
                                     label="Amount"
                                     name="Amount"
+                                    InputProps={{ inputProps: { min: 0 } }}
                                     required
-                                    fullWidth
                                     autoFocus
                                 />
                             </Grid>

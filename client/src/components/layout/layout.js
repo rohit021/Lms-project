@@ -1,14 +1,17 @@
 import React from "react";
 import {Route, Switch, Redirect, withRouter} from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import {Hidden, Typography, Link} from '@material-ui/core';
 // components
 import Header from "../header/header";
 import Sidebar from "../sidebar/sidebar";
 import classnames from "classnames";
 // pages
 // import Dashboard from "../../pages/dashboard";
-import Leads from "../../pages/leads/leads";
+import RadixLeads from "../../pages/leads/radixLeads";
+import AnardanaLeads from "../../pages/leads/anardanaLeads";
+import RelpLeads from "../../pages/leads/relpLeads";
+import WoodappleLeads from "../../pages/leads/woodappleLeads";
+import HarvinLeads from "../../pages/leads/harvinLeads";
 // import Typography from "../../pages/typography";
 // import Notifications from "../../pages/notifications";
 // import Maps from "../../pages/maps";
@@ -41,11 +44,6 @@ const useStyles = makeStyles(theme => ({
   fakeToolbar: {
     ...theme.mixins.toolbar,
   },
-  link: {
-    '&:not(:first-child)': {
-      paddingLeft: 15
-    }
-  }
 }));
 
 const Layout = (props)=> {
@@ -64,7 +62,12 @@ const Layout = (props)=> {
         <div className={classes.fakeToolbar} />
         <Switch>
           {/* <Route path="/app/dashboard" component={Dashboard} /> */}
-          <Route path="/app/leads" component={Leads} />
+          {/* <Route path="/app/leads" component={Leads} /> */}
+          <Route
+                exact
+                path="/app/leads"
+                render={() => <Redirect to="/app/leads/radixLeads" />}
+              />
           {/* <Route path="/app/typography" component={Typography} />
           <Route path="/app/tables" component={Tables} />
           <Route path="/app/notifications" component={Notifications} />
@@ -72,10 +75,13 @@ const Layout = (props)=> {
               exact
               path="/app/ui"
             render={() => <Redirect to="/app/ui/icons" />}
-          />
-          <Route path="/app/ui/maps" component={Maps} />
-          <Route path="/app/ui/icons" component={Icons} />
-          <Route path="/app/ui/charts" component={Charts} /> */}
+          /> */}
+          <Route path="/app/leads/radixLeads" component={RadixLeads} />
+          <Route path="/app/leads/anardanaLeads" component={AnardanaLeads} />
+          <Route path="/app/leads/woodappleLeads" component={WoodappleLeads} />
+          <Route path="/app/leads/relpLeads" component={RelpLeads}/>
+          <Route path="/app/leads/harvinLeads" component={HarvinLeads} />
+
         </Switch>
           {/* <footer className={classes.footer}>
             <Copyright />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles, Paper } from '@material-ui/core';
+import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
 import {OrganizationOptions, SourceOptions, DateFilterOptions} from "../../helpers/utils";
 import Widget from './../widget/widget';
 import moment from 'moment';
@@ -36,9 +36,9 @@ const Filter = (props) => {
   const handleEndDate = (date) => {
     setFilterData({ ...filterData, endDate: date });// [key]: event.target.
   }
-    useEffect(() => {
-      props.updateData(filterData);
-    }, [filterData]);
+    // useEffect(() => {
+    //   props.updateData(filterData);
+    // }, [filterData]);
 
   const changedateWeek =()=>{
       var weekstartDate = moment().clone().startOf('isoWeek').format('YYYY-MM-DD');;
@@ -64,21 +64,22 @@ const Filter = (props) => {
 
   const onSortFilterChange = (value) => {
     switch(value){
-        case 'week':
-            setButtonColor("week");
-            setDisabledStatus("week");
-            changedateWeek();
-            break;
-        case 'month':
-            setButtonColor("month")
-            setDisabledStatus("month");
-            changedateMonth();
-            break;
-        case 'year':
-            setButtonColor("year");
-            setDisabledStatus("year");
-            changedateYear();
-            break;         
+      case 'week':
+          setButtonColor("week");
+          setDisabledStatus("week");
+          changedateWeek();
+          break;
+      case 'month':
+          setButtonColor("month")
+          setDisabledStatus("month");
+          changedateMonth();
+          break;
+      case 'year':
+          setButtonColor("year");
+          setDisabledStatus("year");
+          changedateYear();
+          break;  
+      default:
     }
   }
 
@@ -115,8 +116,8 @@ const Filter = (props) => {
           <ButtonGroup color="primary" aria-label="outlined primary button group">
               {
                   DateFilterOptions.map((option) => (
-                  <Button key={option.value} style={ (buttonColor == option.value) ? {backgroundColor: '#01579b', color: '#fff'} : {textTransform: 'capitalize'}} onClick={() => onSortFilterChange(option.value)}  
-                  disabled={disabledStatus == option.value}>
+                  <Button key={option.value} style={ (buttonColor === option.value) ? {backgroundColor: '#01579b', color: '#fff'} : {textTransform: 'capitalize'}} onClick={() => onSortFilterChange(option.value)}  
+                  disabled={disabledStatus === option.value}>
                       {option.text}
                   </Button>
                   ))
