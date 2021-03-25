@@ -1,14 +1,14 @@
 'use strict';
 
 /**
- * Module dependencies.d
+ * Module dependencies.
  */
-var Lead = require('../models/Lead.model'),
+var Review = require('../models/Review.model'),
     errorHandler = require('../helpers/dbErrorHandler'),
     async = require('async');
 
-// Method to Create Form
-exports.createLead = function (req, res) {
+// Method to Create Review
+exports.createReview = function (req, res) {
     var data = req.body;
     // console.log(req.body)
     var errorResult = {
@@ -23,11 +23,11 @@ exports.createLead = function (req, res) {
             if (!data.date) {
                 errorResult.message += " date is missing";                
             }
-            if (!data.phone) {
-                errorResult.message += " Phone number is missing";
+            if (!data.rating) {
+                errorResult.message += " rating is missing";                
             }
-            if (data.phone.length!=10) {
-                errorResult.message += " Phone number not valid";
+            if(!data.comment){
+                errorResult.message+=" comment is missing";
             }
             if (!data.organization) {
                 errorResult.message += " organization is missing";
@@ -35,27 +35,15 @@ exports.createLead = function (req, res) {
             if (!data.center) {
                 errorResult.message += " center is missing";
             }
-            if (!data.department) {
-                errorResult.message += " department is missing";
-            }
-            if (!data.amount) {
-                errorResult.message += " amount is missing";
-            }
-            if (!data.location) {
-                errorResult.message += " location is missing";
-            }
-            if (!data.priority) {
-                errorResult.message += " prority is missing";
-            }
-            if (!data.source) {
-                errorResult.message += " source is missing";
+            if (!data.platform) {
+                errorResult.message += " platform is missing";
             }
             if (errorResult.message) done(errorResult);
             else done(null, data)
         },
         function (data) {
-            var leaddata = new Lead(data);
-            leaddata.save(function (err, result) {
+            var reviewdata = new Review(data);
+            reviewdata.save(function (err, result) {
                 if (err) {
                     // console.log("error----------", err);
                     return res.status(400).json({
@@ -65,11 +53,12 @@ exports.createLead = function (req, res) {
                     var outputResult = {
                         id: result._id,
                         name: result.name,
-                        phone: result.phone,
+                        comment:result.comment,
+                        rating:result.rating
                     }
                     res.json({
                         success: 1,
-                        "message": "Lead Added Successfully",
+                        "message": "Review Added Successfully",
                         outputResult
                     });
                 }
@@ -83,24 +72,10 @@ exports.createLead = function (req, res) {
         });
     });
 }
-
-// Method to Get all Forms
-exports.getAllLeads = function (req, res) {
+    // method to get all reviews
+exports.getAllReview = function (req, res) {
     var data = req.body;
-    console.log(data);
-    var sort_parameter = '', order =''
-    if(data.orderBy)
-        sort_parameter = data.orderBy;
-    if(data.order)
-        order = data.order;
-    var sort_order = 1;
-    if (order == "desc") {
-        sort_order = -1;
-    }
-    var sort = {};
-    sort[sort_parameter] = sort_order;
-    sort['_id'] = sort_order ==1? -1 : 1;
-    
+    // console.log(data);
     var matchQuery = {};
     if(data.organization)
     matchQuery.organization = data.organization;
@@ -109,29 +84,29 @@ exports.getAllLeads = function (req, res) {
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     
-   console.log(sort);
+   
         // console.log(matchQuery);
-    // Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
-    Lead.aggregate(
-        [{
-            "$project": {
-                "_id": "$_id",
-                "name": "$name",
-                "date": "$date",
-                "phone": "$phone",
-                "organization": "$organization",
-                "email": "$email",    
-                "source": "$source",    
-            }
-        },
-        {
-            $match: matchQuery
-        },
-        {
-            "$sort": sort
-        },
+    Review.find(matchQuery).sort({date:-1}).exec(function (err, reviews) {
+    // Form.aggregate(
+    //     [
+    //     //     {
+    //     //     $match: ''
+    //     // },
+    //     // matchCheck,
+    //     {
+    //         "$project": {
+    //             "_id": "$_id",
+    //             "name": "$name",
+    //             "date": "$date",
+    //             "phone": "$phone",
+    //             "organization": "$organization",
+    //             "rating": "$rating",
+    //         }
+    //     }, {
+    //         "$sort": sort
+    //     },
 
-        ], function (err, leads) {
+    //     ], function (err, forms) {
         
             if (err) {
                 return res.status(400).send({
@@ -139,11 +114,11 @@ exports.getAllLeads = function (req, res) {
                     message: "Something went wrong"
                 })
             }
-            if (leads.length) {
+            if (reviews.length) {
                 return res.json({
                     status: 1,
-                    "Total Records": leads.length,
-                    leads
+                    "Total Records": reviews.length,
+                    reviews
                 });
             }
             return res.status(200).send({
@@ -153,53 +128,53 @@ exports.getAllLeads = function (req, res) {
         })
 }
 
-// Method to Get a particlular Form By ID
-exports.getLead = function (req, res) {
-    var leadID = req.query.id;
-    Lead.findOne({ _id: leadID }).exec(function (err, lead) {
+// Method to Get a Review Form By ID
+exports.getReview = function (req, res) {
+    var reviewID = req.query.id;
+    Review.findOne({ _id: reviewID }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
                 message: 'Something went wrong'
             })
         }
-        if (lead) {
-            return res.json(lead);
+        if (review) {
+            return res.json(review);
         }
         return res.status(200).send({
             status: 1,
-            message: 'No Form Stored with this ID'
+            message: 'No Review Stored with this ID'
         })
     })
 }
 
-// Method to Update Form By ID
-exports.updateLead = function (req, res) {
+// Method to Update Review By ID
+exports.updateReview = function (req, res) {
     var data = req.body;
-    Lead.findOne({ _id: data.id }).exec(function (err, lead) {
+    Review.findOne({ _id: data.id }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
                 message: 'Form Id is not correct'
             })
         }
-        if (lead) {
+        if (review) {
             if (data.name) {
-                lead.name = data.name
+                review.name = data.name
             }
             if (data.date) {
-                lead.date = data.date;
+                review.date = data.date;
             }
-            if (data.phone) {
-                lead.phone = data.phone;
+            if (data.platform) {
+                review.platform = data.platform;
             }
-            if (data.organization) {
-                lead.organization = data.organization;
+            if (review.organization) {
+                review.organization = data.organization;
             }
-            if (data.source) {
-                lead.source = data.source;
+            if (data.rating) {
+                review.rating = data.rating;
             }
-            lead.save(function (err, result) {
+            review.save(function (err, result) {
                 if (err) {
                     console.log("error----------", err);
                     return res.status(400).send({
@@ -212,7 +187,7 @@ exports.updateLead = function (req, res) {
                     }
                     res.json({
                         success: 1,
-                        "message": "Lead Updated Successfully",
+                        "message": "Review Updated Successfully",
                         outputResult
                     });
                 }
@@ -221,28 +196,28 @@ exports.updateLead = function (req, res) {
         else {
             return res.json({
                 status: 0,
-                message: 'No Lead Stored with this Id '
+                message: 'No Review Stored with this Id '
             })
         }
 
     })
 }
 
-// Method to delete a particular Lead
-exports.deleteLead = function (req, res) {
-    var leadID = req.body.id;
-    Lead.findOneAndDelete({ _id: leadID }).exec(function (err, lead) {
+// Method to delete a particular Review
+exports.deleteReview = function (req, res) {
+    var reviewID = req.query.id;
+    Review.findOneAndDelete({ _id: reviewID }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
                 message: 'something went wrong'
             })
         }
-        if (lead) {
+        if (review) {
             res.json({
                 status: 1,
                 message: "Successfully Deleted",
-                "lead Detail": lead
+                "review Detail": review
             })
         }
         else {
@@ -251,9 +226,9 @@ exports.deleteLead = function (req, res) {
     })
 }
 
-// Method to Delete all Forms
-exports.deleteAllLeads = function (req, res) {
-    Lead.deleteMany({}).exec(function (err, leads) {
+// Method to Delete all Reviews
+exports.deleteAllReviews = function (req, res) {
+    Review.deleteMany({}).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -262,7 +237,36 @@ exports.deleteAllLeads = function (req, res) {
         }
         res.send({
             status: 1,
-            message: "All Forms Successfully Deleted ",
+            message: "All Reviews Successfully Deleted ",
+        })
+    })
+}
+
+exports.getratingReviews= function(req,res){
+    Review.find({}).exec(function(err,review){
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: err
+            })
+        }
+        if (review) {
+            let posCount = 0 , negCount = 0, nps = 0 ;
+            for(let i= 0; i< review.length; i++){
+                if(review[i].rating == 4 || review[i].rating == 5){
+                    posCount++;
+                }
+                if(review[i].rating == 1 || review[i].rating == 2){
+                    negCount++;
+                }                
+            }
+            nps =( posCount - negCount)/review.length *100;
+            // return res.json(review);
+            return res.json({posCount, negCount, nps})
+        }
+        return res.status(200).send({
+            status: 1,
+            message: 'No review found'
         })
     })
 }
