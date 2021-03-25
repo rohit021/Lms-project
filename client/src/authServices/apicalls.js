@@ -1,74 +1,157 @@
 import axios from "axios";
-import cookie from 'js-cookie';
-const API_URL = "http://localhost:5000" || process.env.REACT_APP_BASE_URL ;
+import { setCookie, getCookie, deleteCookie } from "../helpers/cookies";
+import {
+  setLocalStorage,
+  getLocalStorage,
+  deleteLocalStorage,
+} from "../helpers/localStorage";
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_BASE_URL
+    : "http://localhost:5000";
 
 const config = {
   header: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
+};
+
+const setAuthentication = (token, user) => {
+  setCookie("authToken", token);
+  setLocalStorage("authUser", user);
 };
 
 const login = (email, password) => {
   return axios
-    .post(API_URL + "/auth/login", {
-      email,
-      password,
-    },config)
+    .post(
+      API_URL + "/auth/login",
+      {
+        email,
+        password,
+      },
+      config
+    )
     .then((response) => {
       if (response.data) {
-        cookie.set('authUser', JSON.stringify(response.data.user), { expires: 1 })
-        cookie.set('authToken', JSON.stringify(response.data.token), { expires: 1 })    
-      }  
+        setAuthentication(response.data.token, response.data.user);
+      }
       return response.data;
     });
 };
 
 const register = (username, email, password) => {
   return axios
-    .post(API_URL + "/auth/register", {
+    .post(
+      API_URL + "/auth/register",
+      {
         username,
         email,
         password,
       },
-      config)
+      config
+    )
     .then((response) => {
       if (response.data) {
-        cookie.set('authUser', JSON.stringify(response.data.user), { expires: 1 })
-        cookie.set('authToken', JSON.stringify(response.data.token), { expires: 1 })            
-      }  
+        setAuthentication(response.data.token, response.data.user);
+      }
+      return response.data;
+    });
+};
+
+const reset = (email) => {
+  return axios
+    .post(
+      API_URL + "/auth/reset-password",
+      {
+        email,
+      },
+      config
+    )
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const newpassword = (password, token) => {
+  return axios
+    .post(
+      API_URL + "/auth/reset/" + token,
+      {
+        password,
+      },
+      config
+    )
+    .then((response) => {
       return response.data;
     });
 };
 
 // checking user is loggeg in
-const isAuthenticated = () => {
+const isAuthenticated = function () {
   if (typeof window == "undefined") {
-      return false;
+    return false;
   }
-  if (cookie.get("authToken")) {
-      return JSON.stringify(cookie.get("authUser"));
+  if (getCookie("authToken") && getLocalStorage("authUser")) {
+    return getLocalStorage("authUser");
   } else {
-      return false;
+    return false;
   }
 };
-  
+
 const signout = function (next) {
   if (typeof window !== "undefined") {
-      cookie.remove('authUser');
-      cookie.set('authToken');      
-      next();
-
-      return fetch(`${API_URL}/auth/signout`, {
-          method: "GET"
-      })
-          .then(response => console.log("signout success"))
-          .catch(err => console.log(err));
+    deleteCookie("authToken");
+    deleteLocalStorage("authUser");
+    return fetch(`${API_URL}/auth/logout`, {
+      method: "GET",
+    })
+      .then((response) => console.log("signout success"))
+      .catch((err) => console.log(err));
   }
 };
 
+const getAllLeads = function (filterValue) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/leads/datas", filterValue, config)
+    .then((response) => {
+      return response.data;
+    });
+};
 
-  export default {
-    login,register,isAuthenticated, 
-    signout
-  }
+const createNewLead = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/leads/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const deleteLeadbyId = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .delete(API_URL + "/api/leads/data", { data, config })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export default {
+  login,
+  register,
+  isAuthenticated,
+  reset,
+  newpassword,
+  getAllLeads,
+  deleteLeadbyId,
+  createNewLead,
+  signout,
+};

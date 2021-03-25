@@ -1,26 +1,30 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
-    typography: {
-      useNextVariants: true,
-    },
-    palette: {
-      primary: {
-      light: '#4f83cc',
-      main: '#01579b',
-      dark: '#002f6c',
-      contrastText: '#fff',
+  typography: {
+    useNextVariants: true,
+  },
+  palette: {
+    primary: {
+      light: "#fff",
+      main: "#01579b",
+      dark: "#2d2727", //dark blue
+      red: "#ee114e",
+      green:"#1cde24",
+      blue: "#1178ee", //blue
+      contrastText: "#666666", //grey
     },
     secondary: {
-      light: '#9fffe0',
-      main: '#69f0ae',
-      dark: '#2bbd7e',
-      contrastText: '#000',
+      light: "#999999", //grey
+      main: "#69f0ae",
+      dark: "#333333", // dark 
+      contrastText: "#666666",
     },
-      openTitle: '#002f6c',
-      protectedTitle: '#2bbd7e',
-      type: 'light'
-    }
-  })
+    openTitle: "#333333", // dark color
+    backgroundGradient: "linear-gradient(-135deg, #fa09ea, #4158d0)",
+    protectedTitle: "#2bbd7e",
+    type: "light",
+  },
+});
 
-  export default theme
+export default theme;

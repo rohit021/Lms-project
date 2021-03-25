@@ -5,13 +5,13 @@
 - for server
 
 ```bash
-npm install
+ cd server && npm install
 ```
 
 - for client side
 
 ```bash
-npm run client-install
+cd client && npm install
 ```
 
 ## Step 2: Now run the Project by cmd
@@ -25,11 +25,5 @@ npm run server
 - for client
 
 ```bash
-npm run client
-```
-
-- for both server and client
-
-```bash
-npm run dev
+npm run start
 ```

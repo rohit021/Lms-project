@@ -1,8 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Link, useHistory} from "react-router-dom";
-import AuthService from "../../../authServices/apicalls";
-import { Grid, Card, Typography, makeStyles} from '@material-ui/core';
-import PcImg from '../../../assets/images/img-01.png';
+import AuthService from "../../authServices/apicalls";
+import { Grid, Typography, Card, makeStyles } from '@material-ui/core';
 import {CircularProgress} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -16,8 +15,8 @@ const useStyles = makeStyles(theme => ({
         padding: "15px",
         background: theme.palette.backgroundGradient,
     },
-    WrapBlock: {
-        width: "960px",
+    ResetWrap :{
+        width: "460px",
         background: "#fff",
         borderRadius: "10px",
         overflow: "hidden",
@@ -28,26 +27,11 @@ const useStyles = makeStyles(theme => ({
             padding: "50px 15px 33px 15px"
           },
         [theme.breakpoints.up('sm')]: {
-            padding: "50px 80px 33px 80px"
+            padding: "50px 15px 33px 15px"
           },
           [theme.breakpoints.up('md')]: {
-            padding:"80px 100px"
+            padding: "50px 30px 30px 30px"
           }
-    },
-    loginPic: {
-        [theme.breakpoints.down('sm')]: {
-            display: "none"
-          },
-          [theme.breakpoints.up('md')]: {
-            width: "35%"
-          },
-          [theme.breakpoints.up('lg')]: {
-            width: "316px",
-          },
-       
-    },
-    imgWidth:{
-        maxWidth:"100%",
     },
     loginForm:{        
         [theme.breakpoints.up('sm')]: {
@@ -56,20 +40,28 @@ const useStyles = makeStyles(theme => ({
           [theme.breakpoints.up('md')]: {
             width: "100%"
           },
-          [theme.breakpoints.up('lg')]: {
-            width: "320px"
-          },
     },
     loginFormTitle:{
         fontFamily: "Poppins-Bold",
         fontSize: "24px",
-        color:  theme.palette.openTitle,
+        color: theme.palette.openTitle,
         lineHeight: "1.2",
         textAlign: "center",
         width: "100%",
         display: "block",
         paddingBottom: "54px"
     },
+    ResetFormTitle: {
+        fontFamily: "Poppins-Bold",
+        fontSize: "16px",
+        color: theme.palette.primary.red,
+        lineHeight: "1.2",
+        textAlign: "center",
+        width: "100%",
+        display: "block",
+        paddingBottom: "54px"
+      },
+      
     wrapInput: {
         position: "relative",
         zIndex: "1",
@@ -81,6 +73,13 @@ const useStyles = makeStyles(theme => ({
         fontWeight: "600",
         fontSize: "16px",
         color:  theme.palette.primary.red, 
+    },
+    successMsg:{
+        textAlign: "center",
+        width: "100%",
+        fontWeight: "600",
+        fontSize: "16px",
+        color:  theme.palette.primary.green, 
     },
     ContainerloginFormBtn: {
         width: "100%",      
@@ -108,15 +107,9 @@ const useStyles = makeStyles(theme => ({
             background: theme.palette.secondary.dark, 
         }
     },
-    forgetBlock: {
+    LinkBlock: {
         textAlign: "center",
         paddingTop: "12px"
-    },
-    txt1: {
-        fontFamily: "Poppins-Regular",
-        fontSize: "13px",
-        lineHeight: "1.5",
-        color: theme.palette.secondary.light
     },
     txt2: {
         fontFamily: "Poppins-Regular",
@@ -127,25 +120,23 @@ const useStyles = makeStyles(theme => ({
     }  
 }))
 
-const LoginPage =()=> {
+const ResetPassword =()=> {
     const classes = useStyles();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setloading] = useState(false)
+    const [email, setEmail] = useState("");   
     const [error, setError] = useState("");
     const history = useHistory();
-
-    const loginHandler = async (e) => {
+    const [loading, setloading] = useState(false)
+    const [emailSent, setemailSent] = useState(false);
+    
+    const passwordHandler = async (e) => {
         e.preventDefault();
         setloading(true);
-        AuthService.login(email, password).then(
+        AuthService.reset(email).then(
             () => {
-                if (AuthService.isAuthenticated()) {
-                    console.log('Redirecting to admin dashboard');
-                    window.location.reload();
-                    history.push('/app/dashboard')
-                    setloading(false);   
-                }
+              
+                setemailSent(true);                
+                setTimeout(() => history.push('/'), 4000);
+                setloading(false);   
             },
             (error) => {
                 setloading(false);
@@ -160,65 +151,50 @@ const LoginPage =()=> {
     useEffect(() => {
         if (AuthService.isAuthenticated()) {
             console.log('Redirecting to admin dashboard');
-            history.push('/app/dashboard')
+            history.push('/');
         }
       }, [history]);
-      
+    
     return (
         <React.Fragment>
-            <Card container spacing= {1} className ={classes.gridContainer}>
-                <Grid container className ={classes.WrapBlock}>
-                    <Grid item md={7} xs={12} sm={12} className ={classes.loginPic} >
-                        <img className={classes.imgWidth} src={PcImg} alt="IMG"/>
-                    </Grid>
-                    
-                    <Grid item md={5} xs={12} sm={12} >
-                        <form onSubmit={loginHandler} className={classes.loginForm}>
+            <Card container spacing= {1} className ={classes.gridContainer}>           
+                <Grid container className ={classes.ResetWrap}>
+                    <Grid item md={12} xs={12} sm={12} >
+                        <form onSubmit={passwordHandler} className={classes.loginForm}>
                             <Typography className={classes.loginFormTitle}>
-                                Member Login
+                                Forgot Password? 🔒
                             </Typography>
-                        
-                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >
-                                <input className="inputField" type="email" name="email" placeholder="Email" value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                            <Typography className={classes.ResetFormTitle}>
+                                Enter your email and we'll send you instructions to reset your password
+                            </Typography>
+                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >        
+                                <input className="inputField" type="email" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}
+                                value={email}
                                 required/>
                                 <span className="focus-input"></span>
                                 <span className="symbol-input">
                                     <i className="fa fa-envelope" aria-hidden="true"></i>
-                                </span>                                
-                            </Grid>
-        
-                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >
-                                <input className="inputField" type="password" name="pass" placeholder="Password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                                required/>
-                                <span className="focus-input"></span>
-                                <span className="symbol-input">
-                                    <i className="fa fa-lock" aria-hidden="true"></i>                            
                                 </span>
                             </Grid>
+                            {emailSent && <Grid item md={12} xs={12} sm={12} className={classes.successMsg} role="alert">Check your Email we have sent an mail</Grid>}
                             {error && <Grid item md={12} xs={12} sm={12} className={classes.errorMsg} role="alert">{error}</Grid>}
                             <Grid item md={12} xs={12} sm={12} className={classes.ContainerloginFormBtn} >
-                                {!loading ? <button className={classes.loginFormBtn} type="submit" >
-                                    Login
+                                {!loading ? <button disabled={emailSent} className={classes.loginFormBtn} type="submit" >
+                                    Continue
                                 </button> : <CircularProgress/>
                                 }
-                            </Grid>   
-                            <Grid item md={12} xs={12} sm={12} className={classes.forgetBlock} >               
-                                <span className={classes.txt1}>
-                                    Forgot   
-                                </span>
-                                <Link className={classes.txt2} to="/reset-password">
-                                    Password?
+                            </Grid> 
+                            <Grid item md={12} xs={12} sm={12} className={classes.LinkBlock} >               
+                                <Link className={classes.txt2} to="./login">
+                                    Back to login
                                 </Link>
-                            </Grid>            
+                            </Grid>  
                         </form>
                     </Grid>  
                 </Grid>     
-            </Card>    
+            </Card>        
         </React.Fragment>
     )
 }
 
-export default LoginPage;
+export default ResetPassword;
