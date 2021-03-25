@@ -3,6 +3,7 @@ import { Link, useHistory} from "react-router-dom";
 import AuthService from "../../../authServices/apicalls";
 import { Grid, Card, Typography, makeStyles} from '@material-ui/core';
 import PcImg from '../../../assets/images/img-01.png';
+import {CircularProgress} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     gridContainer: {
@@ -130,24 +131,28 @@ const LoginPage =()=> {
     const classes = useStyles();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setloading] = useState(false)
     const [error, setError] = useState("");
     const history = useHistory();
 
     const loginHandler = async (e) => {
         e.preventDefault();
+        setloading(true);
         AuthService.login(email, password).then(
             () => {
                 if (AuthService.isAuthenticated()) {
                     console.log('Redirecting to admin dashboard');
                     window.location.reload();
                     history.push('/app/dashboard')
+                    setloading(false);   
                 }
             },
             (error) => {
-            setError(error.response.data.error);
-            setTimeout(() => {
-                setError("");
-            }, 3000);
+                setloading(false);
+                setError(error.response.data.error);
+                setTimeout(() => {
+                    setError("");
+                }, 3000);
             }
         );
     };
@@ -195,9 +200,10 @@ const LoginPage =()=> {
                             </Grid>
                             {error && <Grid item md={12} xs={12} sm={12} className={classes.errorMsg} role="alert">{error}</Grid>}
                             <Grid item md={12} xs={12} sm={12} className={classes.ContainerloginFormBtn} >
-                                <button className={classes.loginFormBtn} type="submit" >
+                                {!loading ? <button className={classes.loginFormBtn} type="submit" >
                                     Login
-                                </button>
+                                </button> : <CircularProgress/>
+                                }
                             </Grid>   
                             <Grid item md={12} xs={12} sm={12} className={classes.forgetBlock} >               
                                 <span className={classes.txt1}>

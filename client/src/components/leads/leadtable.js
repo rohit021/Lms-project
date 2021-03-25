@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
-import {Paper, Dialog,DialogContent, DialogContentText, DialogTitle, 
-    DialogActions,Slide,
+import React, {useState, useEffect} from 'react';
+// import {Dialog,D }
+import {Paper, 
     IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
@@ -23,6 +23,17 @@ const useStyles = makeStyles((theme) => ({
     bold: {
         fontFamily: "Poppins-Bold",
     },
+    priority:{
+        textAlign: "center",
+        color: "#fff",
+        fontWeight: "700",
+        borderRadius: "10px",
+        padding: "5px"
+    },
+    text:{
+        fontSize:16,
+        textTransform: "capitalize",
+    },
     li: {
         '&:hover': {
             backgroundColor: lighten('#01579b', 0.85),
@@ -30,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     table: {
       minWidth: 750,
-    },
+    },    
     visuallyHidden: {
       border: 0,
       clip: 'rect(0 0 0 0)',
@@ -61,6 +72,7 @@ const LeadTable = ({fetchData, tableData, updateData}) => {
     };
     
     useEffect(() => {
+        console.log(filterData);
         updateData(filterData);
       }, [filterData]);
 
@@ -92,6 +104,16 @@ const LeadTable = ({fetchData, tableData, updateData}) => {
                 // setdeleteModal(false);
             }
           );
+    }
+
+    const PriorityChecker =(value) =>{
+        return(
+            <React.Fragment>
+                {value === 'hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}
+                {value === 'neutral' ? (<div className={classes.priority} style={{backgroundColor: "#ff8800"}}>{value}</div>):''}
+                {value === 'cold' ? (<div className={classes.priority} style={{backgroundColor: "#01579b"}}>{value}</div>):''}
+            </React.Fragment>
+        )
     }
 
     // const DeleteDialog = (data) =>{
@@ -171,13 +193,14 @@ const LeadTable = ({fetchData, tableData, updateData}) => {
                         tableData.map((data, index) => (
                             <TableRow key={index} className={classes.li}
                             >
-                                <TableCell>{index+1}</TableCell>
-                                <TableCell>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
-                                <TableCell>{data.name}</TableCell>
-                                <TableCell>{data.email}</TableCell>
-                                <TableCell>{data.phone}</TableCell>
-                                <TableCell>{data.organization}</TableCell>
-                                <TableCell>{data.source}</TableCell>
+                                <TableCell className={classes.text}>{index+1}</TableCell>
+                                <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
+                                <TableCell className={classes.text}>{data.name}</TableCell>
+                                <TableCell className={classes.text}>{data.email}</TableCell>
+                                <TableCell className={classes.text}>{data.phone}</TableCell>
+                                <TableCell className={classes.text}>{data.center}</TableCell>
+                                <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
+                                <TableCell className={classes.text}>{data.source}</TableCell>
                                 <TableCell>
                                     <Button
                                      variant="contained"

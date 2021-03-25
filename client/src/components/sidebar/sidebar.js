@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, makeStyles, List } from "@material-ui/core";
-import {
-  Home as HomeIcon,
-  NotificationsNone as NotificationsIcon,
-  FormatSize as TypographyIcon,
-  FilterNone as UIElementsIcon,
-  BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
-  ArrowBack as ArrowBackIcon,
-} from "@material-ui/icons";
+import {ArrowBack as ArrowBackIcon} from "@material-ui/icons";
 import { withRouter } from "react-router-dom";
 import {mainListItems} from '../../helpers/utils';
 import {

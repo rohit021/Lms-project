@@ -1,10 +1,10 @@
 import React, {useState, useEffect } from "react";
-import { Grid, Avatar, Paper, CircularProgress,Button } from "@material-ui/core";
+import { Grid, Avatar, CircularProgress,Button } from "@material-ui/core";
 import LeadTable from "../../components/leads/leadtable";
 import LeadFilter from "../../components/leads/lead-filter";
 import AuthService from "../../authServices/apicalls";
-import LeadModal from '../../components/modals/form-modal'
-import ListTopBar from '../../components/layout/listTopBar'
+import LeadModal from '../../components/modals/lead-modal'
+// import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 
 const defaultData = {
@@ -15,7 +15,7 @@ const defaultData = {
   source:'',
   orderBy:'date',
   order: 'desc',
-  organization: "",
+  organization: "radix",
 };
 
 // const topBarValues = [
@@ -46,6 +46,7 @@ const Leads = () => {
     function updateData(filters) {
       setFilterValue(filters);
     }
+    
     useEffect(() => {
       fetchData();
     }, [filterValue]);
@@ -76,7 +77,7 @@ const Leads = () => {
         >
           Add Data
         </Button>
-        {openmodal ? <LeadModal openModal={openmodal} closeModal={handleChange} /> : ''}
+        {openmodal ? <LeadModal openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''}
         {/* {openmodal? <FormModal  openModal={openmodal} closeModal = {handleChange} />:''}        */}
         {
           !loading && leadData &&
