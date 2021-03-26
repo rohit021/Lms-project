@@ -20,8 +20,18 @@ import {
           { label: "Woodapple Leads", link: "/app/leads/woodappleLeads" , icon: <DotIcon fontSize="small"/> },
           { label: "Relp Leads", link: "/app/leads/relpLeads" , icon: <DotIcon fontSize="small" /> },
           { label: "Harvin Leads", link: "/app/leads/harvinLeads" , icon: <DotIcon fontSize="small"/> },
-        ],
-    }
+        ],   
+    },
+    { id: 2, label: "Review Menu", link: "/app/reviews", icon: <AssignmentIcon /> ,children: [
+      { label: "Radix Review", link: "/app/reviews/radixReviews", icon: <DotIcon fontSize = "small" /> },
+      { label: "Anardana Review", link: "/app/reviews/anardanaReviews" , icon: <DotIcon fontSize="small"/> },
+      { label: "Woodapple Review", link: "/app/reviews/woodappleReviews" , icon: <DotIcon fontSize="small"/> },
+      { label: "Relp Review", link: "/app/reviews/relpReviews" , icon: <DotIcon fontSize="small" /> },
+      { label: "Harvin Review", link: "/app/reviews/harvinReviews" , icon: <DotIcon fontSize="small"/> },
+    ],   
+}
+
+    
     // {'text': 'Lead Menu', 'link': '/viewleads', 'page': 'Leads', 'icon': <AssignmentOutlined />},
     // {'text': 'DateWise Status', 'link': '/datewiseStatus', 'page': 'datewiseStatus', 'icon': <TrendingUp />},
     // {'text': 'Reviews', 'link': '/reviews', 'page': 'review', 'icon': <ThumbUpAlt />},
@@ -50,9 +60,14 @@ export const LeadHeadCells = [
     { id: 'email', disablePadding: false, label: 'Email' },
     { id: 'phone', disablePadding: false, label: 'Phone' },
     { id: 'center', disablePadding: false, label: 'Center' },
-    { id: 'status', disablePadding: false, label: 'Status' },
+    // { id: 'status', disablePadding: false, label: 'Status' },
     { id: 'source', disablePadding: false, label: 'Source' },
     // { id: 'actions', disablePadding: false, label: 'Actions' },
+  ];
+  export const ReviewHeadCells = [
+    { id: 'date', disablePadding: false, label: 'Date' },
+    { id: 'rating', disablePadding: true, label: 'Rating' },    
+    
   ];
   export const CenterOptions = [
     { "key": 'delhi', "text": 'Delhi', "value": 'delhi' },

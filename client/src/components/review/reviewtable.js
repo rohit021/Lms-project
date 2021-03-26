@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react';
-// import {Dialog,D }
-import {Paper, 
-    IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
+import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
-import {LeadHeadCells} from '../../helpers/utils';
+import {ReviewHeadCells} from '../../helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,11 +53,10 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
+const ReviewTable = ({fetchData, tableData, filterValue, updateData}) => {
     const classes = useStyles();
     const [Order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = React.useState('date');
-    // const [deleteModal, setdeleteModal] = useState(false)
     const [filterData, setFilterData] = useState(filterValue);
     var [ButtonRef, setButtonRef] = useState(null);
     const open = Boolean(ButtonRef);
@@ -76,14 +73,6 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         updateData(filterData);
       }, [filterData]);
 
-    // const CloseDeleteModal = () => {
-    //     setdeleteModal(false);
-    // };
-    
-    // const OpenDeleteModal = (data) => {
-    //     console.log("check",data);
-    //     // setdeleteModal(true);
-    // };
     const handleClick = (event) => {
         setButtonRef(event.currentTarget);
     };
@@ -95,60 +84,16 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         const payload ={
             id:data
         }
-        AuthService.deleteLeadbyId(payload).then(
+        AuthService.deleteReviewbyId(payload).then(
             (data) => {
                 fetchData();
-                // setdeleteModal(false);
             },
             (error) => {
-                // setdeleteModal(false);
             }
           );
     }
 
-    const PriorityChecker =(value) =>{
-        return(
-            <React.Fragment>
-                {value === 'hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}
-                {value === 'neutral' ? (<div className={classes.priority} style={{backgroundColor: "#ff8800"}}>{value}</div>):''}
-                {value === 'cold' ? (<div className={classes.priority} style={{backgroundColor: "#01579b"}}>{value}</div>):''}
-            </React.Fragment>
-        )
-    }
-
-    // const DeleteDialog = (data) =>{
-    //     console.log(data);
-    //     return(
-    //         <React.Fragment>
-    //              <Dialog
-    //         open={deleteModal}
-    //         TransitionComponent={Transition}
-    //         keepMounted
-    //         onClose={CloseDeleteModal}
-    //         aria-labelledby="alert-dialog-slide-title"
-    //         aria-describedby="alert-dialog-slide-description"
-    //       >
-    //         <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
-    //         <DialogContent>
-    //           <DialogContentText id="alert-dialog-slide-description">
-    //             once you delete the delete the lead details then you will not be able to see this in future.
-    //           </DialogContentText>
-    //         </DialogContent>
-    //         <DialogActions>
-    //           <Button onClick={CloseDeleteModal} color="primary">
-    //             Disagree
-    //           </Button>
-    //           <Button onClick={handleClick11(name)} color="primary">
-    //             Agree
-    //           </Button>
-    //         </DialogActions>
-    //       </Dialog>
-    //         </React.Fragment>
-    //     )
-    // }
-    // const Transition = React.forwardRef(function Transition(props, ref) {
-    //     return <Slide direction="up" ref={ref} {...props} />;
-    // });
+  
     return (
         <Paper className={classes.paper}>
             <TableContainer>
@@ -161,7 +106,7 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                     <TableHead>                    
                         <TableRow>
                             <TableCell className={classes.bold}>S.No</TableCell>
-                            {LeadHeadCells.map((headCell)=>(
+                            {ReviewHeadCells.map((headCell)=>(
                             <TableCell 
                             className={classes.bold}
                             key={headCell.id}
@@ -184,9 +129,13 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                             </TableCell>
                             ))                        
                             }
-                             <TableCell className={classes.bold}>Status</TableCell>
-                            <TableCell className={classes.bold}>Logs</TableCell>
+                            <TableCell className={classes.bold}>Daily Review</TableCell>
+                            <TableCell className={classes.bold}>Reply</TableCell>
+                            <TableCell className={classes.bold}>Name</TableCell>
+                            <TableCell className={classes.bold}>Review Category</TableCell>
                             <TableCell className={classes.bold}>Actions</TableCell>                        
+
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -196,22 +145,11 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                             >
                                 <TableCell className={classes.text}>{index+1}</TableCell>
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
+                                <TableCell className={classes.text}>{data.rating}</TableCell>
+                                <TableCell className={classes.text}>{data.comment}</TableCell>
+                                <TableCell className={classes.text}>{data.reply}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
-                                <TableCell className={classes.text}>{data.email}</TableCell>
-                                <TableCell className={classes.text}>{data.phone}</TableCell>
-                                <TableCell className={classes.text}>{data.center}</TableCell>
-                                <TableCell className={classes.text}>{data.source}</TableCell>
-                                <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
-                                <TableCell>
-                                    <Button
-                                     variant="contained"
-                                     color="primary"
-                                     style={{ margin:"5px auto",background:"#01579b", color:"#fff" }}
-                                    //  onClick={handleChange}
-                                     >
-                                         View Logs
-                                    </Button>
-                                </TableCell>
+                                <TableCell className={classes.text}>{data.organization}</TableCell>
                                 <TableCell>
                                     <IconButton
                                         aria-owns="widget-menu"
@@ -246,4 +184,4 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     )
 }
 
-export default LeadTable;
+export default ReviewTable;

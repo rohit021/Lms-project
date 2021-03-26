@@ -87,7 +87,7 @@ exports.createLead = function (req, res) {
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
@@ -106,10 +106,11 @@ exports.getAllLeads = function (req, res) {
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     
-//    console.log(sort);
-//    return; 
-   console.log(matchQuery);
-    Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
+   console.log(sort);
+//  
+//    console.log(matchQuery);
+//    return;  
+   Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
     // Lead.aggregate(
     //     [{
     //         "$project": {
