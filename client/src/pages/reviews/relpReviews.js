@@ -1,11 +1,11 @@
 import React from 'react'
 
-const HarvinLeads = () => {
+const RelpReviews = () => {
     return (
         <div>
-        HarvinReviews
+       Relp Reviews
         </div>
     )
 }
 
-export default HarvinLeads
+export default RelpReviews

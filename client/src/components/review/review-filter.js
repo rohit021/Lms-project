@@ -37,9 +37,9 @@ const Filter = (props) => {
   const handleEndDate = (date) => {
     setFilterData({ ...filterData, endDate: date });// [key]: event.target.
   }
-    useEffect(() => {
-      props.updateData(filterData);
-    }, [filterData]);
+    // useEffect(() => {
+    //   props.updateData(filterData);
+    // }, [filterData]);
 
   const changedateWeek =()=>{
       var weekstartDate = moment().clone().startOf('isoWeek').format('YYYY-MM-DD');;
@@ -62,9 +62,9 @@ const Filter = (props) => {
     setEndDate(formattedTodayDate);   
     setFilterData({...filterData, startDate:yearstartDate, endDate:formattedTodayDate});   
   }
-  // const resetFilterData =(props)=>{
-  //   setFilterData({filterData:props.defaultData})
-  // }
+  const resetFilterData =(props)=>{
+    setFilterData({filterData:props.defaultData})
+  }
   const onSortFilterChange = (value) => {
     switch(value){
       case 'week':
@@ -89,6 +89,19 @@ const Filter = (props) => {
   return (
     <Widget header="Search Filters">
       <Grid container spacing={1} className={classes.gridContainer}>
+        <Grid item md={2} xs={6} sm={3}>
+          <FormControl className={classes.selectStyle}>
+            <TextField
+              size="small"
+              select
+              label="Organization"
+              name="organization"
+              value={filterData.organization}
+              onChange={handleChange()}>
+              {OrganizationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+            </TextField>
+          </FormControl>
+        </Grid>
         <Grid item md={2} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
@@ -150,9 +163,9 @@ const Filter = (props) => {
             format="DD/MM/YYYY"
           />
         </Grid>
-        {/* <Grid item md={2} xs={6} sm={1}>
+        <Grid item md={2} xs={6} sm={1}>
           <Button onClick={resetFilterData} ><RotateLeftIcon/></Button>
-        </Grid> */}
+        </Grid>
       </Grid>
     </Widget>    
   )
