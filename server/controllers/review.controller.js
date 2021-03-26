@@ -75,57 +75,45 @@ exports.createReview = function (req, res) {
     // method to get all reviews
 exports.getAllReview = function (req, res) {
     var data = req.body;
+    // console.log(req.body);
+    var sort_parameter = data.orderBy;
+    var order = data.order;
+    var sort_order = 1;
+    if (order == "desc") {
+        sort_order = -1;
+    }
+    var sort = {};
+    sort[sort_parameter] = sort_order;
+    sort['_id'] = sort_order ==1? -1 : 1;    
+    var matchQuery = {};
+
+
+    var data = req.body;
     // console.log(data);
     var matchQuery = {};
     if(data.organization)
     matchQuery.organization = data.organization;
-    if(data.source)
-    matchQuery.source = data.source;
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    
-   
-        // console.log(matchQuery);
-    Review.find(matchQuery).sort({date:-1}).exec(function (err, reviews) {
-    // Form.aggregate(
-    //     [
-    //     //     {
-    //     //     $match: ''
-    //     // },
-    //     // matchCheck,
-    //     {
-    //         "$project": {
-    //             "_id": "$_id",
-    //             "name": "$name",
-    //             "date": "$date",
-    //             "phone": "$phone",
-    //             "organization": "$organization",
-    //             "rating": "$rating",
-    //         }
-    //     }, {
-    //         "$sort": sort
-    //     },
-
-    //     ], function (err, forms) {
-        
-            if (err) {
-                return res.status(400).send({
-                    status: 0,
-                    message: "Something went wrong"
-                })
-            }
-            if (reviews.length) {
-                return res.json({
-                    status: 1,
-                    "Total Records": reviews.length,
-                    reviews
-                });
-            }
-            return res.status(200).send({
-                status: 1,
-                message: 'No Data found'
+    Review.find(matchQuery).sort(sort).exec(function (err, reviews) {
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: "Something went wrong"
             })
+        }
+        if (reviews.length) {
+            return res.json({
+                status: 1,
+                "Total Records": reviews.length,
+                reviews
+            });
+        }
+        return res.status(200).send({
+            status: 1,
+            message: 'No Data found'
         })
+    })
 }
 
 // Method to Get a Review Form By ID

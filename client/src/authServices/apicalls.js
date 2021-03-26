@@ -111,6 +111,16 @@ const signout = function (next) {
   }
 };
 
+const getAllReviews = function (filterValue) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/review/datas", filterValue, config)
+    .then((response) => {
+      return response.data;
+    });
+};
 const getAllLeads = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -121,6 +131,7 @@ const getAllLeads = function (filterValue) {
       return response.data;
     });
 };
+
 
 const createNewLead = function (data) {
   axios.defaults.headers.common = {
@@ -133,6 +144,18 @@ const createNewLead = function (data) {
     });
 };
 
+const createNewReview = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  console.log("data2,",data);
+
+  return axios
+    .post(API_URL + "/api/review/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
 const deleteLeadbyId = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -153,5 +176,7 @@ export default {
   getAllLeads,
   deleteLeadbyId,
   createNewLead,
+  createNewReview,
   signout,
+ getAllReviews 
 };
