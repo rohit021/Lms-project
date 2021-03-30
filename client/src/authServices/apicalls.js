@@ -167,6 +167,29 @@ const deleteLeadbyId = function (data) {
     });
 };
 
+const FindLeadbyId = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/leads/data",{params :{id:data}}, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const updateLead = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .put(API_URL + "/api/leads/data",data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+
 export default {
   login,
   register,
@@ -178,5 +201,7 @@ export default {
   createNewLead,
   createNewReview,
   signout,
- getAllReviews 
+  getAllReviews,
+  FindLeadbyId,
+  updateLead
 };

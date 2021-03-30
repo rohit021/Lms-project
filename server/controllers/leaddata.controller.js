@@ -197,6 +197,24 @@ exports.updateLead = function (req, res) {
             if (data.source) {
                 lead.source = data.source;
             }
+            if(data.priority){
+                lead.priority=data.priority;
+            }
+            if(data.location){
+                lead.location=data.location;
+            }
+            if(data.center){
+                lead.center=data.center;
+            }
+            if(data.email){
+                lead.email=data.email;
+            }
+            if(data.department){
+                lead.department=data.department;
+            }
+            if(data.amount){
+                lead.amount=data.amount;
+            }
             lead.save(function (err, result) {
                 if (err) {
                     console.log("error----------", err);
