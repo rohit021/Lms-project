@@ -31,7 +31,7 @@ const Filter = (props) => {
   }
 
   const handleStartDate = (date) => {
-    console.log(date);
+    // console.log(date);
     setFilterData({ ...filterData, startDate: date });// [key]: event.target.
   }
   const handleEndDate = (date) => {
@@ -62,9 +62,7 @@ const Filter = (props) => {
     setEndDate(formattedTodayDate);   
     setFilterData({...filterData, startDate:yearstartDate, endDate:formattedTodayDate});   
   }
-  // const resetFilterData =(props)=>{
-  //   setFilterData({filterData:props.defaultData})
-  // }
+  
   const onSortFilterChange = (value) => {
     switch(value){
       case 'week':
@@ -98,20 +96,23 @@ const Filter = (props) => {
               name="source"
               value={filterData.source}
               onChange={handleChange()}>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
               {SourceOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
         </Grid>
         <Grid item md={3} xs={12} sm={6}>
           <ButtonGroup color="primary" aria-label="outlined primary button group">
-              {
-                  DateFilterOptions.map((option) => (
-                  <Button key={option.value} style={ (buttonColor === option.value) ? {backgroundColor: '#01579b', color: '#fff'} : {textTransform: 'capitalize'}} onClick={() => onSortFilterChange(option.value)}  
-                  disabled={disabledStatus === option.value}>
-                      {option.text}
-                  </Button>
-                  ))
-              }
+            {
+              DateFilterOptions.map((option) => (
+              <Button key={option.value} style={ (buttonColor === option.value) ? {backgroundColor: '#01579b', color: '#fff'} : {textTransform: 'capitalize'}} onClick={() => onSortFilterChange(option.value)}  
+              disabled={disabledStatus === option.value}>
+                  {option.text}
+              </Button>
+              ))
+            }
           </ButtonGroup>                            
         </Grid>
         <Grid item md={2} xs={6} sm={2}>
@@ -150,9 +151,6 @@ const Filter = (props) => {
             format="DD/MM/YYYY"
           />
         </Grid>
-        {/* <Grid item md={2} xs={6} sm={1}>
-          <Button onClick={resetFilterData} ><RotateLeftIcon/></Button>
-        </Grid> */}
       </Grid>
     </Widget>    
   )

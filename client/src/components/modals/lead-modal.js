@@ -45,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FormModal = ({data, status, closeModal, openModal, organization}) => {
-    console.log(status);
+const FormModal = ({id, reload, status, closeModal, openModal, organization}) => {
     const classes = useStyles();
     const [Name, setName] = useState("");
     const [Number, setNumber] = useState("");
@@ -67,14 +66,12 @@ const FormModal = ({data, status, closeModal, openModal, organization}) => {
     }, []);
 
     useEffect(() => {
-        console.log(data);
         fetchData();
     }, []);
 
     const fetchData =()=>{
-        AuthService.FindLeadbyId(data).then(
+        AuthService.FindLeadbyId(id).then(
             (data) => {
-                console.log(data)
                 setName(data.name);
                 setNumber(data.phone);
                 setEmail(data.email);
@@ -93,9 +90,8 @@ const FormModal = ({data, status, closeModal, openModal, organization}) => {
     
     const onSubmit = async (event) => {
         let payload ={
-            id:data,
+            id:id,
             name: Name,
-            date: Date,
             phone: Number,
             organization:organization,
             email: Email,
@@ -105,9 +101,9 @@ const FormModal = ({data, status, closeModal, openModal, organization}) => {
             center: Center,
             department: Department,
             priority: Priority
-
         }
         if(status ==="add"){
+            payload['date']=Date;
             AuthService.createNewLead(payload)
             .then(function (response) {
                 closeModal();
@@ -120,19 +116,19 @@ const FormModal = ({data, status, closeModal, openModal, organization}) => {
                 return setError(error.response.data.message);   
             })  
         } else {
-                AuthService.updateLead(payload)
-                .then(function (response) {
-                    closeModal();
-                    window.location.reload();
-                })
-                .catch(function (error) {
-                    setTimeout(() => {
-                        setError("");
-                    }, 5000);
-                    return setError(error.response.data.message);   
-                })  
-            }        
-            event.preventDefault(event);      
+            AuthService.updateLead(payload)
+            .then(function (response) {
+                closeModal();
+                reload();
+            })
+            .catch(function (error) {
+                setTimeout(() => {
+                    setError("");
+                }, 5000);
+                return setError(error.response.data.message);   
+            })  
+        }        
+        event.preventDefault(event);      
     };
     return (
         <React.Fragment>             
