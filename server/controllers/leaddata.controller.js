@@ -88,28 +88,24 @@ exports.createLead = function (req, res) {
 exports.getAllLeads = function (req, res) {
     var data = req.body;
     // console.log(req.body);
+    var sort = {}, matchQuery ={};
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
     if (order == "desc") {
         sort_order = -1;
     }
-    var sort = {};
     sort[sort_parameter] = sort_order;
     sort['_id'] = sort_order ==1? -1 : 1;    
-    var matchQuery = {};
-
     if(data.organization)
     matchQuery.organization = data.organization;
     if(data.source)
     matchQuery.source = data.source;
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    
-   console.log(sort);
-//  
-//    console.log(matchQuery);
-//    return;  
+    // console.log(sort);
+    // console.log(matchQuery);
+    // return;  
    Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
     // Lead.aggregate(
     //     [{

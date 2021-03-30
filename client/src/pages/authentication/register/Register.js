@@ -3,6 +3,7 @@ import {Link, useHistory} from "react-router-dom";
 import { Grid, Card, Typography, makeStyles} from '@material-ui/core';
 import AuthService from "../../../authServices/apicalls";
 import PcImg from '../../../assets/images/img-01.png';
+import {CircularProgress} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     gridContainer: {
@@ -133,6 +134,7 @@ function RegisterPage() {
     const [password, setPassword] = useState("");    
     const [confirmpassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setloading] = useState(false);
     const history = useHistory();
     
     useEffect(() => {
@@ -144,12 +146,14 @@ function RegisterPage() {
 
     const registerHandler = async (e) => {
         e.preventDefault();
+        setloading(true);
         if (password !== confirmpassword) {
             setPassword("");
             setConfirmPassword("");
             setTimeout(() => {
               setError("");
             }, 5000);
+            setloading(false);
             return setError("Passwords do not match");
           }
       
@@ -158,13 +162,15 @@ function RegisterPage() {
             if (AuthService.isAuthenticated()) {
                     console.log('Redirecting to admin dashboard');
                     history.push('/app/dashboard');
+                    setloading(false);
                 }
             },
             (error) => {
-            setError(error.response.data.error);
-            setTimeout(() => {
-                setError("");
-            }, 3000);
+                setloading(false);
+                setError(error.response.data.error);
+                setTimeout(() => {
+                    setError("");
+                }, 3000);
             }
         );
     };
@@ -227,9 +233,10 @@ function RegisterPage() {
                             
                             {error && <Grid item md={12} xs={12} sm={12} className={classes.errorMsg} role="alert">{error}</Grid>}
                             <Grid item md={12} xs={12} sm={12} className={classes.ContainerloginFormBtn} >
-                                <button className={classes.loginFormBtn} type="submit" >
+                                {!loading ? <button className={classes.loginFormBtn} type="submit" >
                                     Register
-                                </button>
+                                </button> : <CircularProgress/>
+                                }
                             </Grid>
                             <Grid item md={12} xs={12} sm={12} className={classes.forgetBlock} >               
                                 <span className={classes.txt1}>

@@ -2,7 +2,8 @@
 import {
     Home as HomeIcon,
     AssignmentOutlined as AssignmentIcon,
-    FiberManualRecord as DotIcon
+    FiberManualRecord as DotIcon,
+    Stars as StarsIcon
     // FormatSize as TypographyIcon,
     // FilterNone as UIElementsIcon,
     // BorderAll as TableIcon,
@@ -11,27 +12,23 @@ import {
     // HelpOutline as FAQIcon,
     // ArrowBack as ArrowBackIcon,
   } from "@material-ui/icons";
-
-  export const mainListItems = [
-    { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
-    { id: 1, label: "Lead Menu", link: "/app/leads", icon: <AssignmentIcon /> ,children: [
-          { label: "Radix Leads", link: "/app/leads/radixLeads", icon: <DotIcon fontSize = "small" /> },
-          { label: "Anardana Leads", link: "/app/leads/anardanaLeads" , icon: <DotIcon fontSize="small"/> },
-          { label: "Woodapple Leads", link: "/app/leads/woodappleLeads" , icon: <DotIcon fontSize="small"/> },
-          { label: "Relp Leads", link: "/app/leads/relpLeads" , icon: <DotIcon fontSize="small" /> },
-          { label: "Harvin Leads", link: "/app/leads/harvinLeads" , icon: <DotIcon fontSize="small"/> },
-        ],   
-    },
-    { id: 2, label: "Review Menu", link: "/app/reviews", icon: <AssignmentIcon /> ,children: [
-      { label: "Radix Review", link: "/app/reviews/radixReviews", icon: <DotIcon fontSize = "small" /> },
-      { label: "Anardana Review", link: "/app/reviews/anardanaReviews" , icon: <DotIcon fontSize="small"/> },
-      { label: "Woodapple Review", link: "/app/reviews/woodappleReviews" , icon: <DotIcon fontSize="small"/> },
-      { label: "Relp Review", link: "/app/reviews/relpReviews" , icon: <DotIcon fontSize="small" /> },
-      { label: "Harvin Review", link: "/app/reviews/harvinReviews" , icon: <DotIcon fontSize="small"/> },
+  
+export const mainListItems = [
+  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  { id: 1, label: "Lead Menu", link: "/app/leads", icon: <AssignmentIcon /> ,children: [
+    { label: "Radix Leads", link: "/app/leads/radixLeads", icon: <DotIcon fontSize = "small" /> },
+    { label: "Anardana Leads", link: "/app/leads/anardanaLeads" , icon: <DotIcon fontSize="small"/> },
+    { label: "Woodapple Leads", link: "/app/leads/woodappleLeads" , icon: <DotIcon fontSize="small"/> },
+    { label: "Relp Leads", link: "/app/leads/relpLeads" , icon: <DotIcon fontSize="small" /> },
     ],   
-}
-
-    
+  },
+  { id: 2, label: "Review Menu", link: "/app/reviews", icon: <StarsIcon /> ,children: [
+    { label: "Radix Review", link: "/app/reviews/radixReviews", icon: <DotIcon fontSize = "small" /> },
+    { label: "Anardana Review", link: "/app/reviews/anardanaReviews" , icon: <DotIcon fontSize="small"/> },
+    { label: "Woodapple Review", link: "/app/reviews/woodappleReviews" , icon: <DotIcon fontSize="small"/> },
+    { label: "Relp Review", link: "/app/reviews/relpReviews" , icon: <DotIcon fontSize="small" /> },
+  ],   
+}   
     // {'text': 'Lead Menu', 'link': '/viewleads', 'page': 'Leads', 'icon': <AssignmentOutlined />},
     // {'text': 'DateWise Status', 'link': '/datewiseStatus', 'page': 'datewiseStatus', 'icon': <TrendingUp />},
     // {'text': 'Reviews', 'link': '/reviews', 'page': 'review', 'icon': <ThumbUpAlt />},

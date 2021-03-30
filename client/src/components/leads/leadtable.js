@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
+import { Dialog,DialogActions, DialogTitle, DialogContentText, DialogContent, Slide }from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
     text:{
         fontSize:16,
-        textTransform: "capitalize",
+        // textTransform: "capitalize",
     },
     li: {
         '&:hover': {
@@ -58,14 +59,14 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     const classes = useStyles();
     const [Order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = React.useState('date');
-    // const [deleteModal, setdeleteModal] = useState(false)
+    const [deleteModal, setdeleteModal] = useState(false)
     const [filterData, setFilterData] = useState(filterValue);
     var [ButtonRef, setButtonRef] = useState(null);
-    const [Data, setData] = useState()
     const open = Boolean(ButtonRef);
     const [openmodal, setOpenModal] = useState(false);
-    const editHandler = (data) => {
-        setData(data);
+    const [dataId, setdataId] = useState('')
+    
+    const editHandler = () => {        
       if (openmodal) {
         setOpenModal(false);
       } else {
@@ -85,32 +86,33 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         updateData(filterData);
       }, [filterData]);
 
-    // const CloseDeleteModal = () => {
-    //     setdeleteModal(false);
-    // };
+    const CloseDeleteModal = () => {
+        setdeleteModal(false);
+    };
     
-    // const OpenDeleteModal = (data) => {
-    //     console.log("check",data);
-    //     // setdeleteModal(true);
-    // };
-    const handleClick = (event) => {
+    const OpenDeleteModal = () => {
+        setdeleteModal(true);
+    };
+
+    const handleClick = (event, data) => {
+        setdataId(data._id);
         setButtonRef(event.currentTarget);
     };
     const handleClose = () => {
         setButtonRef(null);
     };
     
-    const deleteHandler = (data) =>{
+    const deleteHandler = () =>{
         const payload ={
-            id:data
+            id:dataId
         }
         AuthService.deleteLeadbyId(payload).then(
             (data) => {
                 fetchData();
-                // setdeleteModal(false);
+                setdeleteModal(false);
             },
             (error) => {
-                // setdeleteModal(false);
+                setdeleteModal(false);
             }
           );
     }
@@ -125,42 +127,42 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         )
     }
 
-    // const DeleteDialog = (data) =>{
-    //     console.log(data);
-    //     return(
-    //         <React.Fragment>
-    //              <Dialog
-    //         open={deleteModal}
-    //         TransitionComponent={Transition}
-    //         keepMounted
-    //         onClose={CloseDeleteModal}
-    //         aria-labelledby="alert-dialog-slide-title"
-    //         aria-describedby="alert-dialog-slide-description"
-    //       >
-    //         <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
-    //         <DialogContent>
-    //           <DialogContentText id="alert-dialog-slide-description">
-    //             once you delete the delete the lead details then you will not be able to see this in future.
-    //           </DialogContentText>
-    //         </DialogContent>
-    //         <DialogActions>
-    //           <Button onClick={CloseDeleteModal} color="primary">
-    //             Disagree
-    //           </Button>
-    //           <Button onClick={handleClick11(name)} color="primary">
-    //             Agree
-    //           </Button>
-    //         </DialogActions>
-    //       </Dialog>
-    //         </React.Fragment>
-    //     )
-    // }
-    // const Transition = React.forwardRef(function Transition(props, ref) {
-    //     return <Slide direction="up" ref={ref} {...props} />;
-    // });
+    const DeleteDialog = () =>{
+        return(
+            <React.Fragment>
+                <Dialog 
+                    open={deleteModal} 
+                    TransitionComponent={Transition} 
+                    keepMounted 
+                    onClose={CloseDeleteModal}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            once you delete the lead details then you will not be able to see this in future.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={CloseDeleteModal} color="primary">
+                            Disagree
+                        </Button>
+                        <Button onClick={deleteHandler} color="primary">
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </React.Fragment>
+        )
+    }
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
     return (
         <Paper className={classes.paper}>
-            {openmodal ? <LeadModal status="edit" data={Data} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
+            {openmodal ? <LeadModal status="edit" id={dataId} reload={fetchData} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
+            {deleteModal ? <DeleteDialog /> : ''}
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -226,7 +228,7 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                                     <IconButton
                                         aria-owns="widget-menu"
                                         aria-haspopup="true"
-                                        onClick={handleClick}
+                                        onClick={(event) => handleClick(event, data)}
                                     >
                                         <MoreIcon />
                                     </IconButton>
@@ -239,10 +241,10 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                                         disableAutoFocusItem
                                         >
                                             <MenuItem>
-                                            <Button onClick={(event) => editHandler(data._id)}>Edit</Button>
+                                            <Button onClick={editHandler}>Edit</Button>
                                             </MenuItem>
                                             <MenuItem>
-                                            <Button onClick={(event) => deleteHandler(data._id)}>Delete</Button>
+                                            <Button onClick={OpenDeleteModal}>Delete</Button>
                                             </MenuItem>                                            
                                         </Menu>
                                 </TableCell>

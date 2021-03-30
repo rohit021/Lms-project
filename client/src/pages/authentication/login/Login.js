@@ -142,7 +142,6 @@ const LoginPage =()=> {
             () => {
                 if (AuthService.isAuthenticated()) {
                     console.log('Redirecting to admin dashboard');
-                    window.location.reload();
                     history.push('/app/dashboard')
                     setloading(false);   
                 }
