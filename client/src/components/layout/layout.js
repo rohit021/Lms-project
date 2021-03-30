@@ -11,7 +11,6 @@ import RadixLeads from "../../pages/leads/radixLeads";
 import AnardanaLeads from "../../pages/leads/anardanaLeads";
 import RelpLeads from "../../pages/leads/relpLeads";
 import WoodappleLeads from "../../pages/leads/woodappleLeads";
-import HarvinLeads from "../../pages/leads/harvinLeads";
 // import Typography from "../../pages/typography";
 // import Notifications from "../../pages/notifications";
 // import Maps from "../../pages/maps";
@@ -24,11 +23,8 @@ import HarvinLeads from "../../pages/leads/harvinLeads";
   import AnardanaReviews from "../../pages/reviews/anardanaReviews";
   import RelpReviews from "../../pages/reviews/relpReviews";
   import WoodappleReviews from "../../pages/reviews/woodappleReviews";
-  import HarvinReviews from "../../pages/reviews/harvinReviews";
 
-
-
-// context
+  // context
 import { useLayoutState } from "../../context/LayoutContext";
 
 const useStyles = makeStyles(theme => ({
@@ -94,16 +90,13 @@ const Layout = (props)=> {
           <Route path="/app/leads/anardanaLeads" component={AnardanaLeads} />
           <Route path="/app/leads/woodappleLeads" component={WoodappleLeads} />
           <Route path="/app/leads/relpLeads" component={RelpLeads}/>
-          <Route path="/app/leads/harvinLeads" component={HarvinLeads} />
 
             {/* Route for Reviews */}
 
-            <Route path="/app/reviews/radixReviews" component={RadixReviews} />
+          <Route path="/app/reviews/radixReviews" component={RadixReviews} />
           <Route path="/app/reviews/anardanaReviews" component={AnardanaReviews} />
           <Route path="/app/reviews/woodappleReviews" component={WoodappleReviews} />
           <Route path="/app/reviews/relpReviews" component={RelpReviews}/>
-          <Route path="/app/reviews/harvinReviews" component={HarvinReviews} />
-
         </Switch>
           {/* <footer className={classes.footer}>
             <Copyright />
