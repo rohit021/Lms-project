@@ -29,7 +29,7 @@ const defaultData = {
 //   {text: 'Actions', md:1, xs:3, sm:2},    
 // ]
   
-const Leads = () => {
+const RadixLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
@@ -73,9 +73,9 @@ const Leads = () => {
           style={{ float:"right", margin:"5px auto",background:"#01579b", color:"#fff" }}
           onClick={handleChange}
         >
-        Add Data
+        Add data
         </Button>
-        {openmodal ? <LeadModal openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''}
+        {openmodal ? <LeadModal status="add" openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''}
         {
           !loading && leadData &&
             <LeadTable filterValue={filterValue} tableData={leadData} updateData={updateData} fetchData={fetchData} />
@@ -95,4 +95,4 @@ const Leads = () => {
   )
 }
 
-export default Leads;
+export default RadixLeads;

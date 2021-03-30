@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
-// import {Dialog,D }
-import {Paper, 
-    IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
+import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
 import {LeadHeadCells} from '../../helpers/utils';
+import LeadModal from '../../components/modals/lead-modal'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -62,8 +61,18 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     // const [deleteModal, setdeleteModal] = useState(false)
     const [filterData, setFilterData] = useState(filterValue);
     var [ButtonRef, setButtonRef] = useState(null);
+    const [Data, setData] = useState()
     const open = Boolean(ButtonRef);
-    
+    const [openmodal, setOpenModal] = useState(false);
+    const editHandler = (data) => {
+        setData(data);
+      if (openmodal) {
+        setOpenModal(false);
+      } else {
+        setOpenModal(true);
+      }
+    };
+     
     const handleRequestSort = (property) =>(event) => {
         const isAsc = orderBy === property && Order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -91,7 +100,7 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         setButtonRef(null);
     };
     
-    const deletehandler = (data) =>{
+    const deleteHandler = (data) =>{
         const payload ={
             id:data
         }
@@ -151,6 +160,7 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     // });
     return (
         <Paper className={classes.paper}>
+            {openmodal ? <LeadModal status="edit" data={Data} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -229,10 +239,10 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                                         disableAutoFocusItem
                                         >
                                             <MenuItem>
-                                            <Button>Edit</Button>
+                                            <Button onClick={(event) => editHandler(data._id)}>Edit</Button>
                                             </MenuItem>
                                             <MenuItem>
-                                            <Button onClick={(event) => deletehandler(data._id)}>Delete</Button>
+                                            <Button onClick={(event) => deleteHandler(data._id)}>Delete</Button>
                                             </MenuItem>                                            
                                         </Menu>
                                 </TableCell>
