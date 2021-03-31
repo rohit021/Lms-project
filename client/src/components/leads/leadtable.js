@@ -6,7 +6,7 @@ import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
 import {LeadHeadCells} from '../../helpers/utils';
-import LeadModal from '../../components/modals/lead-modal'
+import RadixModal from '../modals/radix-modal'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -161,7 +161,7 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     });
     return (
         <Paper className={classes.paper}>
-            {openmodal ? <LeadModal status="edit" id={dataId} reload={fetchData} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
+            {openmodal ? <RadixModal status="edit" id={dataId} reload={fetchData} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
             {deleteModal ? <DeleteDialog /> : ''}
             <TableContainer>
                 <Table
