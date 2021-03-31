@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
         opacity: 0,
       },
       nestedList: {
-        paddingLeft: theme.spacing(2) + 30,
+        paddingLeft: theme.spacing(2) + 23,
       },
       sectionTitle: {
         marginLeft: theme.spacing(4.5),

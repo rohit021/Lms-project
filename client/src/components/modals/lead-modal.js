@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FormModal = (props) => {
+const FormModal = ({id, reload, status, closeModal, openModal, organization}) => {
     const classes = useStyles();
     const [Name, setName] = useState("");
     const [Number, setNumber] = useState("");
@@ -59,18 +59,41 @@ const FormModal = (props) => {
     const [Amount, setAmount] = useState("")
     const [Priority, setPriority] = useState("")
     const formattedTodayDate = moment().format("YYYY-MM-DD");
-
+    
     useEffect(() => {
         // console.log(formattedTodayDate);
         setDate(formattedTodayDate);        
     }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData =()=>{
+        AuthService.FindLeadbyId(id).then(
+            (data) => {
+                setName(data.name);
+                setNumber(data.phone);
+                setEmail(data.email);
+                setCenter(data.center);
+                setAmount(data.amount);
+                setLocation(data.location);
+                setPriority(data.priority);
+                setSource(data.source);
+                setDepartment(data.department);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
     
     const onSubmit = async (event) => {
         let payload ={
+            id:id,
             name: Name,
-            date: Date,
             phone: Number,
-            organization:props.organization,
+            organization:organization,
             email: Email,
             source: Source,
             amount: Amount,
@@ -78,11 +101,12 @@ const FormModal = (props) => {
             center: Center,
             department: Department,
             priority: Priority
-
         }
-        AuthService.createNewLead(payload)
+        if(status ==="add"){
+            payload['date']=Date;
+            AuthService.createNewLead(payload)
             .then(function (response) {
-                props.closeModal();
+                closeModal();
                 window.location.reload();
             })
             .catch(function (error) {
@@ -91,15 +115,27 @@ const FormModal = (props) => {
                 }, 5000);
                 return setError(error.response.data.message);   
             })  
+        } else {
+            AuthService.updateLead(payload)
+            .then(function (response) {
+                closeModal();
+                reload();
+            })
+            .catch(function (error) {
+                setTimeout(() => {
+                    setError("");
+                }, 5000);
+                return setError(error.response.data.message);   
+            })  
+        }        
         event.preventDefault(event);      
     };
-
     return (
         <React.Fragment>             
             <Dialog classes={{paper: classes.dialogPaper }}
-                open={props.openModal}  disableBackdropClick fullWidth maxWidth="md" >
+                open={openModal}  disableBackdropClick fullWidth maxWidth="md" >
                 <DialogTitle>
-                    <IconButton style={{ backgroundColor: "#3f51b5",color:"#fff", float: "right" }} onClick={props.closeModal} >
+                    <IconButton style={{ backgroundColor: "#3f51b5",color:"#fff", float: "right" }} onClick={closeModal} >
                         <CloseIcon />
                     </IconButton>
                     {error ?<Alert severity="error">{error}</Alert>:''}
@@ -111,6 +147,7 @@ const FormModal = (props) => {
                                 <TextField
                                     variant="outlined"
                                     onChange={(e) => setName(e.target.value)}
+                                    value={Name}
                                     id="name"
                                     label="User Name"
                                     name="name"
@@ -123,6 +160,7 @@ const FormModal = (props) => {
                                 <TextField
                                     variant="outlined"
                                     onChange={(e) => setNumber(e.target.value)}
+                                    value={Number}
                                     id="Number"
                                     type="number"
                                     label="Phone Number"
@@ -137,6 +175,7 @@ const FormModal = (props) => {
                                     variant="outlined"
                                     onChange={(e) => setEmail(e.target.value)}
                                     id="email"
+                                    value={Email}
                                     type="email"
                                     label="Email"
                                     name="email"
@@ -152,6 +191,7 @@ const FormModal = (props) => {
                                     id="Location"
                                     type="String"
                                     label="Location"
+                                    value={Location}
                                     name="Location"
                                     fullWidth
                                     autoFocus
@@ -207,6 +247,7 @@ const FormModal = (props) => {
                                     onChange={(e) => setAmount(e.target.value)}
                                     id="Amount"
                                     type="number"
+                                    value={Amount}
                                     label="Amount"
                                     name="Amount"
                                     InputProps={{ inputProps: { min: 0 } }}
@@ -230,6 +271,7 @@ const FormModal = (props) => {
                             </Grid>
                             
                         </Grid>
+                        {status ==="add"? (
                         <Button
                             type="submit"
                             fullWidth
@@ -238,7 +280,15 @@ const FormModal = (props) => {
                         >
                             Submit Data
                         </Button>
-
+                        ):
+                        <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        className={classes.submit}
+                    >
+                        Updata Data
+                    </Button>}
                     </form>
                 </DialogContent>
 

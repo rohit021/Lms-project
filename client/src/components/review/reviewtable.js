@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
-import { Dialog,DialogActions, DialogTitle, DialogContentText, DialogContent, Slide }from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
-import {LeadHeadCells} from '../../helpers/utils';
-import LeadModal from '../../components/modals/lead-modal'
+import {ReviewHeadCells} from '../../helpers/utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     text:{
         fontSize:16,
-        // textTransform: "capitalize",
+        textTransform: "capitalize",
     },
     li: {
         '&:hover': {
@@ -55,25 +53,14 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
+const ReviewTable = ({fetchData, tableData, filterValue, updateData}) => {
     const classes = useStyles();
     const [Order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = React.useState('date');
-    const [deleteModal, setdeleteModal] = useState(false)
     const [filterData, setFilterData] = useState(filterValue);
     var [ButtonRef, setButtonRef] = useState(null);
     const open = Boolean(ButtonRef);
-    const [openmodal, setOpenModal] = useState(false);
-    const [dataId, setdataId] = useState('')
     
-    const editHandler = () => {        
-      if (openmodal) {
-        setOpenModal(false);
-      } else {
-        setOpenModal(true);
-      }
-    };
-     
     const handleRequestSort = (property) =>(event) => {
         const isAsc = orderBy === property && Order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -86,83 +73,29 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         updateData(filterData);
       }, [filterData]);
 
-    const CloseDeleteModal = () => {
-        setdeleteModal(false);
-    };
-    
-    const OpenDeleteModal = () => {
-        setdeleteModal(true);
-    };
-
-    const handleClick = (event, data) => {
-        setdataId(data._id);
+    const handleClick = (event) => {
         setButtonRef(event.currentTarget);
     };
     const handleClose = () => {
         setButtonRef(null);
     };
     
-    const deleteHandler = () =>{
+    const deletehandler = (data) =>{
         const payload ={
-            id:dataId
+            id:data
         }
-        AuthService.deleteLeadbyId(payload).then(
+        AuthService.deleteReviewbyId(payload).then(
             (data) => {
                 fetchData();
-                setdeleteModal(false);
             },
             (error) => {
-                setdeleteModal(false);
             }
           );
     }
 
-    const PriorityChecker =(value) =>{
-        return(
-            <React.Fragment>
-                {value === 'hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}
-                {value === 'neutral' ? (<div className={classes.priority} style={{backgroundColor: "#ff8800"}}>{value}</div>):''}
-                {value === 'cold' ? (<div className={classes.priority} style={{backgroundColor: "#01579b"}}>{value}</div>):''}
-            </React.Fragment>
-        )
-    }
-
-    const DeleteDialog = () =>{
-        return(
-            <React.Fragment>
-                <Dialog 
-                    open={deleteModal} 
-                    TransitionComponent={Transition} 
-                    keepMounted 
-                    onClose={CloseDeleteModal}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
-                >
-                    <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            once you delete the lead details then you will not be able to see this in future.
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={CloseDeleteModal} color="primary">
-                            Disagree
-                        </Button>
-                        <Button onClick={deleteHandler} color="primary">
-                            Agree
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
-        )
-    }
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
+  
     return (
         <Paper className={classes.paper}>
-            {openmodal ? <LeadModal status="edit" id={dataId} reload={fetchData} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
-            {deleteModal ? <DeleteDialog /> : ''}
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -173,7 +106,7 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                     <TableHead>                    
                         <TableRow>
                             <TableCell className={classes.bold}>S.No</TableCell>
-                            {LeadHeadCells.map((headCell)=>(
+                            {ReviewHeadCells.map((headCell)=>(
                             <TableCell 
                             className={classes.bold}
                             key={headCell.id}
@@ -196,9 +129,13 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                             </TableCell>
                             ))                        
                             }
-                             <TableCell className={classes.bold}>Status</TableCell>
-                            <TableCell className={classes.bold}>Logs</TableCell>
+                            <TableCell className={classes.bold}>Daily Review</TableCell>
+                            <TableCell className={classes.bold}>Reply</TableCell>
+                            <TableCell className={classes.bold}>Name</TableCell>
+                            <TableCell className={classes.bold}>Review Category</TableCell>
                             <TableCell className={classes.bold}>Actions</TableCell>                        
+
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -208,27 +145,16 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                             >
                                 <TableCell className={classes.text}>{index+1}</TableCell>
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
+                                <TableCell className={classes.text}>{data.rating}</TableCell>
+                                <TableCell className={classes.text}>{data.comment}</TableCell>
+                                <TableCell className={classes.text}>{data.reply}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
-                                <TableCell className={classes.text}>{data.email}</TableCell>
-                                <TableCell className={classes.text}>{data.phone}</TableCell>
-                                <TableCell className={classes.text}>{data.center}</TableCell>
-                                <TableCell className={classes.text}>{data.source}</TableCell>
-                                <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
-                                <TableCell>
-                                    <Button
-                                     variant="contained"
-                                     color="primary"
-                                     style={{ margin:"5px auto",background:"#01579b", color:"#fff" }}
-                                    //  onClick={handleChange}
-                                     >
-                                         View Logs
-                                    </Button>
-                                </TableCell>
+                                <TableCell className={classes.text}>{data.organization}</TableCell>
                                 <TableCell>
                                     <IconButton
                                         aria-owns="widget-menu"
                                         aria-haspopup="true"
-                                        onClick={(event) => handleClick(event, data)}
+                                        onClick={handleClick}
                                     >
                                         <MoreIcon />
                                     </IconButton>
@@ -241,10 +167,10 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                                         disableAutoFocusItem
                                         >
                                             <MenuItem>
-                                            <Button onClick={editHandler}>Edit</Button>
+                                            <Button>Edit</Button>
                                             </MenuItem>
                                             <MenuItem>
-                                            <Button onClick={OpenDeleteModal}>Delete</Button>
+                                            <Button onClick={(event) => deletehandler(data._id)}>Delete</Button>
                                             </MenuItem>                                            
                                         </Menu>
                                 </TableCell>
@@ -258,4 +184,4 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     )
 }
 
-export default LeadTable;
+export default ReviewTable;

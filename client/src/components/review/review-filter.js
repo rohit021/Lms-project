@@ -31,15 +31,15 @@ const Filter = (props) => {
   }
 
   const handleStartDate = (date) => {
-    // console.log(date);
+    console.log(date);
     setFilterData({ ...filterData, startDate: date });// [key]: event.target.
   }
   const handleEndDate = (date) => {
     setFilterData({ ...filterData, endDate: date });// [key]: event.target.
   }
-    useEffect(() => {
-      props.updateData(filterData);
-    }, [filterData]);
+    // useEffect(() => {
+    //   props.updateData(filterData);
+    // }, [filterData]);
 
   const changedateWeek =()=>{
       var weekstartDate = moment().clone().startOf('isoWeek').format('YYYY-MM-DD');;
@@ -62,7 +62,9 @@ const Filter = (props) => {
     setEndDate(formattedTodayDate);   
     setFilterData({...filterData, startDate:yearstartDate, endDate:formattedTodayDate});   
   }
-  
+  const resetFilterData =(props)=>{
+    setFilterData({filterData:props.defaultData})
+  }
   const onSortFilterChange = (value) => {
     switch(value){
       case 'week':
@@ -92,27 +94,37 @@ const Filter = (props) => {
             <TextField
               size="small"
               select
+              label="Organization"
+              name="organization"
+              value={filterData.organization}
+              onChange={handleChange()}>
+              {OrganizationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+            </TextField>
+          </FormControl>
+        </Grid>
+        <Grid item md={2} xs={6} sm={3}>
+          <FormControl className={classes.selectStyle}>
+            <TextField
+              size="small"
+              select
               label="Source"
               name="source"
               value={filterData.source}
               onChange={handleChange()}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
               {SourceOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
         </Grid>
         <Grid item md={3} xs={12} sm={6}>
           <ButtonGroup color="primary" aria-label="outlined primary button group">
-            {
-              DateFilterOptions.map((option) => (
-              <Button key={option.value} style={ (buttonColor === option.value) ? {backgroundColor: '#01579b', color: '#fff'} : {textTransform: 'capitalize'}} onClick={() => onSortFilterChange(option.value)}  
-              disabled={disabledStatus === option.value}>
-                  {option.text}
-              </Button>
-              ))
-            }
+              {
+                  DateFilterOptions.map((option) => (
+                  <Button key={option.value} style={ (buttonColor === option.value) ? {backgroundColor: '#01579b', color: '#fff'} : {textTransform: 'capitalize'}} onClick={() => onSortFilterChange(option.value)}  
+                  disabled={disabledStatus === option.value}>
+                      {option.text}
+                  </Button>
+                  ))
+              }
           </ButtonGroup>                            
         </Grid>
         <Grid item md={2} xs={6} sm={2}>
@@ -150,6 +162,9 @@ const Filter = (props) => {
             InputProps={{inputProps: {max: formattedTodayDate} }}
             format="DD/MM/YYYY"
           />
+        </Grid>
+        <Grid item md={2} xs={6} sm={1}>
+          <Button onClick={resetFilterData} ><RotateLeftIcon/></Button>
         </Grid>
       </Grid>
     </Widget>    

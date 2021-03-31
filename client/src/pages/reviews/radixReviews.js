@@ -1,9 +1,9 @@
 import React, {useState, useEffect } from "react";
 import { Grid, Avatar, CircularProgress,Button } from "@material-ui/core";
-import LeadTable from "../../components/leads/leadtable";
-import LeadFilter from "../../components/leads/lead-filter";
+import ReviewTable from "../../components/review/reviewtable";
+import ReviewFilter from "../../components/review/review-filter";
 import AuthService from "../../authServices/apicalls";
-import LeadModal from '../../components/modals/lead-modal'
+import ReviewModal from '../../components/modals/review-modal'
 // import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 
@@ -29,10 +29,10 @@ const defaultData = {
 //   {text: 'Actions', md:1, xs:3, sm:2},    
 // ]
   
-const RadixLeads = () => {
+const RadixReviews = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
-  const [leadData, setleadData] = useState(null);
+  const [reviewData, setreviewData] = useState(null);
   const [openmodal, setOpenModal] = useState(false);
   const handleChange = () => {
     if (openmodal) {
@@ -52,9 +52,9 @@ const RadixLeads = () => {
         
   const fetchData = async () => {
       setLoading(true);
-      AuthService.getAllLeads(filterValue).then(
+      AuthService.getAllReviews(filterValue).then(
         (data) => {
-          setleadData(data.leads);
+          setreviewData(data.reviews);
         },
         (error) => {
           console.log(error);
@@ -66,24 +66,24 @@ const RadixLeads = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
-        <LeadFilter filterValue={filterValue} updateData={updateData} defaultData={defaultData} />
+        {/* <LeadFilter filterValue={filterValue} updateData={updateData} defaultData={defaultData} /> */}
         <Button
           variant="contained"
           color="primary"
           style={{ float:"right", margin:"5px auto",background:"#01579b", color:"#fff" }}
           onClick={handleChange}
         >
-        Add data
+        Add Data
         </Button>
-        {openmodal ? <LeadModal status="add" openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''}
+        {openmodal ? <ReviewModal openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''}
         {
-          !loading && leadData &&
-            <LeadTable filterValue={filterValue} tableData={leadData} updateData={updateData} fetchData={fetchData} />
+          !loading && reviewData &&
+            <ReviewTable filterValue={filterValue} tableData={reviewData} updateData={updateData} fetchData={fetchData} />
         }
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}
-        {!loading && !leadData && (
+        {!loading && !reviewData && (
           <Avatar
           src="https://cdn.dribbble.com/users/1449854/screenshots/4136663/no_data_found.png"
           alt="no data found"
@@ -95,4 +95,4 @@ const RadixLeads = () => {
   )
 }
 
-export default RadixLeads;
+export default RadixReviews;
