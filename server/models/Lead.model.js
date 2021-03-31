@@ -25,7 +25,7 @@ const LeadSchema = new Schema({
         type: String,
         // unique: 'Phone Number already exists',
         lowercase: true,
-        default: '',
+        default: '--',
     },
     date: {
         type: Date,
@@ -36,12 +36,15 @@ const LeadSchema = new Schema({
         maxlength: 30,
         required:true
     },
+    category: {
+        type: String, 
+        maxlength: 30,
+    },
     center:{
         type: String, 
         maxlength: 30,
-        required:true
     },
-    department:{
+    radixdepartment:{
         type: String, 
         maxlength: 30,
     },

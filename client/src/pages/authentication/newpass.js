@@ -1,12 +1,11 @@
-import React,{useState,useEffect} from 'react';
-import { useHistory, useParams} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from "react-router-dom";
 import AuthService from "../../authServices/apicalls";
 import { Grid, Typography, Card, makeStyles } from '@material-ui/core';
 
-
 const useStyles = makeStyles(theme => ({
     gridContainer: {
-        width: "100%", 
+        width: "100%",
         minHeight: "100vh",
         display: "flex",
         flexWrap: "wrap",
@@ -15,33 +14,33 @@ const useStyles = makeStyles(theme => ({
         padding: "15px",
         background: theme.palette.backgroundGradient,
     },
-    ResetWrap :{
+    ResetWrap: {
         width: "460px",
         background: "#fff",
         borderRadius: "10px",
         overflow: "hidden",
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "space-between", 
+        justifyContent: "space-between",
         [theme.breakpoints.up('xs')]: {
             padding: "50px 15px 33px 15px"
-          },
+        },
         [theme.breakpoints.up('sm')]: {
             padding: "50px 15px 33px 15px"
-          },
-          [theme.breakpoints.up('md')]: {
+        },
+        [theme.breakpoints.up('md')]: {
             padding: "50px 30px 30px 30px"
-          }
+        }
     },
-    loginForm:{        
+    loginForm: {
         [theme.breakpoints.up('sm')]: {
             width: "100%"
-          },
-          [theme.breakpoints.up('md')]: {
+        },
+        [theme.breakpoints.up('md')]: {
             width: "100%"
-          },
+        },
     },
-    loginFormTitle:{
+    loginFormTitle: {
         fontFamily: "Poppins-Bold",
         fontSize: "24px",
         color: theme.palette.openTitle,
@@ -60,8 +59,8 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         display: "block",
         paddingBottom: "54px"
-      },
-      
+    },
+
     wrapInput: {
         position: "relative",
         zIndex: "1",
@@ -72,10 +71,10 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         fontWeight: "600",
         fontSize: "16px",
-        color:  theme.palette.primary.red, 
+        color: theme.palette.primary.red,
     },
     ContainerloginFormBtn: {
-        width: "100%",      
+        width: "100%",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
@@ -85,19 +84,19 @@ const useStyles = makeStyles(theme => ({
         fontFamily: "Montserrat-Bold",
         fontSize: "15px",
         lineHeight: "1.5",
-        color:  theme.palette.primary.light, 
+        color: theme.palette.primary.light,
         textTransform: "uppercase",
-        width: "100%",      
+        width: "100%",
         height: "50px",
         borderRadius: "25px",
-        background: theme.palette.primary.blue, 
+        background: theme.palette.primary.blue,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         padding: "0 25px",
         transition: "all 0.4s",
-        "&:hover":{
-            background: theme.palette.secondary.dark, 
+        "&:hover": {
+            background: theme.palette.secondary.dark,
         }
     },
     LinkBlock: {
@@ -110,12 +109,12 @@ const useStyles = makeStyles(theme => ({
         lineHeight: "1.5",
         marginLeft: "4px",
         color: theme.palette.secondary.contrastText
-    }  
+    }
 }))
 
-const NewPassword =()=> {
+const NewPassword = () => {
     const classes = useStyles();
-    const [password, setPassword] = useState("");    
+    const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const history = useHistory();
@@ -126,20 +125,20 @@ const NewPassword =()=> {
             setPassword("");
             setConfirmPassword("");
             setTimeout(() => {
-              setError("");
+                setError("");
             }, 5000);
             return setError("Passwords do not match");
         }
         AuthService.newpassword(password, id).then(
             () => {
-                history.push('/');                
+                history.push('/');
             },
             (error) => {
-            setError(error.response.data.error);
-            setTimeout(() => {
-                setError("");
-                history.push('/'); 
-            }, 3000);
+                setError(error.response.data.error);
+                setTimeout(() => {
+                    setError("");
+                    history.push('/');
+                }, 3000);
             }
         );
     };
@@ -149,12 +148,12 @@ const NewPassword =()=> {
             console.log('Redirecting to admin dashboard');
             history.push('/');
         }
-      }, [history]);
-      
+    }, [history]);
+
     return (
         <React.Fragment>
-            <Card container spacing= {1} className ={classes.gridContainer}>           
-                <Grid container className ={classes.ResetWrap}>
+            <Card container spacing={1} className={classes.gridContainer}>
+                <Grid container className={classes.ResetWrap}>
                     <Grid item md={12} xs={12} sm={12} >
                         <form onSubmit={newpasswordHandler} className={classes.loginForm}>
                             <Typography className={classes.loginFormTitle}>
@@ -162,34 +161,34 @@ const NewPassword =()=> {
                                 </Typography>
                             <Typography className={classes.ResetFormTitle}>
                                 Your new Password must be different from previous used passwords.
-                            </Typography>            
-                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >        
+                            </Typography>
+                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >
                                 <input className="inputField" type="password" name="pass" placeholder="Password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                                required/>
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                    required />
                                 <span className="focus-input"></span>
                                 <span className="symbol-input">
-                                    <i className="fa fa-lock" aria-hidden="true"></i>                            
+                                    <i className="fa fa-lock" aria-hidden="true"></i>
                                 </span>
                             </Grid>
-                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >        
-                            <input className="inputField" type="password" name="pass" placeholder="Confirm Password"
-                                value={confirmpassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required/>
+                            <Grid item md={12} xs={12} sm={12} className={classes.wrapInput} >
+                                <input className="inputField" type="password" name="pass" placeholder="Confirm Password"
+                                    value={confirmpassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    required />
                                 <span className="focus-input"></span>
                                 <span className="symbol-input">
-                                    <i className="fa fa-lock" aria-hidden="true"></i>                            
+                                    <i className="fa fa-lock" aria-hidden="true"></i>
                                 </span>
                             </Grid>
-                        
+
                             {error && <Grid item md={12} xs={12} sm={12} className={classes.errorMsg} role="alert">{error}</Grid>}
                             <Grid item md={12} xs={12} sm={12} className={classes.ContainerloginFormBtn} >
                                 <button className={classes.loginFormBtn} type="submit" >
-                                        Set Password
+                                    Set Password
                                 </button>
-                            </Grid>   
+                            </Grid>
                         </form>
                     </Grid>
                 </Grid>
