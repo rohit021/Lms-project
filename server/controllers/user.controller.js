@@ -50,7 +50,7 @@ exports.createUser = function(req, res) {
                                     userId:result._id,
                                     email: result.email
                                 }
-                                jwt.sign(payload, config.jwtSecret, { expiresIn: 3600 }, (err, token) => {
+                                jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' }, (err, token) => {
                                     // console.log(token);
                                     res.cookie("token", token, {
                                         httpOnly: true,
@@ -103,7 +103,7 @@ exports.loginUser = function(req, res) {
                                 userId:user.id,
                                 email: user.email
                             }
-                            jwt.sign(payload, config.jwtSecret, { expiresIn: 3600 }, (err, token) => {
+                            jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' }, (err, token) => {
                                 res.cookie("token", token, {
                                     httpOnly:true,
                                     expire: new Date() + 9999
@@ -157,7 +157,6 @@ exports.loggedIn = function (req, res) {
 };
   
 // Method to Get all Users
-
 exports.getAllUsers = function (req, res){
     User.find({}).exec(function(err,users){
         if(err){

@@ -7,7 +7,7 @@ import Sidebar from "../sidebar/sidebar";
 import classnames from "classnames";
 // pages
 // import Dashboard from "../../pages/dashboard";
-import RadixLeads from "../../pages/leads/radixLeads";
+import RadixLeads from "../../pages/leads/radix-leads";
 import AnardanaLeads from "../../pages/leads/anardanaLeads";
 import RelpLeads from "../../pages/leads/relpLeads";
 import WoodappleLeads from "../../pages/leads/woodappleLeads";

@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const FormModal = ({id, reload, status, closeModal, openModal, organization}) => {
+const RadixModal = ({id, reload, status, closeModal, openModal, organization}) => {
     const classes = useStyles();
     const [Name, setName] = useState("");
     const [Number, setNumber] = useState("");
@@ -66,10 +66,6 @@ const FormModal = ({id, reload, status, closeModal, openModal, organization}) =>
     }, []);
 
     useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData =()=>{
         AuthService.FindLeadbyId(id).then(
             (data) => {
                 setName(data.name);
@@ -86,8 +82,8 @@ const FormModal = ({id, reload, status, closeModal, openModal, organization}) =>
                 console.log(error);
             }
         );
-    }
-    
+    }, []);
+   
     const onSubmit = async (event) => {
         let payload ={
             id:id,
@@ -297,4 +293,4 @@ const FormModal = ({id, reload, status, closeModal, openModal, organization}) =>
     );
 }
 
-export default FormModal;
+export default RadixModal;

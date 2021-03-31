@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {OrganizationOptions, SourceOptions, DateFilterOptions} from "../../helpers/utils";
-import Widget from './../widget/widget';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import {SourceOptions, DateFilterOptions} from "../../helpers/utils";
+import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -15,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Filter = (props) => {
+const Filter = ({filterValue, updateData}) => {
   const classes = useStyles();
   const [buttonColor, setButtonColor] = useState("");
   const [disabledStatus, setDisabledStatus] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [filterData, setFilterData] = useState(props.filterValue);
+  const [filterData, setFilterData] = useState(filterValue);
   const formattedTodayDate = moment().format("YYYY-MM-DD");
 
   // console.log(filterData);
@@ -38,7 +37,7 @@ const Filter = (props) => {
     setFilterData({ ...filterData, endDate: date });// [key]: event.target.
   }
     useEffect(() => {
-      props.updateData(filterData);
+      updateData(filterData);
     }, [filterData]);
 
   const changedateWeek =()=>{

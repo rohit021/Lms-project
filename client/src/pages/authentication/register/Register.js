@@ -127,7 +127,7 @@ const useStyles = makeStyles(theme => ({
     }  
 }))
 
-function RegisterPage() {
+const RegisterPage = ()=> {
     const classes = useStyles();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -254,4 +254,4 @@ function RegisterPage() {
     )
 }
 
-export default RegisterPage
+export default RegisterPage;
