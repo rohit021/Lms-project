@@ -1,9 +1,11 @@
 import React, {useState, useEffect } from "react";
-import { Grid, Avatar, CircularProgress,Button } from "@material-ui/core";
-import LeadTable from "../../components/leads/leadtable";
-import LeadFilter from "../../components/leads/lead-filter";
+import { Grid, CircularProgress } from "@material-ui/core";
+import RadixLeadTable from "../../components/leads/radix-lead-table";
+import RadixFilter from "../../components/leads/radix-lead-filter";
 import AuthService from "../../authServices/apicalls";
+import AddButton from '../../components/addbutton/addbutton'
 import RadixModal from '../../components/modals/radix-modal'
+import NotFound from "../../components/widget/notfound"
 // import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 
@@ -47,49 +49,32 @@ const RadixLeads = () => {
   }
   
   useEffect(() => {
-    fetchData();
+    setLoading(true);
+    AuthService.getAllLeads(filterValue).then(
+      (data) => {
+        setleadData(data.leads);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    setLoading(false);
   }, [filterValue]);
-        
-  const fetchData = async () => {
-      setLoading(true);
-      AuthService.getAllLeads(filterValue).then(
-        (data) => {
-          setleadData(data.leads);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      setLoading(false);
-    };
 
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
-        <LeadFilter filterValue={filterValue} updateData={updateData} defaultData={defaultData} />
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ float:"right", margin:"5px auto",background:"#01579b", color:"#fff" }}
-          onClick={handleChange}
-        >
-        Add data
-        </Button>
+        <RadixFilter filterValue={filterValue} updateData={updateData} />
+        <AddButton handleChange={handleChange}> Add data </AddButton>          
         {openmodal ? <RadixModal status="add" openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''}
         {
           !loading && leadData &&
-            <LeadTable filterValue={filterValue} tableData={leadData} updateData={updateData} fetchData={fetchData} />
+            <RadixLeadTable filterValue={filterValue} tableData={leadData} updateData={updateData}/>
         }
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}
-        {!loading && !leadData && (
-          <Avatar
-          src="https://cdn.dribbble.com/users/1449854/screenshots/4136663/no_data_found.png"
-          alt="no data found"
-          style={{ width: "40%", height: "80%", margin: "auto" }}
-          />
-        )}
+        {!loading && !leadData && <NotFound/> }
       </Grid>
     </Grid>
   )

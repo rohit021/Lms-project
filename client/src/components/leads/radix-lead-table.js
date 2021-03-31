@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
+const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     const classes = useStyles();
     const [Order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = React.useState('date');
@@ -258,4 +258,4 @@ const LeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     )
 }
 
-export default LeadTable;
+export default RadixLeadTable;
