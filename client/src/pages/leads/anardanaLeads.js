@@ -3,7 +3,7 @@ import { Grid, Avatar, CircularProgress,Button } from "@material-ui/core";
 import LeadTable from "../../components/leads/leadtable";
 import LeadFilter from "../../components/leads/lead-filter";
 import AuthService from "../../authServices/apicalls";
-import LeadModal from '../../components/modals/lead-modal'
+import RadixModal from '../../components/modals/radix-modal'
 // import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 
@@ -75,7 +75,7 @@ const Leads = () => {
         >
         Add data
         </Button>
-        {openmodal ? <LeadModal openModal={openmodal} organization="anardana" closeModal={handleChange} /> : ''}
+        {openmodal ? <RadixModal openModal={openmodal} organization="anardana" closeModal={handleChange} /> : ''}
         {
           !loading && leadData &&
             <LeadTable filterValue={filterValue} tableData={leadData} updateData={updateData} fetchData={fetchData} />
