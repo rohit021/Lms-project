@@ -5,8 +5,6 @@ import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
-import {LeadHeadCells} from '../../helpers/utils';
-import RadixModal from '../modals/radix-modal'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
+const CommonTable = ({LeadHeadCells, filterValue, tableData, updateData}) => {
     const classes = useStyles();
     const [Order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = React.useState('date');
@@ -108,7 +106,6 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         }
         AuthService.deleteLeadbyId(payload).then(
             (data) => {
-                fetchData();
                 setdeleteModal(false);
             },
             (error) => {
@@ -161,7 +158,6 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     });
     return (
         <Paper className={classes.paper}>
-            {openmodal ? <RadixModal status="edit" id={dataId} reload={fetchData} openModal={openmodal} organization="radix" closeModal={editHandler} /> : ''}
             {deleteModal ? <DeleteDialog /> : ''}
             <TableContainer>
                 <Table
@@ -196,7 +192,27 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                             </TableCell>
                             ))                        
                             }
-                             <TableCell className={classes.bold}>Status</TableCell>
+                            {filterData.organization === "radix" ?
+                                <TableCell className={classes.bold}>
+                                    Doctor Name
+                                </TableCell>: ""
+                            }
+                            {filterData.organization === "relp" ?
+                                <TableCell className={classes.bold}>
+                                    Property Name
+                                </TableCell>: ""
+                            }
+                            {filterData.organization === "woodapple" ?
+                                <TableCell className={classes.bold}>
+                                    Category
+                                </TableCell>: ""
+                            }
+                            {/* {filterData.organization === "anardana" ?
+                                <TableCell className={classes.bold}>
+                                    Location
+                                </TableCell>: ""
+                            } */}
+                            <TableCell className={classes.bold}>Status</TableCell>
                             <TableCell className={classes.bold}>Logs</TableCell>
                             <TableCell className={classes.bold}>Actions</TableCell>                        
                         </TableRow>
@@ -210,7 +226,6 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
                                 <TableCell className={classes.text}>{data.phone}</TableCell>
-                                <TableCell className={classes.text}>{data.center}</TableCell>
                                 <TableCell className={classes.text}>{data.source}</TableCell>
                                 <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
                                 <TableCell>
@@ -220,7 +235,7 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
                                      style={{ margin:"5px auto",background:"#01579b", color:"#fff" }}
                                     //  onClick={handleChange}
                                      >
-                                         View Logs
+                                        View Logs
                                     </Button>
                                 </TableCell>
                                 <TableCell>
@@ -257,4 +272,4 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
     )
 }
 
-export default RadixLeadTable;
+export default CommonTable;

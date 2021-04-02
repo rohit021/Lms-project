@@ -1,13 +1,12 @@
 import React, {useState, useEffect } from "react";
 import { Grid, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
-import RadixFilter from "../../components/filters/filter";
+import RadixFilter from "../../components/leads/radix-lead-filter";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
 import RadixModal from '../../components/modals/radix-modal'
 import NotFound from "../../components/widget/notfound";
 import {CommonLeadHeadCells} from '../../helpers/utils';
-// import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 
 const defaultData = {
@@ -18,21 +17,10 @@ const defaultData = {
   source:'',
   orderBy:'date',
   order: 'desc',
-  organization: "radix",
+  organization: "relp",
 };
-
-// const topBarValues = [
-// 	{text: 'S.No', md:1, xs:3, sm:1},
-// 	{text: 'Name', md:2, xs:3, sm:2},
-// 	{text: 'Date', md:1, xs:3, sm:2},
-// 	{text: 'Email', md:2, xs:3, sm:1},
-// 	{text: 'Phone', md:2, xs:2, sm:2},
-// 	{text: 'Organization', md:2, xs:3, sm:2},
-// 	{text: 'Source', md:1, xs:3, sm:2},
-//   {text: 'Actions', md:1, xs:3, sm:2},    
-// ]
   
-const RadixLeads = () => {
+const RelpLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
@@ -81,4 +69,4 @@ const RadixLeads = () => {
   )
 }
 
-export default RadixLeads;
+export default RelpLeads;

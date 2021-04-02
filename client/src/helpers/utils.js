@@ -51,15 +51,12 @@ export const DateFilterOptions = [
     { key: 'year', text: 'YEARLY', value: 'year' },
   ]
 
-export const LeadHeadCells = [
+export const CommonLeadHeadCells = [
     { id: 'date', disablePadding: false, label: 'Date' },
     { id: 'name', disablePadding: true, label: 'Name' },    
-    { id: 'email', disablePadding: false, label: 'Email' },
     { id: 'phone', disablePadding: false, label: 'Phone' },
-    { id: 'center', disablePadding: false, label: 'Center' },
-    // { id: 'status', disablePadding: false, label: 'Status' },
     { id: 'source', disablePadding: false, label: 'Source' },
-    // { id: 'actions', disablePadding: false, label: 'Actions' },
+    // { id: 'status', disablePadding: false, label: 'Status' },
   ];
   export const ReviewHeadCells = [
     { id: 'date', disablePadding: false, label: 'Date' },
