@@ -8,9 +8,9 @@ import classnames from "classnames";
 // pages
 // import Dashboard from "../../pages/dashboard";
 import RadixLeads from "../../pages/leads/radix-leads";
-import AnardanaLeads from "../../pages/leads/anardanaLeads";
-import RelpLeads from "../../pages/leads/relpLeads";
-import WoodappleLeads from "../../pages/leads/woodappleLeads";
+import AnardanaLeads from "../../pages/leads/anardana-leads";
+import RelpLeads from "../../pages/leads/relp-leads";
+import WoodappleLeads from "../../pages/leads/woodapple-leads";
 // import Typography from "../../pages/typography";
 // import Notifications from "../../pages/notifications";
 // import Maps from "../../pages/maps";
