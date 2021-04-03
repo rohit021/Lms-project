@@ -3,9 +3,8 @@ import { Grid, FormControl, MenuItem, DialogTitle, DialogContent, TextField, But
 import {Alert} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
-import { SourceOptions, CenterOptions, PriorityOptions, DepartmentOptions} from "../../helpers/utils";
+import { SourceOptions, CenterOptions, PriorityOptions, DepartmentOptions, PropertyNameOptions} from "../../helpers/utils";
 import AuthService from "../../authServices/apicalls";
-import UserDetailsModal from '../modals/user-modal'
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -46,19 +45,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const RadixModal = ({id, reload, status, closeModal, openModal, organization}) => {
+const RelpModal = ({id, reload, status, closeModal, openModal, organization}) => {
     const classes = useStyles();
     const [Name, setName] = useState("");
     const [Number, setNumber] = useState("");
     const [Date, setDate] = useState("");
     const [error, setError] = useState("");
     const [Email, setEmail] = useState('')
-    const [Location, setLocation] = useState("")
-    const [Department, setDepartment] = useState("")
-    const [Center, setCenter] = useState("")
-    const [Source, setSource] = useState("")
+    const[Source,setSource]=useState("");
     const [Amount, setAmount] = useState("")
     const [Priority, setPriority] = useState("")
+    const[PropertyName,setPropertyName]=useState("")
     const formattedTodayDate = moment().format("YYYY-MM-DD");
     
     useEffect(() => {
@@ -67,37 +64,35 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
     }, []);
 
     useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData =()=>{
         AuthService.FindLeadbyId(id).then(
             (data) => {
                 setName(data.name);
                 setNumber(data.phone);
                 setEmail(data.email);
-                setCenter(data.center);
                 setAmount(data.amount);
-                setLocation(data.location);
                 setPriority(data.priority);
                 setSource(data.source);
-                setDepartment(data.department);
+                setPropertyName(data.source);
             },
             (error) => {
                 console.log(error);
             }
         );
-    }, []);
-   
+    }
+    
     const onSubmit = async (event) => {
         let payload ={
             id:id,
             name: Name,
             phone: Number,
-            organization:organization,
             email: Email,
-            source: Source,
             amount: Amount,
-            location: Location,
-            center: Center,
-            department: Department,
-            priority: Priority
+            priority: Priority,
+            source: Source,
         }
         if(status ==="add"){
             payload['date']=Date;
@@ -128,10 +123,10 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
         event.preventDefault(event);      
     };
     return (
-        <React.Fragment>         
+        <React.Fragment>             
             <Dialog classes={{paper: classes.dialogPaper }}
-                open={UserDetailsModal}  disableBackdropClick fullWidth maxWidth="md" >
-                {/* <DialogTitle>
+                open={openModal}  disableBackdropClick fullWidth maxWidth="md" >
+                <DialogTitle>
                     <IconButton style={{ backgroundColor: "#3f51b5",color:"#fff", float: "right" }} onClick={closeModal} >
                         <CloseIcon />
                     </IconButton>
@@ -140,6 +135,33 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
                 <DialogContent>
                     <form onSubmit={onSubmit}>
                         <Grid container spacing={2}>
+                        {/* <Grid item md={12} xs={12} sm={12}>
+                                <TextField
+                                    variant="outlined"
+                                    onChange={(e) => setPropertyName(e.target.value)}
+                                    // value={Name=}
+                                    id="PropertyName"
+                                    label="Property Name"
+                                    name="PropertyName"
+                                    fullWidth
+                                    autoFocus
+                                />
+                            </Grid> */}
+                             <Grid item md={12} xs={12} sm={12}>
+                                <FormControl className={classes.selectStyle}>
+                                    <TextField
+                                        size="large"
+                                        select
+                                        label="Property Name"
+                                        name="PropertyName"
+                                        required
+                                        // value={Priority}
+                                        onChange={(e) => setPropertyName(e.target.value)}
+                                        defaultValue="Choose Property name" >
+                                        {PropertyNameOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+                                    </TextField>
+                                </FormControl>
+                            </Grid>
                             <Grid item md={12} xs={12} sm={12}>
                                 <TextField
                                     variant="outlined"
@@ -180,49 +202,7 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
                                     fullWidth
                                     autoFocus
                                 />
-                            </Grid>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <TextField
-                                    variant="outlined"
-                                    onChange={(e) => setLocation(e.target.value)}
-                                    id="Location"
-                                    type="String"
-                                    label="Location"
-                                    value={Location}
-                                    name="Location"
-                                    fullWidth
-                                    autoFocus
-                                />
-                            </Grid>                           
-                            <Grid item md={12} xs={12} sm={12}>
-                                <FormControl className={classes.selectStyle}>
-                                    <TextField
-                                        size="small"
-                                        select
-                                        label="Department"
-                                        name="Department"                                        
-                                        required
-                                        value={Department}
-                                        onChange={(e) => setDepartment(e.target.value)}
-                                        defaultValue="Choose any Value" >
-                                        {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-                                    </TextField>
-                                </FormControl>
-                            </Grid>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <FormControl className={classes.selectStyle}>
-                                    <TextField
-                                        size="small"
-                                        select
-                                        label="Center"
-                                        name="Center"
-                                        value={Center}
-                                        onChange={(e) => setCenter(e.target.value)}
-                                        defaultValue="Choose any Value" >
-                                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-                                    </TextField>
-                                </FormControl>
-                            </Grid>
+                            </Grid>                          
                             <Grid item md={12} xs={12} sm={12}>
                                 <FormControl className={classes.selectStyle}>
                                     <TextField
@@ -230,10 +210,26 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
                                         select
                                         label="Priority"
                                         name="Priority"
+                                        required
                                         value={Priority}
                                         onChange={(e) => setPriority(e.target.value)}
                                         defaultValue="Choose any Value" >
                                         {PriorityOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+                                    </TextField>
+                                </FormControl>
+                            </Grid>
+                            <Grid item md={12} xs={12} sm={12}>
+                                <FormControl className={classes.selectStyle}>
+                                    <TextField
+                                        size="small"
+                                        select
+                                        label="Source"
+                                        name="Source"
+                                        required
+                                        value={Source}
+                                        onChange={(e) => setSource(e.target.value)}
+                                        defaultValue="Choose any Value" >
+                                        {SourceOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
                                     </TextField>
                                 </FormControl>
                             </Grid>
@@ -252,21 +248,6 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
                                     autoFocus
                                 />
                             </Grid>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <FormControl className={classes.selectStyle}>
-                                    <TextField
-                                        size="small"
-                                        select
-                                        label="Source"
-                                        name="Source"
-                                        value={Source}
-                                        onChange={(e) => setSource(e.target.value)}
-                                        defaultValue="Choose any Value" >
-                                        {SourceOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-                                    </TextField>
-                                </FormControl>
-                            </Grid>
-                            
                         </Grid>
                         {status ==="add"? (
                         <Button
@@ -287,11 +268,11 @@ const RadixModal = ({id, reload, status, closeModal, openModal, organization}) =
                         Updata Data
                     </Button>}
                     </form>
-                </DialogContent> */}
+                </DialogContent>
 
             </Dialog>
         </React.Fragment>
     );
 }
 
-export default RadixModal;
+export default RelpModal;

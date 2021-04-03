@@ -3,7 +3,7 @@
 // import LeadTable from "../../components/leads/leadtable";
 // import LeadFilter from "../../components/leads/lead-filter";
 // import AuthService from "../../authServices/apicalls";
-// import LeadModal from '../../components/modals/lead-modal'
+// import WoodAppleModal from '../../components/modals/woodapple-modal'
 // // import ListTopBar from '../../components/layout/listTopBar'
 // import moment from "moment";
 
@@ -15,7 +15,7 @@
 //   source:'',
 //   orderBy:'date',
 //   order: 'desc',
-//   organization: "woodapple",
+//   organization: "radix",
 // };
 
 // // const topBarValues = [
@@ -29,7 +29,7 @@
 // //   {text: 'Actions', md:1, xs:3, sm:2},    
 // // ]
   
-// const Leads = () => {
+// const WoodAppleLeads = () => {
 //   const [filterValue, setFilterValue] = useState(defaultData);
 //   const [loading, setLoading] = useState(false);
 //   const [leadData, setleadData] = useState(null);
@@ -75,7 +75,7 @@
 //         >
 //         Add data
 //         </Button>
-//         {openmodal ? <LeadModal openModal={openmodal} organization="woodapple" closeModal={handleChange} /> : ''}
+//         {openmodal ? <WoodAppleModal status="add" openModal={openmodal} organization="woodapple" closeModal={handleChange} /> : ''}
 //         {
 //           !loading && leadData &&
 //             <LeadTable filterValue={filterValue} tableData={leadData} updateData={updateData} fetchData={fetchData} />
@@ -84,7 +84,7 @@
 //           <CircularProgress color="primary" size={30} thickness={4} />
 //         )}
 //         {!loading && !leadData && (
-//           <Avatar
+//           <Avata
 //           src="https://cdn.dribbble.com/users/1449854/screenshots/4136663/no_data_found.png"
 //           alt="no data found"
 //           style={{ width: "40%", height: "80%", margin: "auto" }}
@@ -95,4 +95,4 @@
 //   )
 // }
 
-// export default Leads;
+// export default WoodAppleLeads;

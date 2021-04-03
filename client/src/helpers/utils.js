@@ -67,10 +67,10 @@ export const LeadHeadCells = [
     
   ];
   export const CenterOptions = [
-    { "key": 'delhi', "text": 'Delhi', "value": 'delhi' },
+ 
     { "key": 'chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
     { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
-    { "key": 'other', "text": 'Other', "value": 'other' },
+    
 ]
 export const DepartmentOptions = [
     { "key": 'corona', "text": 'Corona', "value": 'corona' },
@@ -82,5 +82,15 @@ export const PriorityOptions = [
     { "key": 'hot', "text": 'Hot', "value": 'hot' },
     { "key": 'cold', "text": 'Cold', "value": 'cold' },
     { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
- 
+    
+]
+export const PropertyNameOptions = [
+  { "key": '1', "text": 'PropertyName 1', "value": '1' },
+  { "key": '2', "text": 'PropertyName 2', "value": '2' },
+  { "key": '3', "text": 'PropertyName 3', "value": '3' },
+]
+export const CategoryOptions= [
+  { "key": 'banquet', "text": 'banquet ', "value": 'banquet' },
+  { "key": 'room', "text": 'room ', "value": 'room' },
+  
 ]
