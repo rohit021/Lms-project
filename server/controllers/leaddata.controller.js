@@ -11,6 +11,7 @@ var Lead = require('../models/Lead.model'),
 exports.createLead = function (req, res) {
     var data = req.body;
     // console.log(req.body)
+    // return;
     var errorResult = {
         error: true,
         message: "",
@@ -169,8 +170,8 @@ exports.getLead = function (req, res) {
 
 // Method to Update Form By ID
 exports.updateLead = function (req, res) {
-    var data = req.body;
-    Lead.findOne({ _id: data.id }).exec(function (err, lead) {
+    var leadId = req.params.id;
+    Lead.findOne({ _id: leadId }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -242,8 +243,8 @@ exports.updateLead = function (req, res) {
 
 // Method to delete a particular Lead
 exports.deleteLead = function (req, res) {
-    var leadID = req.body.id;
-    Lead.findOneAndDelete({ _id: leadID }).exec(function (err, lead) {
+    var leadId = req.params.id;
+    Lead.findOneAndDelete({ _id: leadId }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,

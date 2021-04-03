@@ -23,8 +23,7 @@ const LeadSchema = new Schema({
     },
     phone: {
         type: String,
-        // unique: 'Phone Number already exists',
-        lowercase: true,
+        required: true,
         default: '--',
     },
     date: {
@@ -44,7 +43,7 @@ const LeadSchema = new Schema({
         type: String, 
         maxlength: 30,
     },
-    radixdepartment:{
+    radixDepartment:{
         type: String, 
         maxlength: 30,
     },
@@ -52,9 +51,9 @@ const LeadSchema = new Schema({
         type:String,
         maxlength:30
     },
-    amount:{
+    expectedAmount:{
         type:Number,
-        required:true
+        default: 0
     },
     source: {
         type: String, 
