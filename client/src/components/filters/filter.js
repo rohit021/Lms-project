@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Filter = ({filterValue, updateData}) => {
+const CommonFilters = ({filterValue, updateData}) => {
   const classes = useStyles();
   const [buttonColor, setButtonColor] = useState("");
   const [disabledStatus, setDisabledStatus] = useState(false);
@@ -86,7 +86,7 @@ const Filter = ({filterValue, updateData}) => {
   return (
     <Widget header="Search Filters">
       <Grid container spacing={1} className={classes.gridContainer}>
-        <Grid item md={2} xs={6} sm={4}>
+        <Grid item md={2} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -171,4 +171,4 @@ const Filter = ({filterValue, updateData}) => {
   )
 }
 
-export default Filter;
+export default CommonFilters;

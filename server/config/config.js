@@ -3,7 +3,7 @@ module.exports = {
     service: 'services@demoleads.com',
     admin: 'prateek@demoleads.com'
   },
-  clienthost: 'http://localhost:3000',
+  clienthost: process.env.ClientHost || 'http://localhost:3000',
   DB: {
     uri: process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 
     'mongodb://localhost:27017/lms-dev',

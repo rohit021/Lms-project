@@ -29,6 +29,7 @@ var UserSchema = new Schema({
     },
     resetToken:{
         type: String,
+        default: null
     },
     expireToken:{
         type:Date,

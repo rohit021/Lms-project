@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import {DepartmentOptions, DoctorOptions, LocationOptions } from "../../helpers/utils";
+import {CenterOptions, LocationOptions } from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -15,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ValidationSchema = yup.object().shape({
-  radixDepartment: yup
-      .string()
-      .required("This field is required"),
-  doctor: yup
+  center: yup
       .string()
       .required("This field is required"),
   location: yup
@@ -52,28 +49,13 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     <TextField
                         size="small"
                         select
-                        label="Department *"
-                        name="radixDepartment"
-                        value={values.radixDepartment}
-                        error={errors.radixDepartment && touched.radixDepartment}
-                        helperText={errors.radixDepartment && touched.radixDepartment ? errors.radixDepartment : ""}
+                        label="Center *"
+                        name="center"
+                        value={values.center}
+                        error={errors.center && touched.center}
+                        helperText={errors.center && touched.center ? errors.center : ""}
                         onChange={handleChange}>
-                        {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
-                    </TextField>
-                </FormControl>                
-                </Grid>
-                <Grid item md={12} xs={12} sm={12}>
-                <FormControl className={classes.selectStyle}>
-                    <TextField
-                        size="small"
-                        select
-                        label="Doctor *"
-                        name="doctor"
-                        value={values.doctor}
-                        error={errors.doctor && touched.doctor}
-                        helperText={errors.doctor && touched.doctor ? errors.doctor : ""}
-                        onChange={handleChange}>
-                        {DoctorOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>
