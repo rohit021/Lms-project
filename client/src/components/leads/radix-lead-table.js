@@ -106,15 +106,16 @@ const RadixLeadTable = ({fetchData, filterValue, tableData, updateData}) => {
         const payload ={
             id:dataId
         }
-        AuthService.deleteLeadbyId(payload).then(
-            (data) => {
-                fetchData();
-                setdeleteModal(false);
-            },
-            (error) => {
-                setdeleteModal(false);
-            }
-          );
+        console.log(payload);
+        // AuthService.deleteLeadbyId(payload).then(
+        //     (data) => {
+        //         window.location.reload();
+        //         setdeleteModal(false);
+        //     },
+        //     (error) => {
+        //         setdeleteModal(false);
+        //     }
+        //   );
     }
 
     const PriorityChecker =(value) =>{

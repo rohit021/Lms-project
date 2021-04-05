@@ -158,7 +158,7 @@ const deleteLeadbyId = function (data) {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/leads/data", { data, config })
+    .delete(API_URL + "/api/leads/data",{data}, config )
     .then((response) => {
       return response.data;
     });

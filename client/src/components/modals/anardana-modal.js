@@ -35,9 +35,8 @@ const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) =
       <Formik
         initialValues={FormData}
        onSubmit={values => {
-           console.log("inside");
           setFormData(values);
-          direction === 'back' ? handleBack() : handleNext();
+          handleNext();
         }}
         validationSchema={ValidationSchema}
         >
@@ -76,12 +75,11 @@ const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) =
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button
-                    type='submit'
                     variant='contained'
                     color='secondary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('back')}
+                    onClick={handleBack}
                     >
                     Back
                 </Button>
@@ -92,8 +90,7 @@ const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) =
                     variant='contained'
                     color='primary'
                     fullWidth
-                    className={classes.Button}
-                    onClick={() => setDirection('forward')}
+                    className={classes.Button}                 
                     >
                     Continue
                 </Button>                

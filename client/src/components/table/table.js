@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const CommonTable = ({LeadHeadCells, filterValue, tableData, updateData}) => {
+const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateData}) => {
     const classes = useStyles();
     const [Order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = React.useState('date');
@@ -107,6 +107,7 @@ const CommonTable = ({LeadHeadCells, filterValue, tableData, updateData}) => {
         AuthService.deleteLeadbyId(payload).then(
             (data) => {
                 setdeleteModal(false);
+                fetchData();
             },
             (error) => {
                 setdeleteModal(false);
@@ -207,11 +208,11 @@ const CommonTable = ({LeadHeadCells, filterValue, tableData, updateData}) => {
                                     Category
                                 </TableCell>: ""
                             }
-                            {/* {filterData.organization === "anardana" ?
+                            {filterData.organization === "anardana" ?
                                 <TableCell className={classes.bold}>
-                                    Location
+                                    Center
                                 </TableCell>: ""
-                            } */}
+                            }
                             <TableCell className={classes.bold}>Status</TableCell>
                             <TableCell className={classes.bold}>Logs</TableCell>
                             <TableCell className={classes.bold}>Actions</TableCell>                        
@@ -230,6 +231,21 @@ const CommonTable = ({LeadHeadCells, filterValue, tableData, updateData}) => {
                                 {
                                     filterData.organization === "radix" ?
                                         <TableCell className={classes.text}>{data.doctor}</TableCell>
+                                    :" "
+                                }
+                                {
+                                    filterData.organization === "woodapple" ?
+                                        <TableCell className={classes.text}>{data.category}</TableCell>
+                                    :" "
+                                }
+                                {
+                                    filterData.organization === "anardana" ?
+                                        <TableCell className={classes.text}>{data.center}</TableCell>
+                                    :" "
+                                }
+                                 {
+                                    filterData.organization === "relp" ?
+                                        <TableCell className={classes.text}>{data.propertyName}</TableCell>
                                     :" "
                                 }
                                 <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>

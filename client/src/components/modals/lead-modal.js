@@ -18,19 +18,18 @@ const ValidationSchema = yup.object().shape({
     priority: yup
         .string()
         .required("This field is required"),
-    expectedAmount: yup
-        .number()
-        .integer()
-        .positive()
-        .typeError('Value must be a number')
-        .min(0,'Min Amount should be 0')
-        .required('This field is required')
+    // expectedAmount: yup
+    //     .number()
+    //     .integer()
+    //     .positive()
+    //     .typeError('Value must be a number')
+    //     .min(0,'Min Amount should be 0')
+    //     .required('This field is required')
 })
   
 const LeadDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
-  const [direction, setDirection] = useState('back');
-
+  
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom align="center">
@@ -38,10 +37,10 @@ const LeadDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
       </Typography>
       <Formik
         initialValues={FormData}
-       onSubmit={values => {
-          setFormData(values);
-          direction === 'back' ? handleBack() : handleNext();
-        }}
+        onSubmit={values => {
+            setFormData(values);
+            handleNext();
+          }}
         validationSchema={ValidationSchema}
         >
           {({errors, touched, values, handleChange})=>(
@@ -69,6 +68,7 @@ const LeadDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     label="Expected Amount "
                     name="expectedAmount"
                     type="number"
+                    placeholder="Placeholder" 
                     onChange={handleChange}
                     value={values.expectedAmount}
                     error={errors.expectedAmount && touched.expectedAmount}
@@ -78,12 +78,11 @@ const LeadDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button
-                    type='submit'
                     variant='contained'
                     color='secondary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('back')}
+                    onClick={handleBack}
                     >
                     Back
                 </Button>
@@ -95,7 +94,6 @@ const LeadDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     color='primary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('forward')}
                     >
                     Continue
                 </Button>                

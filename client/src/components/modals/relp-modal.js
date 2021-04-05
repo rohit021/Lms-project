@@ -25,8 +25,6 @@ const ValidationSchema = yup.object().shape({
   
 const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
-  const [direction, setDirection] = useState('back');
-
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom align="center">
@@ -34,10 +32,9 @@ const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
       </Typography>
       <Formik
         initialValues={FormData}
-       onSubmit={values => {
-           console.log("inside");
+        onSubmit={values => {
           setFormData(values);
-          direction === 'back' ? handleBack() : handleNext();
+          handleNext();
         }}
         validationSchema={ValidationSchema}
         >
@@ -55,7 +52,7 @@ const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                         error={errors.propertyName && touched.propertyName}
                         helperText={errors.propertyName && touched.propertyName ? errors.propertyName : ""}
                         onChange={handleChange}>
-                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        {PropertyNameOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>
@@ -76,12 +73,11 @@ const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button
-                    type='submit'
                     variant='contained'
                     color='secondary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('back')}
+                    onClick={handleBack}
                     >
                     Back
                 </Button>
@@ -93,7 +89,6 @@ const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     color='primary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('forward')}
                     >
                     Continue
                 </Button>                
