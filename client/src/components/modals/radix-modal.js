@@ -71,7 +71,7 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                         helperText={errors.radixDepartment && touched.radixDepartment ? errors.radixDepartment : ""}
                         // onChange={handleChange}
                         onChange={(event)=>{
-                          console.log("inside text field",event.target.value.text);
+                          // console.log("inside text field",event.target.value.text);
                             DepartmentChange(event);
                           handleChange(event);
                           
