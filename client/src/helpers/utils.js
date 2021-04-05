@@ -77,9 +77,14 @@ export const LocationOptions = [
   { "key": 'other', "text": 'Other', "value": 'other' },
 ]
 export const PropertyNameOptions = [
-  { "key": '1', "text": 'PropertyName 1', "value": '1' },
-  { "key": '2', "text": 'PropertyName 2', "value": '2' },
-  { "key": '3', "text": 'PropertyName 3', "value": '3' },
+  { "key": '1704', "text": 'Amrapali B-1704', "value": 'amrapali_B-1704' },
+  { "key": '1204', "text": 'Amrapali G-1204', "value": 'amrapali_G-1204' },
+  { "key": '201', "text": 'Amrapali G-201', "value": 'amrapali_G-201' },
+  { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'grand_omaxe' },
+  { "key": 'palla-plot', "text": 'Palla Plot', "value": 'palla_plot' },
+  { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'ramprastha_plot' },
+  
+
 ]
 export const CategoryOptions= [
   { "key": 'banquet', "text": 'Banquet ', "value": 'banquet' },
