@@ -51,15 +51,12 @@ export const DateFilterOptions = [
     { key: 'year', text: 'YEARLY', value: 'year' },
   ]
 
-export const LeadHeadCells = [
+export const CommonLeadHeadCells = [
     { id: 'date', disablePadding: false, label: 'Date' },
     { id: 'name', disablePadding: true, label: 'Name' },    
-    { id: 'email', disablePadding: false, label: 'Email' },
     { id: 'phone', disablePadding: false, label: 'Phone' },
-    { id: 'center', disablePadding: false, label: 'Center' },
-    // { id: 'status', disablePadding: false, label: 'Status' },
     { id: 'source', disablePadding: false, label: 'Source' },
-    // { id: 'actions', disablePadding: false, label: 'Actions' },
+    // { id: 'status', disablePadding: false, label: 'Status' },
   ];
   export const ReviewHeadCells = [
     { id: 'date', disablePadding: false, label: 'Date' },
@@ -72,17 +69,10 @@ export const LeadHeadCells = [
     { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
     
 ]
-export const DepartmentOptions = [
-    { "key": 'corona', "text": 'Corona', "value": 'corona' },
-    { "key": 'cardio', "text": 'Cardio', "value": 'cardio' },
-    { "key": 'skin', "text": 'Skin', "value": 'skin' },
-    { "key": 'other', "text": 'Other', "value": 'other' },
-]
-export const PriorityOptions = [
-    { "key": 'hot', "text": 'Hot', "value": 'hot' },
-    { "key": 'cold', "text": 'Cold', "value": 'cold' },
-    { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
-    
+
+export const LocationOptions = [
+  { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
+  { "key": 'other', "text": 'Other', "value": 'other' },
 ]
 export const PropertyNameOptions = [
   { "key": '1', "text": 'PropertyName 1', "value": '1' },
@@ -92,5 +82,47 @@ export const PropertyNameOptions = [
 export const CategoryOptions= [
   { "key": 'banquet', "text": 'banquet ', "value": 'banquet' },
   { "key": 'room', "text": 'room ', "value": 'room' },
-  
+
 ]
+export const DepartmentOptions = [
+    { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
+    { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
+    { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
+    { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
+    { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
+    { "key": 'other', "text": 'Other', "value": 'other' },
+]
+export const DoctorOptions = [
+  { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
+  { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
+  { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
+  { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
+  { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
+  { "key": 'other', "text": 'Other', "value": 'other' },
+]
+export const PriorityOptions = [
+    { "key": 'hot', "text": 'Hot', "value": 'hot' },
+    { "key": 'cold', "text": 'Cold', "value": 'cold' },
+    { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
+]
+
+            // <option value="Dermatology">Dermatology</option>
+            // <option value="Diagnostics">Diagnostics</option>
+            // <option value="Anaesthesia">Anaesthesia</option>
+            // <option value="Physiotherapy">Physiotherapy</option>
+            // <option value="Psychiatry">Psychiatry</option>
+            // <option value="Neurosciences">Neurosciences</option>
+            // <option value="Plastic Surgery">Plastic Surgery</option>
+            // <option value="Radiology">Radiology</option>
+            // <option value="Diabetes">Diabetes</option>
+            // <option value="Gastroenterology">Gastroenterology</option>
+            // <option value="Urology">Urology</option>
+            // <option value="Opthalmology">Opthalmology</option>
+            // <option value="Cardiology">Cardiology</option>
+            // <option value="Bariatric Surgery">Bariatric Surgery</option>
+            // <option value="Dietician">Dietician</option>
+            // <option value="Gynaecology">Gynaecology</option>
+            // <option value="Cosmo Dental">Cosmo Dental</option>
+            // <option value="Dental"> Dental</option>
+            // <option value="Paediatric">Paediatric</option>
+            // <option value="Others">Other</option>

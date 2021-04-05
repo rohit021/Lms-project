@@ -11,7 +11,6 @@ import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
 import {CommonLeadHeadCells} from '../../helpers/utils';
-// import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
@@ -22,19 +21,8 @@ const defaultData = {
   status:'',
   orderBy:'date',
   order: 'desc',
-  organization: "radix",
+  organization: "anardana",
 };
-
-// const topBarValues = [
-// 	{text: 'S.No', md:1, xs:3, sm:1},
-// 	{text: 'Name', md:2, xs:3, sm:2},
-// 	{text: 'Date', md:1, xs:3, sm:2},
-// 	{text: 'Email', md:2, xs:3, sm:1},
-// 	{text: 'Phone', md:2, xs:2, sm:2},
-// 	{text: 'Organization', md:2, xs:3, sm:2},
-// 	{text: 'Source', md:1, xs:3, sm:2},
-//   {text: 'Actions', md:1, xs:3, sm:2},    
-// ]
 
 const RadixLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
@@ -47,12 +35,11 @@ const RadixLeads = () => {
     email: "",
     phone: "",
     source: "",
-    radixDepartment: "",
-    doctor: "",
+    center: "",
     location: "",
     priority: "",
     expectedAmount: 0,
-    organization: "radix",
+    organization: "anardana",
     date: formattedTodayDate,
   });
   
@@ -61,13 +48,8 @@ const RadixLeads = () => {
     if (openmodal) {
       handleReset();
       setOpenModal(false);
-   resetStep();
-   setValue("")
-
-
     } else {
       setOpenModal(true);
-
     }
   };
 
@@ -91,10 +73,9 @@ const RadixLeads = () => {
   };
 
   const handleSubmit = ()=>{
-    console.log("inside handle submit method")
    AuthService.createNewLead(FormData)
    .then(function (response) {
-     console.log("inside Create Lead")
+    //  console.log("inside Create Lead")
      ModalChange();
        // window.location.reload();
    })
