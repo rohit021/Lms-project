@@ -37,7 +37,7 @@ exports.createLead = function (req, res) {
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     var sort = {}, matchQuery ={};
     var sort_parameter = data.orderBy;
     var order = data.order;
@@ -47,10 +47,14 @@ exports.getAllLeads = function (req, res) {
     }
     sort[sort_parameter] = sort_order;
     sort['_id'] = sort_order ==1? -1 : 1;    
+    if(data.radixDepartment)
+        matchQuery.radixDepartment = data.radixDepartment;
     if(data.organization)
-    matchQuery.organization = data.organization;
+        matchQuery.organization = data.organization;
     if(data.source)
         matchQuery.source = data.source;
+    if(data.category)
+        matchQuery.category = data.category;
     if(data.status)
         matchQuery.priority = data.status;    
     if(data.startDate && data.endDate)
@@ -194,7 +198,7 @@ exports.updateLead = function (req, res) {
 
 // Method to delete a particular Lead
 exports.deleteLead = function (req, res) {
-    var leadId = req.params.id;
+    var leadId = req.body.id;
     Lead.findOneAndDelete({ _id: leadId }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
