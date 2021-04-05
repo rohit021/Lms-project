@@ -29,14 +29,13 @@ const ValidationSchema = yup.object().shape({
 const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
   const[newDoctorOptions, setNewDoctorOptions]=useState(DoctorOptions);
-  const[newdepartmentOptions,setNewDepartmentOptions]=useState(DepartmentOptions);
-
+  
   const DepartmentChange=(event)=>{
     const newdepartment=event.target.value;
-    console.log(newdepartment)
-    const DoctorList=DoctorOptions.filter(newData=>newdepartment.key===newData.dept);
+    // console.log(newdepartment)
+    const DoctorList=DoctorOptions.filter(newData=>newdepartment===newData.dept);
     setNewDoctorOptions(DoctorList);
-    console.log(DoctorList)
+    // console.log(DoctorList)
   }
 
   return (
@@ -67,13 +66,12 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                       helperText={errors.radixDepartment && touched.radixDepartment ? errors.radixDepartment : ""}
                       // onChange={handleChange}
                       onChange={(event)=>{
-                        console.log("inside text field",event.target.value.text);
                         DepartmentChange(event);
                         handleChange(event);
                         }
                       }
                     >
-                      {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option}>{option.text}</MenuItem>)}   
+                      {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                   </FormControl>                
                 </Grid>

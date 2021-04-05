@@ -3,6 +3,7 @@ import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, 
 import { Dialog,DialogActions, DialogTitle, DialogContentText, DialogContent, Slide }from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
+import EditModal from '../modals/edit-modal';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
 
@@ -159,6 +160,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     });
     return (
         <Paper className={classes.paper}>
+            {openmodal ? <EditModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} /> : ''}
             {deleteModal ? <DeleteDialog /> : ''}
             <TableContainer>
                 <Table

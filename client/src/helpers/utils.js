@@ -117,23 +117,21 @@ export const DepartmentOptions = [
   { "key": 'others', "text": 'Others', "value": 'others' },
 ]
 export const DoctorOptions = [
-{ "key": 'ravimalik', "text": 'Dr.Ravi Malik', "value": 'ravimalik', "dept":"paediatric" },
-{ "key": 'renumalik', "text": 'Dr.Renu Malik', "value": 'renumalik',"dept":"gynaecology" },
-{ "key": 'shrutimalik', "text": 'Dr.Shruti Malik', "value": 'shrutimalik',"dept":"dental" },
-{ "key": 'vaishali', "text": 'Dr.Vaishali Saini', "value": 'vaishali',"dept":"gynaecology" },
-{ "key": 'meenu', "text": 'Dr.Meenu Aggarwal', "value": 'meenu',"dept":"gynaecology" },
-{ "key": 'rajni', "text": 'Dr.Rajni', "value": 'rajni',"dept":"gynaecology" },
-{ "key": 'rupam', "text": 'Dr.Rupam Arora', "value": 'rupam',"dept":"gynaecology" },
-{ "key": 'kksinha', "text": 'Dr.K.K Sinha', "value": 'kksinha',"dept":"radiology" },
-{ "key": 'tkvohra', "text": 'Dr.T.K Vohra', "value": 'tkvohra',"dept":"radiology" },
-{ "key": 'kirtidwivedi', "text": 'Dr.Kirti Dwivedi', "value": 'kirtidwivedi',"dept":"physiotherapy" },
-{ "key": 'ravikumar', "text": 'Dr.Ravi Kumar', "value": 'ravikumar',"dept":"physiotherapy" },
-{ "key": 'amitbatra', "text": 'Dr.Amit Batra', "value": 'amitbatra',"dept":"neurosciences" },
-{ "key": 'rahulgupta', "text": 'Dr.Rahul Gupta', "value": 'rahulgupta',"dept":"neurosciences" },
-{ "key": 'sandeepgovil', "text": 'Dr.Sandeep Govil', "value": 'sandeepgovil',"dept":"psychiatry" },
-{ "key": 'mohitsharma', "text": 'Dr.Mohit Sharma', "value": 'mohitsharma',"dept":"psychiatry" },
-
-
+{ "key": 'ravimalik', "text": 'Dr.Ravi Malik', "value": 'Dr.Ravi Malik', "dept":"paediatric" },
+{ "key": 'renumalik', "text": 'Dr.Renu Malik', "value": 'Dr.Renu Malik',"dept":"gynaecology" },
+{ "key": 'shrutimalik', "text": 'Dr.Shruti Malik', "value": 'Dr.Shruti Malik',"dept":"dental" },
+{ "key": 'vaishali', "text": 'Dr.Vaishali Saini', "value": 'Dr.Vaishali Saini',"dept":"gynaecology" },
+{ "key": 'meenu', "text": 'Dr.Meenu Aggarwal', "value": 'Dr.Meenu Aggarwal',"dept":"gynaecology" },
+{ "key": 'rajni', "text": 'Dr.Rajni', "value": 'Dr.Rajni',"dept":"gynaecology" },
+{ "key": 'rupam', "text": 'Dr.Rupam Arora', "value": 'Dr.Rupam Arora',"dept":"gynaecology" },
+{ "key": 'kksinha', "text": 'Dr.K.K Sinha', "value": 'Dr.K.K Sinha',"dept":"radiology" },
+{ "key": 'tkvohra', "text": 'Dr.T.K Vohra', "value": 'Dr.T.K Vohra',"dept":"radiology" },
+{ "key": 'kirtidwivedi', "text": 'Dr.Kirti Dwivedi', "value": 'Dr.Kirti Dwivedi',"dept":"physiotherapy" },
+{ "key": 'ravikumar', "text": 'Dr.Ravi Kumar', "value": 'Dr.Ravi Kumar',"dept":"physiotherapy" },
+{ "key": 'amitbatra', "text": 'Dr.Amit Batra', "value": 'Dr.Amit Batra',"dept":"neurosciences" },
+{ "key": 'rahulgupta', "text": 'Dr.Rahul Gupta', "value": 'Dr.Rahul Gupta',"dept":"neurosciences" },
+{ "key": 'sandeepgovil', "text": 'Dr.Sandeep Govil', "value": 'Dr.Sandeep Govil',"dept":"psychiatry" },
+{ "key": 'mohitsharma', "text": 'Dr.Mohit Sharma', "value": 'Dr.Mohit Sharma',"dept":"psychiatry" },
 
 ]
 
