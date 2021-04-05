@@ -12,83 +12,32 @@ exports.createLead = function (req, res) {
     var data = req.body;
     // console.log(req.body)
     // return;
-    var errorResult = {
-        error: true,
-        message: "",
-    }
-    async.waterfall([
-        function (done) {
-            if (!data.name) {
-                errorResult.message += "name is missing ";
+    var leaddata = new Lead(data);
+    leaddata.save(function (err, result) {
+        if (err) {
+            // console.log("error----------", err);
+            return res.status(400).json({
+                error: errorHandler.getErrorMessage(err)
+            })
+        } else {
+            var outputResult = {
+                id: result._id,
+                name: result.name,
+                phone: result.phone,
             }
-            if (!data.date) {
-                errorResult.message += " date is missing";                
-            }
-            if (!data.phone) {
-                errorResult.message += " Phone number is missing";
-            }
-            if (data.phone.length!=10) {
-                errorResult.message += " Phone number not valid";
-            }
-            if (!data.organization) {
-                errorResult.message += " organization is missing";
-            }
-            if (!data.center) {
-                errorResult.message += " center is missing";
-            }
-            if (!data.department) {
-                errorResult.message += " department is missing";
-            }
-            if (!data.amount) {
-                errorResult.message += " amount is missing";
-            }
-            if (!data.location) {
-                errorResult.message += " location is missing";
-            }
-            if (!data.priority) {
-                errorResult.message += " prority is missing";
-            }
-            if (!data.source) {
-                errorResult.message += " source is missing";
-            }
-            if (errorResult.message) done(errorResult);
-            else done(null, data)
-        },
-        function (data) {
-            var leaddata = new Lead(data);
-            leaddata.save(function (err, result) {
-                if (err) {
-                    // console.log("error----------", err);
-                    return res.status(400).json({
-                        error: errorHandler.getErrorMessage(err)
-                    })
-                } else {
-                    var outputResult = {
-                        id: result._id,
-                        name: result.name,
-                        phone: result.phone,
-                    }
-                    res.json({
-                        success: 1,
-                        "message": "Lead Added Successfully",
-                        outputResult
-                    });
-                }
+            res.json({
+                success: 1,
+                "message": "Lead Added Successfully",
+                outputResult
             });
         }
-
-    ], function (err) {
-        console.log("error----------", err);
-        return res.status(400).send({
-            message: err.message
-        });
     });
 }
 
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    // console.log(req.body);
+    console.log(req.body);
     var sort = {}, matchQuery ={};
     var sort_parameter = data.orderBy;
     var order = data.order;
@@ -101,7 +50,9 @@ exports.getAllLeads = function (req, res) {
     if(data.organization)
     matchQuery.organization = data.organization;
     if(data.source)
-    matchQuery.source = data.source;
+        matchQuery.source = data.source;
+    if(data.status)
+        matchQuery.priority = data.status;    
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     // console.log(sort);

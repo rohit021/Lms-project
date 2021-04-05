@@ -69,15 +69,60 @@ export const CommonLeadHeadCells = [
     { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
     { "key": 'other', "text": 'Other', "value": 'other' },
 ]
+
+export const LocationOptions = [
+  { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
+  { "key": 'other', "text": 'Other', "value": 'other' },
+]
+export const PropertyNameOptions = [
+  { "key": '1', "text": 'PropertyName 1', "value": '1' },
+  { "key": '2', "text": 'PropertyName 2', "value": '2' },
+  { "key": '3', "text": 'PropertyName 3', "value": '3' },
+]
+export const CategoryOptions= [
+  { "key": 'banquet', "text": 'banquet ', "value": 'banquet' },
+  { "key": 'room', "text": 'room ', "value": 'room' },
+
+]
 export const DepartmentOptions = [
-    { "key": 'corona', "text": 'Corona', "value": 'corona' },
-    { "key": 'cardio', "text": 'Cardio', "value": 'cardio' },
-    { "key": 'skin', "text": 'Skin', "value": 'skin' },
+    { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
+    { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
+    { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
+    { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
+    { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
     { "key": 'other', "text": 'Other', "value": 'other' },
+]
+export const DoctorOptions = [
+  { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
+  { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
+  { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
+  { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
+  { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
+  { "key": 'other', "text": 'Other', "value": 'other' },
 ]
 export const PriorityOptions = [
     { "key": 'hot', "text": 'Hot', "value": 'hot' },
     { "key": 'cold', "text": 'Cold', "value": 'cold' },
     { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
- 
 ]
+
+            // <option value="Dermatology">Dermatology</option>
+            // <option value="Diagnostics">Diagnostics</option>
+            // <option value="Anaesthesia">Anaesthesia</option>
+            // <option value="Physiotherapy">Physiotherapy</option>
+            // <option value="Psychiatry">Psychiatry</option>
+            // <option value="Neurosciences">Neurosciences</option>
+            // <option value="Plastic Surgery">Plastic Surgery</option>
+            // <option value="Radiology">Radiology</option>
+            // <option value="Diabetes">Diabetes</option>
+            // <option value="Gastroenterology">Gastroenterology</option>
+            // <option value="Urology">Urology</option>
+            // <option value="Opthalmology">Opthalmology</option>
+            // <option value="Cardiology">Cardiology</option>
+            // <option value="Bariatric Surgery">Bariatric Surgery</option>
+            // <option value="Dietician">Dietician</option>
+            // <option value="Gynaecology">Gynaecology</option>
+            // <option value="Cosmo Dental">Cosmo Dental</option>
+            // <option value="Dental"> Dental</option>
+            // <option value="Paediatric">Paediatric</option>
+            // <option value="Others">Other</option>

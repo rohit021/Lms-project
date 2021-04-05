@@ -227,6 +227,11 @@ const CommonTable = ({LeadHeadCells, filterValue, tableData, updateData}) => {
                                 <TableCell className={classes.text}>{data.name}</TableCell>
                                 <TableCell className={classes.text}>{data.phone}</TableCell>
                                 <TableCell className={classes.text}>{data.source}</TableCell>
+                                {
+                                    filterData.organization === "radix" ?
+                                        <TableCell className={classes.text}>{data.doctor}</TableCell>
+                                    :" "
+                                }
                                 <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
                                 <TableCell>
                                     <Button
