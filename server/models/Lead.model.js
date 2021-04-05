@@ -39,6 +39,10 @@ const LeadSchema = new Schema({
         type: String, 
         maxlength: 30,
     },
+    doctor: {
+        type: String, 
+        maxlength: 30,
+    },
     center:{
         type: String, 
         maxlength: 30,
@@ -48,6 +52,10 @@ const LeadSchema = new Schema({
         maxlength: 30,
     },
     location:{
+        type:String,
+        maxlength:30
+    },
+    propertyName:{
         type:String,
         maxlength:30
     },
