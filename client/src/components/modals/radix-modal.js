@@ -26,9 +26,21 @@ const ValidationSchema = yup.object().shape({
       .required("This field is required"),
 })
   
+ 
+
 const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
   const [direction, setDirection] = useState('back');
+  const[newDoctorOptions, setNewDoctorOptions]=useState(DoctorOptions);
+  const[newdepartmentOptions,setNewDepartmentOptions]=useState(DepartmentOptions);
+
+  const DepartmentChange=(event)=>{
+    const newdepartment=event.target.value;
+    console.log(newdepartment)
+    const DoctorList=DoctorOptions.filter(newData=>newdepartment.key===newData.dept);
+    setNewDoctorOptions(DoctorList);
+    console.log(DoctorList)
+  }
 
   return (
     <React.Fragment>
@@ -57,8 +69,16 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                         value={values.radixDepartment}
                         error={errors.radixDepartment && touched.radixDepartment}
                         helperText={errors.radixDepartment && touched.radixDepartment ? errors.radixDepartment : ""}
-                        onChange={handleChange}>
-                        {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        // onChange={handleChange}
+                        onChange={(event)=>{
+                          console.log("inside text field",event.target.value.text);
+                            DepartmentChange(event);
+                          handleChange(event);
+                          
+                        }
+                        }
+                         >
+                        {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>
@@ -73,7 +93,7 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                         error={errors.doctor && touched.doctor}
                         helperText={errors.doctor && touched.doctor ? errors.doctor : ""}
                         onChange={handleChange}>
-                        {DoctorOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        {newDoctorOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>

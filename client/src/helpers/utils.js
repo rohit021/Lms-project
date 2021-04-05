@@ -90,39 +90,47 @@ export const DepartmentOptions = [
     { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
     { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
     { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
-    { "key": 'other', "text": 'Other', "value": 'other' },
+    { "key": 'diagnostics', "text": 'Diagnostics', "value": 'diagnostics' },
+    { "key": 'physiotherapy', "text": 'Physiotherapy', "value": 'physiotherapy' },
+    { "key": 'psychiatry', "text": 'Psychiatry', "value": 'psychiatry' },
+    { "key": 'neurosciences', "text": 'Neurosciences', "value": 'neurosciences' },
+    { "key": 'plasticsurgery', "text": 'Plastic Surgery', "value": 'plasticsurgery' },
+    { "key": 'radiology', "text": 'Radiology', "value": 'radiology' },
+    { "key": 'diabetes', "text": 'Diabetes', "value": 'diabetes' },
+    { "key": 'gastroenterology', "text": 'Gastroenterology', "value": 'gastroenterology' },
+    { "key": 'urology', "text": 'Urology', "value": 'urology' },
+    { "key": 'opthalmology', "text": 'Opthalmology', "value": 'opthalmology' },
+    { "key": 'cardiology', "text": 'Cardiology', "value": 'cardiology' },
+    { "key": 'bariatricsurgery', "text": 'Bariatric Surgery', "value": 'bariatricsurgery' },
+    { "key": 'dietician', "text": 'Dietician', "value": 'dietician' },
+    { "key": 'gynaecology', "text": 'Gynaecology', "value": 'gynaecology' },
+    { "key": 'cosmodental', "text": 'Cosmo Dental', "value": 'cosmodental' },
+    { "key": 'dental', "text": 'Dental', "value": 'dental' },
+    { "key": 'paediatric', "text": 'Paediatric', "value": 'paediatric' },
+    { "key": 'others', "text": 'Others', "value": 'others' },
 ]
 export const DoctorOptions = [
-  { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
-  { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
-  { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
-  { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
-  { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
-  { "key": 'other', "text": 'Other', "value": 'other' },
+  { "key": 'ravimalik', "text": 'Dr.Ravi Malik', "value": 'ravimalik', "dept":"paediatric" },
+  { "key": 'renumalik', "text": 'Dr.Renu Malik', "value": 'renumalik',"dept":"gynaecology" },
+  { "key": 'shrutimalik', "text": 'Dr.Shruti Malik', "value": 'shrutimalik',"dept":"dental" },
+  { "key": 'vaishali', "text": 'Dr.Vaishali Saini', "value": 'vaishali',"dept":"gynaecology" },
+  { "key": 'meenu', "text": 'Dr.Meenu Aggarwal', "value": 'meenu',"dept":"gynaecology" },
+  { "key": 'rajni', "text": 'Dr.Rajni', "value": 'rajni',"dept":"gynaecology" },
+  { "key": 'rupam', "text": 'Dr.Rupam Arora', "value": 'rupam',"dept":"gynaecology" },
+  { "key": 'kksinha', "text": 'Dr.K.K Sinha', "value": 'kksinha',"dept":"radiology" },
+  { "key": 'tkvohra', "text": 'Dr.T.K Vohra', "value": 'tkvohra',"dept":"radiology" },
+  { "key": 'kirtidwivedi', "text": 'Dr.Kirti Dwivedi', "value": 'kirtidwivedi',"dept":"physiotherapy" },
+  { "key": 'ravikumar', "text": 'Dr.Ravi Kumar', "value": 'ravikumar',"dept":"physiotherapy" },
+  { "key": 'amitbatra', "text": 'Dr.Amit Batra', "value": 'amitbatra',"dept":"neurosciences" },
+  { "key": 'rahulgupta', "text": 'Dr.Rahul Gupta', "value": 'rahulgupta',"dept":"neurosciences" },
+  { "key": 'sandeepgovil', "text": 'Dr.Sandeep Govil', "value": 'sandeepgovil',"dept":"psychiatry" },
+  { "key": 'mohitsharma', "text": 'Dr.Mohit Sharma', "value": 'mohitsharma',"dept":"psychiatry" },
+
+
+ 
 ]
 export const PriorityOptions = [
     { "key": 'hot', "text": 'Hot', "value": 'hot' },
     { "key": 'cold', "text": 'Cold', "value": 'cold' },
     { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
 ]
-
-            // <option value="Dermatology">Dermatology</option>
-            // <option value="Diagnostics">Diagnostics</option>
-            // <option value="Anaesthesia">Anaesthesia</option>
-            // <option value="Physiotherapy">Physiotherapy</option>
-            // <option value="Psychiatry">Psychiatry</option>
-            // <option value="Neurosciences">Neurosciences</option>
-            // <option value="Plastic Surgery">Plastic Surgery</option>
-            // <option value="Radiology">Radiology</option>
-            // <option value="Diabetes">Diabetes</option>
-            // <option value="Gastroenterology">Gastroenterology</option>
-            // <option value="Urology">Urology</option>
-            // <option value="Opthalmology">Opthalmology</option>
-            // <option value="Cardiology">Cardiology</option>
-            // <option value="Bariatric Surgery">Bariatric Surgery</option>
-            // <option value="Dietician">Dietician</option>
-            // <option value="Gynaecology">Gynaecology</option>
-            // <option value="Cosmo Dental">Cosmo Dental</option>
-            // <option value="Dental"> Dental</option>
-            // <option value="Paediatric">Paediatric</option>
-            // <option value="Others">Other</option>
