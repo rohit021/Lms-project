@@ -37,7 +37,7 @@ exports.createLead = function (req, res) {
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     var sort = {}, matchQuery ={};
     var sort_parameter = data.orderBy;
     var order = data.order;
@@ -47,10 +47,14 @@ exports.getAllLeads = function (req, res) {
     }
     sort[sort_parameter] = sort_order;
     sort['_id'] = sort_order ==1? -1 : 1;    
+    if(data.radixDepartment)
+        matchQuery.radixDepartment = data.radixDepartment;
     if(data.organization)
-    matchQuery.organization = data.organization;
+        matchQuery.organization = data.organization;
     if(data.source)
         matchQuery.source = data.source;
+    if(data.category)
+        matchQuery.category = data.category;
     if(data.status)
         matchQuery.priority = data.status;    
     if(data.startDate && data.endDate)
@@ -121,8 +125,8 @@ exports.getLead = function (req, res) {
 
 // Method to Update Form By ID
 exports.updateLead = function (req, res) {
-    var leadId = req.params.id;
-    Lead.findOne({ _id: leadId }).exec(function (err, lead) {
+    var data = req.body
+    Lead.findOne({ _id: data._id }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -133,35 +137,41 @@ exports.updateLead = function (req, res) {
             if (data.name) {
                 lead.name = data.name
             }
-            if (data.date) {
-                lead.date = data.date;
-            }
             if (data.phone) {
                 lead.phone = data.phone;
-            }
-            if (data.organization) {
-                lead.organization = data.organization;
-            }
-            if (data.source) {
-                lead.source = data.source;
-            }
-            if(data.priority){
-                lead.priority=data.priority;
-            }
-            if(data.location){
-                lead.location=data.location;
-            }
-            if(data.center){
-                lead.center=data.center;
             }
             if(data.email){
                 lead.email=data.email;
             }
-            if(data.department){
-                lead.department=data.department;
+            if (data.source) {
+                lead.source = data.source;
             }
-            if(data.amount){
-                lead.amount=data.amount;
+            if (data.organization) {
+                lead.organization = data.organization;
+            }
+            if(data.radixDepartment){
+                lead.radixDepartment=data.radixDepartment;
+            }
+            if(data.doctor){
+                lead.doctor=data.doctor;
+            }
+            if(data.location){
+                lead.location=data.location;
+            }
+            if(data.category){
+                lead.category=data.category;
+            }
+            if(data.propertyName){
+                lead.propertyName=data.propertyName;
+            }
+            if(data.center){
+                lead.center=data.center;
+            }
+            if(data.priority){
+                lead.priority=data.priority;
+            }
+            if(data.expectedAmount){
+                lead.expectedAmount=data.expectedAmount;
             }
             lead.save(function (err, result) {
                 if (err) {
@@ -194,7 +204,7 @@ exports.updateLead = function (req, res) {
 
 // Method to delete a particular Lead
 exports.deleteLead = function (req, res) {
-    var leadId = req.params.id;
+    var leadId = req.body.id;
     Lead.findOneAndDelete({ _id: leadId }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({

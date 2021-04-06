@@ -6,7 +6,7 @@ module.exports = {
   clienthost: process.env.ClientHost || 'http://localhost:3000',
   DB: {
     uri: process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 
-    'mongodb://localhost:27017/lms-dev',
+    'mongodb://localhost:27017/lmsdev',
     options: {useNewUrlParser: true, useUnifiedTopology:true, useCreateIndex: true},
     // Enable mongoose debug mode
     debug: false

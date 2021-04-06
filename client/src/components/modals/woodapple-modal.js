@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import {CenterOptions, LocationOptions } from "../../helpers/utils";
+import {CategoryOptions, LocationOptions } from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ValidationSchema = yup.object().shape({
-  center: yup
+  category: yup
       .string()
       .required("This field is required"),
   location: yup
@@ -49,13 +49,13 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     <TextField
                         size="small"
                         select
-                        label="Center *"
-                        name="center"
-                        value={values.center}
-                        error={errors.center && touched.center}
-                        helperText={errors.center && touched.center ? errors.center : ""}
+                        label="Category *"
+                        name="category"
+                        value={values.category}
+                        error={errors.category && touched.category}
+                        helperText={errors.category && touched.category ? errors.category : ""}
                         onChange={handleChange}>
-                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        {CategoryOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>
@@ -69,7 +69,7 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                         value={values.location}
                         error={errors.location && touched.location}
                         helperText={errors.location && touched.location ? errors.location : ""}
-                        onChange={handleChange}>
+                        onChange={handleChange}>  
                         {LocationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                

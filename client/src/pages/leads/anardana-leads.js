@@ -1,16 +1,16 @@
 import React, {useState, useEffect } from "react";
-import { Grid, Stepper, Button, Step, StepLabel, CircularProgress } from "@material-ui/core";
+import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
 import RadixFilter from "../../components/filters/filter";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
 import Modal from '../../components/modals/modal';
 import UserModal from '../../components/modals/user-modal';
-import RadixModal from '../../components/modals/radix-modal';
+import AnardanaModal from '../../components/modals/anardana-modal';
 import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
-import {CommonLeadHeadCells} from '../../helpers/utils';
+import {Steps, CommonLeadHeadCells} from '../../helpers/utils';
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
@@ -38,12 +38,11 @@ const RadixLeads = () => {
     center: "",
     location: "",
     priority: "",
-    expectedAmount: 0,
+    expectedAmount: null,
     organization: "anardana",
     date: formattedTodayDate,
   });
   
-  const steps = ['User Information', 'Organization Information', 'Lead  Information'];  
   const ModalChange = () => {
     if (openmodal) {
       handleReset();
@@ -73,26 +72,25 @@ const RadixLeads = () => {
   };
 
   const handleSubmit = ()=>{
-   AuthService.createNewLead(FormData)
-   .then(function (response) {
-    //  console.log("inside Create Lead")
-     ModalChange();
-       // window.location.reload();
-   })
-   .catch(function (error) {
+    AuthService.createNewLead(FormData)
+    .then(function (response) {
+      ModalChange();
+      fetchData();
+    })
+    .catch(function (error) {
       //  setTimeout(() => {
       //      setError("");
       //  }, 5000);
        // return setError(error.response.data.message);   
-   })  
-
+    })  
   }
+  
   const renderStepContent = (step) => {
     switch (step) {
       case 1:
         return <UserModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} />;
       case 2:
-        return <RadixModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;
+        return <AnardanaModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;
       case 3:
         return <LeadModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
       case 4:
@@ -106,6 +104,10 @@ const RadixLeads = () => {
     setFilterValue(filters);
   }
   useEffect(() => {
+    fetchData();
+  }, [filterValue]);
+        
+  const fetchData = async () => {
     setLoading(true);
     AuthService.getAllLeads(filterValue).then(
       (data) => {
@@ -116,7 +118,7 @@ const RadixLeads = () => {
       }
     );
     setLoading(false);
-  }, [filterValue]);
+  };
 
   return (
     <Grid container spacing={4}>
@@ -129,9 +131,9 @@ const RadixLeads = () => {
             }
           }>
            Add data </AddButton>          
-          <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
+          <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange} fetchData={fetchData}>
             <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
-              {steps.map(label => (
+              {Steps.map(label => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
@@ -141,10 +143,6 @@ const RadixLeads = () => {
               {renderStepContent(activeStep)}
             </React.Fragment>
           </Modal>
-        
-               
-        
-        {/* {openmodal ? <RadixModal status="add" openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''} */}
         {
           !loading && leadData &&
             <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData}/>
