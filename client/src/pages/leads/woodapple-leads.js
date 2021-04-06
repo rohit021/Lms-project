@@ -39,7 +39,7 @@ const RadixLeads = () => {
     doctor: "",
     location: "",
     priority: "",
-    expectedAmount: null,
+    expectedAmount: "",
     organization: "woodapple",
     date: formattedTodayDate,
   });

@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import {PropertyNameOptions, LocationOptions } from "../../helpers/utils";
+import {PropertyNameOptions} from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -18,7 +18,10 @@ const ValidationSchema = yup.object().shape({
   propertyName: yup
       .string()
       .required("This field is required"),
-  location: yup
+  // location: yup
+  //     .string()
+  //     .required("This field is required"),
+   visit: yup
       .string()
       .required("This field is required"),
 })
@@ -57,19 +60,44 @@ const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                 </FormControl>                
                 </Grid>
                 <Grid item md={12} xs={12} sm={12}>
-                <FormControl className={classes.selectStyle}>
-                    <TextField
-                        size="small"
-                        select
-                        label="Location *"
-                        name="location"
-                        value={values.location}
-                        error={errors.location && touched.location}
-                        helperText={errors.location && touched.location ? errors.location : ""}
-                        onChange={handleChange}>
-                        {LocationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
-                    </TextField>
-                </FormControl>                
+                  <TextField
+                    variant="outlined"
+                    id="location"
+                    label="Location*"
+                    name="location"
+                    onChange={handleChange}
+                    value={values.location}
+                    error={errors.location && touched.location}
+                    helperText={errors.location && touched.location ? errors.location : ""}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item md={12} xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    id="remark"
+                    label="remark"
+                    name="remark"
+                    multiline
+                    onChange={handleChange}
+                    value={values.remark}
+                    error={errors.remark && touched.remark}
+                    helperText={errors.remark && touched.remark ? errors.remark : ""}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item md={12} xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    id="visit"
+                    label="visit"
+                    name="visit"
+                    onChange={handleChange}
+                    value={values.visit}
+                    error={errors.visit && touched.visit}
+                    helperText={errors.visit && touched.visit ? errors.visit : ""}
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button
