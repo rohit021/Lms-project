@@ -59,6 +59,12 @@ const LeadSchema = new Schema({
         type:String,
         maxlength:30
     },
+    remark:{
+        type: String,
+    },
+    visit:{
+        type: String,
+    },
     expectedAmount:{
         type:Number,
         default: 0
@@ -71,7 +77,10 @@ const LeadSchema = new Schema({
     priority:{
         type:String,
         required:true
-    },   
+    }, 
+    otherspecify: {
+        type:String,     
+    },  
     created_at: {
         type: Date,
         default: Date.now

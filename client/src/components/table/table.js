@@ -203,8 +203,15 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                             {filterData.organization === "relp" ?
                                 <TableCell className={classes.bold}>
                                     Property Name
-                                </TableCell>: ""
+                                </TableCell>
+                                : ""
                             }
+                            {filterData.organization === "relp" ?
+                                <TableCell className={classes.bold}>
+                                    Remarks
+                                </TableCell>
+                                : ""
+                            }                            
                             {filterData.organization === "woodapple" ?
                                 <TableCell className={classes.bold}>
                                     Category
@@ -245,10 +252,15 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                                         <TableCell className={classes.text}>{data.center}</TableCell>
                                     :" "
                                 }
-                                 {
-                                    filterData.organization === "relp" ?
+                                {
+                                    filterData.organization === "relp" ? 
                                         <TableCell className={classes.text}>{data.propertyName}</TableCell>
-                                    :" "
+                                        :" "
+                                }
+                                {
+                                    filterData.organization === "relp" ? 
+                                        <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.remark}</TableCell>
+                                        :" "
                                 }
                                 <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
                                 <TableCell>

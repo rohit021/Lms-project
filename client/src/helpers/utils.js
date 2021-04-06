@@ -45,7 +45,11 @@ export const SourceOptions = [
     { "key": 'friends', "text": 'Friends', "value": 'friends' },
     { "key": 'google', "text": 'Google', "value": 'google' },
     { "key": 'social', "text": 'Social Media', "value": 'social' },
-    { "key": 'other', "text": 'Other', "value": 'other' },
+    { "key": 'email', "text": 'Email Marketing', "value": 'email' },
+    { "key": 'radix practo', "text": 'Radix Practo', "value": 'radix practo' },
+    { "key": 'dental practo', "text": 'Dental Practo', "value": 'dental practo' },
+    { "key": 'housing', "text": 'Housing', "value": 'housing' },
+    { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
 ]
 export const DateFilterOptions = [
     { key: 'week', text: 'WEEKLY', value: 'week' },
@@ -66,16 +70,14 @@ export const CommonLeadHeadCells = [
     
   ];
   export const CenterOptions = [
-    { "key": 'delhi', "text": 'Delhi', "value": 'delhi' },
-    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
     { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
-    { "key": 'other', "text": 'Other', "value": 'other' },
+    { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'preet vihar' },
+    { "key": 'janakpuri', "text": 'Janakpuri', "value": 'janakpuri' },
+    { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'vikasmarg' },
+    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
+    
 ]
 
-export const LocationOptions = [
-  { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
-  { "key": 'other', "text": 'Other', "value": 'other' },
-]
 export const PropertyNameOptions = [
   { "key": '1704', "text": 'Amrapali B-1704', "value": 'amrapali_B-1704' },
   { "key": '1204', "text": 'Amrapali G-1204', "value": 'amrapali_G-1204' },
