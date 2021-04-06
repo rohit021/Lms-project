@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
  
 const ConfirmDetailsModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const [direction, setDirection] = useState('back');
-  const { name, phone, email, source, radixDepartment, doctor, location, priority, expectedAmount, date } = FormData;
+  const { name, phone, email, source, center, category, propertyName, radixDepartment, doctor, organization, location, priority, expectedAmount, date } = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -63,29 +62,90 @@ const ConfirmDetailsModal = ({FormData, handleBack, handleSubmit}) => {
         <Typography variant="h6" gutterBottom >
             Organization Information
         </Typography>
-        <Grid container spacing={2}>
-            <Grid item md={4} xs={4} sm={4}>
-                <ListItemText
-                    primary='Dept'
-                    secondary={radixDepartment}
-                    className={classes.textCenter}
-                />
+        {organization==="radix"?
+            <Grid container spacing={2}>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Dept'
+                        secondary={radixDepartment}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Doctor'
+                        secondary={doctor}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Location'
+                        secondary={location}
+                        className={classes.textCenter}
+                    />
+                </Grid>
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
-                <ListItemText
-                    primary='Doctor'
-                    secondary={doctor}
-                    className={classes.textCenter}
-                />
+            :""
+        }
+        {organization==="anardana"?
+            <Grid container spacing={2}>
+                <Grid item md={6} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Center'
+                        secondary={center}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Location'
+                        secondary={location}
+                        className={classes.textCenter}
+                    />
+                </Grid>
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
-                <ListItemText
-                    primary='Location'
-                    secondary={location}
-                    className={classes.textCenter}
-                />
+            :""
+        }
+        {organization==="relp"?
+            <Grid container spacing={2}>
+                <Grid item md={6} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Property Name'
+                        secondary={propertyName}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Location'
+                        secondary={location}
+                        className={classes.textCenter}
+                    />
+                </Grid>
             </Grid>
-        </Grid>
+            :""
+        }        
+        {organization==="woodapple"?
+            <Grid container spacing={2}>
+                <Grid item md={6} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Category'
+                        secondary={category}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Location'
+                        secondary={location}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+            </Grid>
+            :""
+        }
+        
         <Divider/>
         <Typography variant="h6" gutterBottom >
             Lead Information

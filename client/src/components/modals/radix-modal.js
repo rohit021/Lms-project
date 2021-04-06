@@ -28,7 +28,15 @@ const ValidationSchema = yup.object().shape({
   
 const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
-  const [direction, setDirection] = useState('back');
+  const[newDoctorOptions, setNewDoctorOptions]=useState(DoctorOptions);
+  
+  const DepartmentChange=(event)=>{
+    const newdepartment=event.target.value;
+    // console.log(newdepartment)
+    const DoctorList=DoctorOptions.filter(newData=>newdepartment===newData.dept);
+    setNewDoctorOptions(DoctorList);
+    // console.log(DoctorList)
+  }
 
   return (
     <React.Fragment>
@@ -38,9 +46,8 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
       <Formik
         initialValues={FormData}
        onSubmit={values => {
-           console.log("inside");
           setFormData(values);
-          direction === 'back' ? handleBack() : handleNext();
+          handleNext();
         }}
         validationSchema={ValidationSchema}
         >
@@ -48,19 +55,25 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
             <Form className={classes.form}>
               <Grid container spacing={2}>
                 <Grid item md={12} xs={12} sm={12}>
-                <FormControl className={classes.selectStyle}>
+                  <FormControl className={classes.selectStyle}>
                     <TextField
-                        size="small"
-                        select
-                        label="Department *"
-                        name="radixDepartment"
-                        value={values.radixDepartment}
-                        error={errors.radixDepartment && touched.radixDepartment}
-                        helperText={errors.radixDepartment && touched.radixDepartment ? errors.radixDepartment : ""}
-                        onChange={handleChange}>
-                        {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                      size="small"
+                      select
+                      label="Department *"
+                      name="radixDepartment"
+                      value={values.radixDepartment}
+                      error={errors.radixDepartment && touched.radixDepartment}
+                      helperText={errors.radixDepartment && touched.radixDepartment ? errors.radixDepartment : ""}
+                      // onChange={handleChange}
+                      onChange={(event)=>{
+                        DepartmentChange(event);
+                        handleChange(event);
+                        }
+                      }
+                    >
+                      {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
-                </FormControl>                
+                  </FormControl>                
                 </Grid>
                 <Grid item md={12} xs={12} sm={12}>
                 <FormControl className={classes.selectStyle}>
@@ -73,7 +86,7 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                         error={errors.doctor && touched.doctor}
                         helperText={errors.doctor && touched.doctor ? errors.doctor : ""}
                         onChange={handleChange}>
-                        {DoctorOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        {newDoctorOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>
@@ -94,12 +107,11 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button
-                    type='submit'
                     variant='contained'
                     color='secondary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('back')}
+                    onClick={handleBack}
                     >
                     Back
                 </Button>
@@ -111,8 +123,7 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     color='primary'
                     fullWidth
                     className={classes.Button}
-                    onClick={() => setDirection('forward')}
-                    >
+                  >
                     Continue
                 </Button>                
               </Grid>

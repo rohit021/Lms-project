@@ -12,6 +12,8 @@ import {
     // HelpOutline as FAQIcon,
     // ArrowBack as ArrowBackIcon,
   } from "@material-ui/icons";
+
+export const Steps = ['User Information', 'Organization Information', 'Lead  Information'];  
   
 export const mainListItems = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
@@ -75,35 +77,68 @@ export const LocationOptions = [
   { "key": 'other', "text": 'Other', "value": 'other' },
 ]
 export const PropertyNameOptions = [
-  { "key": '1', "text": 'PropertyName 1', "value": '1' },
-  { "key": '2', "text": 'PropertyName 2', "value": '2' },
-  { "key": '3', "text": 'PropertyName 3', "value": '3' },
+  { "key": '1704', "text": 'Amrapali B-1704', "value": 'amrapali_B-1704' },
+  { "key": '1204', "text": 'Amrapali G-1204', "value": 'amrapali_G-1204' },
+  { "key": '201', "text": 'Amrapali G-201', "value": 'amrapali_G-201' },
+  { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'grand_omaxe' },
+  { "key": 'palla-plot', "text": 'Palla Plot', "value": 'palla_plot' },
+  { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'ramprastha_plot' },
+  
+
 ]
 export const CategoryOptions= [
-  { "key": 'banquet', "text": 'banquet ', "value": 'banquet' },
-  { "key": 'room', "text": 'room ', "value": 'room' },
+  { "key": 'banquet', "text": 'Banquet ', "value": 'banquet' },
+  { "key": 'room', "text": 'Room ', "value": 'room' },
 
 ]
 export const DepartmentOptions = [
-    { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
-    { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
-    { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
-    { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
-    { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
-    { "key": 'other', "text": 'Other', "value": 'other' },
-]
-export const DoctorOptions = [
   { "key": 'medicine', "text": 'Medicine', "value": 'medicine' },
   { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'orthopaedics' },
   { "key": 'pulmonology', "text": 'Pulmonology', "value": 'pulmonology' },
   { "key": 'IVF', "text": 'IVF', "value": 'IVF' },
   { "key": 'dermatology', "text": 'Dermatology', "value": 'dermatology' },
-  { "key": 'other', "text": 'Other', "value": 'other' },
+  { "key": 'diagnostics', "text": 'Diagnostics', "value": 'diagnostics' },
+  { "key": 'physiotherapy', "text": 'Physiotherapy', "value": 'physiotherapy' },
+  { "key": 'psychiatry', "text": 'Psychiatry', "value": 'psychiatry' },
+  { "key": 'neurosciences', "text": 'Neurosciences', "value": 'neurosciences' },
+  { "key": 'plasticsurgery', "text": 'Plastic Surgery', "value": 'plasticsurgery' },
+  { "key": 'radiology', "text": 'Radiology', "value": 'radiology' },
+  { "key": 'diabetes', "text": 'Diabetes', "value": 'diabetes' },
+  { "key": 'gastroenterology', "text": 'Gastroenterology', "value": 'gastroenterology' },
+  { "key": 'urology', "text": 'Urology', "value": 'urology' },
+  { "key": 'opthalmology', "text": 'Opthalmology', "value": 'opthalmology' },
+  { "key": 'cardiology', "text": 'Cardiology', "value": 'cardiology' },
+  { "key": 'bariatricsurgery', "text": 'Bariatric Surgery', "value": 'bariatricsurgery' },
+  { "key": 'dietician', "text": 'Dietician', "value": 'dietician' },
+  { "key": 'gynaecology', "text": 'Gynaecology', "value": 'gynaecology' },
+  { "key": 'cosmodental', "text": 'Cosmo Dental', "value": 'cosmodental' },
+  { "key": 'dental', "text": 'Dental', "value": 'dental' },
+  { "key": 'paediatric', "text": 'Paediatric', "value": 'paediatric' },
+  { "key": 'others', "text": 'Others', "value": 'others' },
 ]
+export const DoctorOptions = [
+{ "key": 'ravimalik', "text": 'Dr.Ravi Malik', "value": 'Dr.Ravi Malik', "dept":"paediatric" },
+{ "key": 'renumalik', "text": 'Dr.Renu Malik', "value": 'Dr.Renu Malik',"dept":"gynaecology" },
+{ "key": 'shrutimalik', "text": 'Dr.Shruti Malik', "value": 'Dr.Shruti Malik',"dept":"dental" },
+{ "key": 'vaishali', "text": 'Dr.Vaishali Saini', "value": 'Dr.Vaishali Saini',"dept":"gynaecology" },
+{ "key": 'meenu', "text": 'Dr.Meenu Aggarwal', "value": 'Dr.Meenu Aggarwal',"dept":"gynaecology" },
+{ "key": 'rajni', "text": 'Dr.Rajni', "value": 'Dr.Rajni',"dept":"gynaecology" },
+{ "key": 'rupam', "text": 'Dr.Rupam Arora', "value": 'Dr.Rupam Arora',"dept":"gynaecology" },
+{ "key": 'kksinha', "text": 'Dr.K.K Sinha', "value": 'Dr.K.K Sinha',"dept":"radiology" },
+{ "key": 'tkvohra', "text": 'Dr.T.K Vohra', "value": 'Dr.T.K Vohra',"dept":"radiology" },
+{ "key": 'kirtidwivedi', "text": 'Dr.Kirti Dwivedi', "value": 'Dr.Kirti Dwivedi',"dept":"physiotherapy" },
+{ "key": 'ravikumar', "text": 'Dr.Ravi Kumar', "value": 'Dr.Ravi Kumar',"dept":"physiotherapy" },
+{ "key": 'amitbatra', "text": 'Dr.Amit Batra', "value": 'Dr.Amit Batra',"dept":"neurosciences" },
+{ "key": 'rahulgupta', "text": 'Dr.Rahul Gupta', "value": 'Dr.Rahul Gupta',"dept":"neurosciences" },
+{ "key": 'sandeepgovil', "text": 'Dr.Sandeep Govil', "value": 'Dr.Sandeep Govil',"dept":"psychiatry" },
+{ "key": 'mohitsharma', "text": 'Dr.Mohit Sharma', "value": 'Dr.Mohit Sharma',"dept":"psychiatry" },
+
+]
+
 export const PriorityOptions = [
     { "key": 'hot', "text": 'Hot', "value": 'hot' },
-    { "key": 'cold', "text": 'Cold', "value": 'cold' },
     { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
+    { "key": 'cold', "text": 'Cold', "value": 'cold' },    
 ]
 
             // <option value="Dermatology">Dermatology</option>

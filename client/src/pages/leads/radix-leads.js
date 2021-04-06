@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from "react";
-import { Grid, Stepper, Button, Step, StepLabel, CircularProgress } from "@material-ui/core";
+import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
 import RadixFilter from "../../components/filters/filter";
 import AuthService from "../../authServices/apicalls";
@@ -10,7 +10,7 @@ import RadixModal from '../../components/modals/radix-modal';
 import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
-import {CommonLeadHeadCells} from '../../helpers/utils';
+import {Steps, CommonLeadHeadCells} from '../../helpers/utils';
 // import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
@@ -47,16 +47,16 @@ const RadixLeads = () => {
     email: "",
     phone: "",
     source: "",
+    center: "",
     radixDepartment: "",
     doctor: "",
     location: "",
     priority: "",
-    expectedAmount: 0,
+    expectedAmount: null,
     organization: "radix",
     date: formattedTodayDate,
   });
   
-  const steps = ['User Information', 'Organization Information', 'Lead  Information'];  
   const ModalChange = () => {
     if (openmodal) {
       handleReset();
@@ -86,21 +86,19 @@ const RadixLeads = () => {
   };
 
   const handleSubmit = ()=>{
-    console.log("inside handle submit method")
-   AuthService.createNewLead(FormData)
-   .then(function (response) {
-     console.log("inside Create Lead")
-     ModalChange();
-       // window.location.reload();
-   })
-   .catch(function (error) {
+    AuthService.createNewLead(FormData)
+    .then(function (response) {
+      ModalChange();
+      fetchData();
+    })
+    .catch(function (error) {
       //  setTimeout(() => {
       //      setError("");
       //  }, 5000);
        // return setError(error.response.data.message);   
-   })  
-
+    })  
   }
+
   const renderStepContent = (step) => {
     switch (step) {
       case 1:
@@ -110,7 +108,7 @@ const RadixLeads = () => {
       case 3:
         return <LeadModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
       case 4:
-          return <ConfirmModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;        
+        return <ConfirmModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;        
       default:
         return <div>Not Found</div>;
     }
@@ -119,7 +117,12 @@ const RadixLeads = () => {
   function updateData(filters) {
     setFilterValue(filters);
   }
+
   useEffect(() => {
+    fetchData();
+  }, [filterValue]);
+        
+  const fetchData = async () => {
     setLoading(true);
     AuthService.getAllLeads(filterValue).then(
       (data) => {
@@ -130,38 +133,35 @@ const RadixLeads = () => {
       }
     );
     setLoading(false);
-  }, [filterValue]);
+  };
 
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
         <RadixFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
-            ()=>{
-              setOpenModal(true);
-              handleNext();
-            }
-          }>
-           Add data </AddButton>          
-          <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
-            <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <React.Fragment>
-              {renderStepContent(activeStep)}
-            </React.Fragment>
-          </Modal>
-        
-               
-        
-        {/* {openmodal ? <RadixModal status="add" openModal={openmodal} organization="radix" closeModal={handleChange} /> : ''} */}
+          ()=>{
+            setOpenModal(true);
+            handleNext();
+          }
+        }>
+          Add data
+        </AddButton>          
+        <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
+          <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
+            {Steps.map(label => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {renderStepContent(activeStep)}
+          </React.Fragment>
+        </Modal>
         {
           !loading && leadData &&
-            <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData}/>
+          <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData} fetchData={fetchData}/>
         }
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {SourceOptions, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
+import {DepartmentOptions, SourceOptions, CategoryOptions, CenterOptions, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
@@ -86,6 +86,60 @@ const CommonFilters = ({filterValue, updateData}) => {
   return (
     <Widget header="Search Filters">
       <Grid container spacing={1} className={classes.gridContainer}>
+        { filterData.organization==="radix" ? 
+        <Grid item md={2} xs={6} sm={3}>
+          <FormControl className={classes.selectStyle}>
+            <TextField
+              size="small"
+              select
+              label="Department"
+              name="radixDepartment"
+              value={filterData.radixDepartment}
+              onChange={handleChange()}>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+            </TextField>
+          </FormControl>
+        </Grid>
+        :""}
+         { filterData.organization==="anardana" ? 
+        <Grid item md={2} xs={6} sm={3}>
+          <FormControl className={classes.selectStyle}>
+            <TextField
+              size="small"
+              select
+              label="Center"
+              name="center"
+              value={filterData.center}
+              onChange={handleChange()}>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+            </TextField>
+          </FormControl>
+        </Grid>
+        :""}
+          { filterData.organization==="woodapple" ? 
+        <Grid item md={2} xs={6} sm={3}>
+          <FormControl className={classes.selectStyle}>
+            <TextField
+              size="small"
+              select
+              label="Category"
+              name="category"
+              value={filterData.category}
+              onChange={handleChange()}>
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {CategoryOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+            </TextField>
+          </FormControl>
+        </Grid>
+        :""}
         <Grid item md={2} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
