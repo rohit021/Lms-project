@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import Login from "./pages/authentication/login/login";
-import Register from "./pages/authentication/register/register";
+import Login from "./pages/authentication/login/Login";
+import Register from "./pages/authentication/register/Register";
 import ResetPass from "./pages/authentication/resetpass";
 import NewPass from "./pages/authentication/newpass";
 import PrivateRoute from "./components/routing/PrivateRoute";
