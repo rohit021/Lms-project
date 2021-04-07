@@ -18,7 +18,6 @@ const LeadSchema = new Schema({
     email: {
         type: String, 
         lowercase: true, 
-        match: [/.+\@.+\..+/, 'Please fill a valid email address'],
         required: true 
     },
     phone: {
