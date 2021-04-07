@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import Login from "./pages/authentication/login/login";
-import Register from "./pages/authentication/register/register";
+import LoginPage from "./pages/authentication/login/Login";
+import RegisterPage from "./pages/authentication/register/Register";
 import ResetPass from "./pages/authentication/resetpass";
 import NewPass from "./pages/authentication/newpass";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -12,8 +12,8 @@ const MainRouter = () => {
       <Switch>
         <Route exact path="/" render={() => <Redirect to="/app/dashboard" />} />
         <PrivateRoute path="/app" component={Layout} />
-        <Route path="/register" component={Register} />
-        <Route path="/login" component={Login} />
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/login" component={LoginPage} />
         <Route path="/reset-password" component={ResetPass} />
         <Route path="/auth/reset/:id" component={NewPass} />
       </Switch>
