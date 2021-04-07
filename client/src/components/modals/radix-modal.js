@@ -113,18 +113,17 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                       label="doctor"
                       disableClearable
                       // value={values.doctor}
-                      
-                      options={newDoctorOptions.map((option) => option.text)}
+                      options={newDoctorOptions.map((option) => option.text)
                       renderInput={(params) => (
                         <TextField
-                        
                           {...params}
                           label="Search Doctors"
                           margin="normal"
                           name="doctor"
                           variant="outlined"
-                          value={params.doctor}
+                          value={values.doctor}
                           onChange={(event)=>{
+                            console.log(event.target.value)
                             handleChange(event);
                             }
                           }
