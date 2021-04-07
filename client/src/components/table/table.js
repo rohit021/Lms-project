@@ -117,6 +117,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     }
 
     const PriorityChecker =(value) =>{
+        console.log(value,value.toLowerCase())
         return(
             <React.Fragment>
                 {value === 'hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}
