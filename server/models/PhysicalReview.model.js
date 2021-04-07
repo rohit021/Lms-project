@@ -15,6 +15,16 @@ const ReviewSchema = new Schema({
         lowercase: true, 
         required: true 
     },
+    email: {
+        type: String, 
+        lowercase: true, 
+        required: true 
+    },
+    phone: {
+        type: String,
+        required: true,
+        default: '--',
+    },
     comment:{
         type: String,
         required:true
@@ -29,10 +39,6 @@ const ReviewSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    },
-    isNegative:{
-        type: Boolean,
-        required:true
     },
     organization: {
         type: String, 
