@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
  
 const ConfirmDetailsModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name, phone, email, source, center, category, propertyName, radixDepartment, doctor, organization, location, priority, expectedAmount, date } = FormData;
+  const { name, phone, email, source, center, category, propertyName, radixDepartment, doctor, organization, location, priority, expectedAmount, date, SnackBar } = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -193,6 +193,7 @@ const ConfirmDetailsModal = ({FormData, handleBack, handleSubmit}) => {
                 fullWidth
                 className={classes.Button}
                 onClick={handleSubmit}
+                
                 >
                 Save Lead
             </Button>                

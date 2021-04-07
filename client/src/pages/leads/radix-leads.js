@@ -11,6 +11,7 @@ import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
 import {Steps, CommonLeadHeadCells} from '../../helpers/utils';
+import SnackBar from '../../components/modals/snackbar-modal'
 // import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
@@ -36,12 +37,13 @@ const defaultData = {
 //   {text: 'Actions', md:1, xs:3, sm:2},    
 // ]
 
-const RadixLeads = () => {
+const RadixLeads = ({}) => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
   const [activeStep, setActiveStep]  = useState(0);
   const [openmodal, setOpenModal] = useState(false);
+  const [Open, setOpen]=useState(false)
   const [FormData, setFormData] = useState({
     name: "",
     email: "",
@@ -61,20 +63,13 @@ const RadixLeads = () => {
     if (openmodal) {
       handleReset();
       setOpenModal(false);
-   resetStep();
-   setValue("")
-
-
     } else {
       setOpenModal(true);
 
     }
   };
 
-  // Handle fields change
-  // const handleChange = (input) => e => {  
-  //   setValue({ ...value, [input]: e.target.value });
-  // };
+ 
 
   const handleNext = () => {
     // console.log(activeStep);
@@ -95,6 +90,9 @@ const RadixLeads = () => {
     .then(function (response) {
       ModalChange();
       fetchData();
+      
+
+      
     })
     .catch(function (error) {
       //  setTimeout(() => {
@@ -139,11 +137,23 @@ const RadixLeads = () => {
     );
     setLoading(false);
   };
-
+  const handleClick=()=>{
+   if(Open){
+      setOpen(false);
+    }
+    else{
+      setOpen(true) ; 
+    }
+   
+  }
+  
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
         <RadixFilter filterValue={filterValue} updateData={updateData} />
+        <AddButton handleChange={handleClick}  >Alert</AddButton>
+       {Open?<SnackBar open={Open} variant="success"  >Rohit</SnackBar> :""}
+        {/* {openmodal ? <WoodAppleModal status="add" openModal={openmodal} organization="woodapple" closeModal={handleChange} /> : ''} */}
         <AddButton handleChange={
           ()=>{
             setOpenModal(true);
@@ -151,7 +161,8 @@ const RadixLeads = () => {
           }
         }>
           Add data
-        </AddButton>          
+        </AddButton>    
+        {/* <Alert mdg="vpdf" vsr ="df"/>      */}
         <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
           <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
             {Steps.map(label => (
@@ -168,6 +179,7 @@ const RadixLeads = () => {
           !loading && leadData &&
           <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData} fetchData={fetchData}/>
         }
+
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}

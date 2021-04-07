@@ -3,6 +3,8 @@ import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
 import {DepartmentOptions, DoctorOptions, LocationOptions } from "../../helpers/utils";
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+const filter = createFilterOptions();
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -31,6 +33,33 @@ const ValidationSchema = yup.object().shape({
 const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
   const[newDoctorOptions, setNewDoctorOptions]=useState(DoctorOptions);
+  const [value, setValue] = React.useState(null);
+  const [open, toggleOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setDialogValue({
+      title: '',
+      year: '',
+    });
+
+    toggleOpen(false);
+  };
+
+  const [dialogValue, setDialogValue] = React.useState({
+    title: '',
+    year: '',
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setValue({
+      title: dialogValue.title,
+      year: parseInt(dialogValue.year, 10),
+    });
+
+    handleClose();
+  };
+
   
   const DepartmentChange=(event)=>{
     const newdepartment=event.target.value;
@@ -79,17 +108,34 @@ const RadixDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                 </Grid>
                 <Grid item md={12} xs={12} sm={12}>
                 <FormControl className={classes.selectStyle}>
-                    <TextField
-                        size="small"
-                        select
-                        label="Doctor *"
-                        name="doctor"
-                        value={values.doctor}
-                        error={errors.doctor && touched.doctor}
-                        helperText={errors.doctor && touched.doctor ? errors.doctor : ""}
-                        onChange={handleChange}>
-                        {newDoctorOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
-                    </TextField>
+              <Autocomplete
+                      freeSolo
+                      label="doctor"
+                      disableClearable
+                      // value={values.doctor}
+                      options={newDoctorOptions.map((option) => option.text)
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Search Doctors"
+                          margin="normal"
+                          name="doctor"
+                          variant="outlined"
+                          value={values.doctor}
+                          onChange={(event)=>{
+                            console.log(event.target.value)
+                            handleChange(event);
+                            }
+                          }
+                            error={errors.doctor && touched.doctor}
+                            helperText={errors.doctor && touched.doctor ? errors.doctor : ""}
+                          InputProps={{ ...params.InputProps, type: 'search' }}
+                         
+                        />
+
+          
+              )}
+              />
                 </FormControl>                
                 </Grid>
                 <Grid item md={12} xs={12} sm={12}>
