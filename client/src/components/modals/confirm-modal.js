@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
  
 const ConfirmDetailsModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name, phone, email, source, center, category, propertyName, radixDepartment, doctor, organization, location, priority, expectedAmount, date } = FormData;
+  const { name, phone, email, source, center, category, propertyName, radixDepartment, doctor, organization, remark, location, priority, expectedAmount, date } = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -109,10 +109,18 @@ const ConfirmDetailsModal = ({FormData, handleBack, handleSubmit}) => {
         }
         {organization==="relp"?
             <Grid container spacing={2}>
-                <Grid item md={6} xs={4} sm={4}>
+                <Grid item md={4} xs={4} sm={4}>
                     <ListItemText
                         primary='Property Name'
                         secondary={propertyName}
+                        className={classes.textCenter}
+                    />
+                </Grid>
+                <Grid item md={4} xs={4} sm={4}>
+                    <ListItemText
+                        primary='Remark'
+                        style={{ wordWrap: 'break-word' }}
+                        secondary={remark}
                         className={classes.textCenter}
                     />
                 </Grid>

@@ -38,7 +38,7 @@ const RadixLeads = () => {
     center: "",
     location: "",
     priority: "",
-    expectedAmount: null,
+    expectedAmount: "",
     organization: "anardana",
     date: formattedTodayDate,
   });

@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import {CenterOptions, LocationOptions } from "../../helpers/utils";
+import {CenterOptions} from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -18,9 +18,9 @@ const ValidationSchema = yup.object().shape({
   center: yup
       .string()
       .required("This field is required"),
-  location: yup
-      .string()
-      .required("This field is required"),
+  // location: yup
+  //     .string()
+  //     .required("This field is required"),
 })
   
 const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
@@ -59,19 +59,17 @@ const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) =
                 </FormControl>                
                 </Grid>
                 <Grid item md={12} xs={12} sm={12}>
-                <FormControl className={classes.selectStyle}>
-                    <TextField
-                        size="small"
-                        select
-                        label="Location *"
-                        name="location"
-                        value={values.location}
-                        error={errors.location && touched.location}
-                        helperText={errors.location && touched.location ? errors.location : ""}
-                        onChange={handleChange}>
-                        {LocationOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
-                    </TextField>
-                </FormControl>                
+                  <TextField
+                    variant="outlined"
+                    id="location"
+                    label="Location*"
+                    name="location"
+                    onChange={handleChange}
+                    value={values.location}
+                    error={errors.location && touched.location}
+                    helperText={errors.location && touched.location ? errors.location : ""}
+                    fullWidth
+                  />
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button

@@ -51,8 +51,9 @@ const RadixLeads = () => {
     radixDepartment: "",
     doctor: "",
     location: "",
+    otherspecify: "",
     priority: "",
-    expectedAmount: null,
+    expectedAmount: "",
     organization: "radix",
     date: formattedTodayDate,
   });
