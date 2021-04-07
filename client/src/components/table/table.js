@@ -262,7 +262,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                                         <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.remark}</TableCell>
                                         :" "
                                 }
-                                <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
+                                <TableCell className={classes.text}>{PriorityChecker(data.priority.toLowerCase())}</TableCell>
                                 <TableCell>
                                     <Button
                                      variant="contained"
