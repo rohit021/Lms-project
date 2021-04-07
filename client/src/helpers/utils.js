@@ -42,13 +42,13 @@ export const OrganizationOptions = [
     { "key": 'relp', "text": 'RELP', "value": 'relp' },
 ]
 export const SourceOptions = [
-    { "key": 'friends', "text": 'Friends', "value": 'friends' },
-    { "key": 'google', "text": 'Google', "value": 'google' },
-    { "key": 'social', "text": 'Social Media', "value": 'social' },
-    { "key": 'email', "text": 'Email Marketing', "value": 'email' },
-    { "key": 'radix practo', "text": 'Radix Practo', "value": 'radix practo' },
-    { "key": 'dental practo', "text": 'Dental Practo', "value": 'dental practo' },
-    { "key": 'housing', "text": 'Housing', "value": 'housing' },
+    { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+    { "key": 'google', "text": 'Google', "value": 'Google' },
+    { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+    { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+    { "key": 'radix practo', "text": 'Radix Practo', "value": 'Radix Practo' },
+    { "key": 'dental practo', "text": 'Dental Practo', "value": 'Dental Practo' },
+    { "key": 'housing', "text": 'Housing', "value": 'Housing' },
     { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
 ]
 export const DateFilterOptions = [
@@ -70,27 +70,27 @@ export const CommonLeadHeadCells = [
     
   ];
   export const CenterOptions = [
-    { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
-    { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'preet vihar' },
-    { "key": 'janakpuri', "text": 'Janakpuri', "value": 'janakpuri' },
-    { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'vikasmarg' },
-    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
+    { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'Nirman Vihar' },
+    { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'Preet Vihar' },
+    { "key": 'janakpuri', "text": 'Janakpuri', "value": 'Janakpuri' },
+    { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
+    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },
     
 ]
 
 export const PropertyNameOptions = [
-  { "key": '1704', "text": 'Amrapali B-1704', "value": 'amrapali_B-1704' },
-  { "key": '1204', "text": 'Amrapali G-1204', "value": 'amrapali_G-1204' },
-  { "key": '201', "text": 'Amrapali G-201', "value": 'amrapali_G-201' },
-  { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'grand_omaxe' },
-  { "key": 'palla-plot', "text": 'Palla Plot', "value": 'palla_plot' },
-  { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'ramprastha_plot' },
+  { "key": '1704', "text": 'Amrapali B-1704', "value": 'Amrapali B-1704' },
+  { "key": '1204', "text": 'Amrapali G-1204', "value": 'Amrapali G-1204' },
+  { "key": '201', "text": 'Amrapali G-201', "value": 'Amrapali G-201' },
+  { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'Grand Omaxe' },
+  { "key": 'palla-plot', "text": 'Palla Plot', "value": 'Palla Plot' },
+  { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'Ramprastha Plot' },
   
 
 ]
 export const CategoryOptions= [
-  { "key": 'banquet', "text": 'Banquet ', "value": 'banquet' },
-  { "key": 'room', "text": 'Room ', "value": 'room' },
+  { "key": 'banquet', "text": 'Banquet ', "value": 'Banquet' },
+  { "key": 'room', "text": 'Room ', "value": 'Room' },
 
 ]
 export const DepartmentOptions = [
@@ -138,9 +138,9 @@ export const DoctorOptions = [
 ]
 
 export const PriorityOptions = [
-    { "key": 'hot', "text": 'Hot', "value": 'hot' },
-    { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
-    { "key": 'cold', "text": 'Cold', "value": 'cold' },    
+    { "key": 'hot', "text": 'Hot', "value": 'Hot' },
+    { "key": 'neutral', "text": 'Neutral', "value": 'Neutral' },
+    { "key": 'cold', "text": 'Cold', "value": 'Cold' },    
 ]
 
             // <option value="Dermatology">Dermatology</option>

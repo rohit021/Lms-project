@@ -20,7 +20,6 @@ const ValidationSchema = yup.object().shape({
       .required("This field is required"),
   email: yup
       .string()
-      .email()
       .required("This field is required"),
   phone: yup
       .string()
