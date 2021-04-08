@@ -9,7 +9,7 @@ const mongoose = require('mongoose'),
 /**
  * ReviewSchema
  */
-const ReviewSchema = new Schema({
+const PhysicalReviewSchema = new Schema({
     name: {
         type: String, 
         lowercase: true, 
@@ -25,34 +25,33 @@ const ReviewSchema = new Schema({
         required: true,
         default: '--',
     },
-    comment:{
-        type: String,
+    center: {
+        type:  String,
+        required: true
+    },
+    isNegative:{
+        type: Boolean,
         required:true
     },
-    reply:{
-        type:String
+    starFood: {
+        type:  String,
+        // required: true
     },
-    rating:{
-        type:Number,
-        required:true
+    starClean: {
+        type:  String,
+        // required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
+    starPlace: {
+        type:  String,
+        // required: true
     },
-    organization: {
-        type: String, 
-        maxlength: 30,
-        required:true
+    starService: {
+        type:  String,
+        // required: true
     },
-    center:{
-        type: String, 
-        maxlength: 30,
-        required:true
-    },
-    platform:{
-        type: String, 
-        maxlength: 30,
+    starMusic: {
+        type:  String,
+        // required: true
     },
     created_at: {
         type: Date,
@@ -68,8 +67,8 @@ const ReviewSchema = new Schema({
     },
 })
 
-ReviewSchema.pre('save', function(next) {
+PhysicalReviewSchema.pre('save', function(next) {
     this.updated_at = new Date;
     next();
 });
-module.exports = mongoose.model('Review', ReviewSchema);
+module.exports = mongoose.model('PhysicalReview', PhysicalReviewSchema);
