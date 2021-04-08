@@ -88,6 +88,20 @@ export const PropertyNameOptions = [
   
 
 ]
+
+export const PlatfromOptions=[
+  { "key": 'zomato', "text": 'Zomato ', "value": 'Zomato' },
+  { "key": 'google', "text": 'Google ', "value": 'Google' },
+  { "key": 'facebook', "text": 'Facebook ', "value": 'Facebook' },
+  { "key": 'mouthShut', "text": 'MouthShut ', "value": 'MouthShut' },
+  { "key": 'swiggy', "text": 'Swiggy ', "value": 'Swiggy' },
+  { "key": 'practo', "text": 'Practo ', "value": 'Practo' },
+  { "key": 'justdial', "text": 'Justdial ', "value": 'Justdial' },
+  { "key": 'lybrate', "text": 'Lybrate ', "value": 'Lybrate' },
+
+]
+
+
 export const CategoryOptions= [
   { "key": 'banquet', "text": 'Banquet ', "value": 'banquet' },
   { "key": 'room', "text": 'Room ', "value": 'room' },
