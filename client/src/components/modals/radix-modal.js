@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
 import {DepartmentOptions, DoctorOptions } from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
