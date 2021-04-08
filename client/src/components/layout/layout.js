@@ -70,7 +70,7 @@ const Layout = (props)=> {
           <Route
             exact
             path="/app/leads"
-            render={() => <Redirect to="/app/leads/radixLeads" />}
+            render={() => <Redirect to="/app/leads/radix-leads" />}
           />
           <Route
             exact
@@ -101,7 +101,7 @@ const Layout = (props)=> {
           <Route path="/app/reviews/anardana-reviews" component={AnardanaReviews} />
           
           {/* Route for Physical Reviews */}
-          <Route path="/app/physicalreviews/anardana-physical-reviews" component={RadixReviews} />
+          <Route path="/app/physicalreviews/anardana-physical-reviews" component={RadixLeads} />
           
         </Switch>
           {/* <footer className={classes.footer}>
