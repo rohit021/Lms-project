@@ -4,7 +4,6 @@ import { Grid, Card, Typography, makeStyles} from '@material-ui/core';
 import AuthService from "../../../authServices/apicalls";
 import PcImg from '../../../assets/images/img-01.png';
 import {CircularProgress} from '@material-ui/core';
-
 const useStyles = makeStyles(theme => ({
     gridContainer: {
         width: "100%", 

@@ -61,7 +61,7 @@ export const DateFilterOptions = [
     { key: 'month', text: 'MONTHLY', value: 'month' },
     { key: 'year', text: 'YEARLY', value: 'year' },
   ]
-
+//did
 export const CommonLeadHeadCells = [
     { id: 'date', disablePadding: false, label: 'Date' },
     { id: 'name', disablePadding: true, label: 'Name' },    
@@ -147,24 +147,3 @@ export const PriorityOptions = [
     { "key": 'neutral', "text": 'Neutral', "value": 'Neutral' },
     { "key": 'cold', "text": 'Cold', "value": 'Cold' },    
 ]
-
-            // <option value="Dermatology">Dermatology</option>
-            // <option value="Diagnostics">Diagnostics</option>
-            // <option value="Anaesthesia">Anaesthesia</option>
-            // <option value="Physiotherapy">Physiotherapy</option>
-            // <option value="Psychiatry">Psychiatry</option>
-            // <option value="Neurosciences">Neurosciences</option>
-            // <option value="Plastic Surgery">Plastic Surgery</option>
-            // <option value="Radiology">Radiology</option>
-            // <option value="Diabetes">Diabetes</option>
-            // <option value="Gastroenterology">Gastroenterology</option>
-            // <option value="Urology">Urology</option>
-            // <option value="Opthalmology">Opthalmology</option>
-            // <option value="Cardiology">Cardiology</option>
-            // <option value="Bariatric Surgery">Bariatric Surgery</option>
-            // <option value="Dietician">Dietician</option>
-            // <option value="Gynaecology">Gynaecology</option>
-            // <option value="Cosmo Dental">Cosmo Dental</option>
-            // <option value="Dental"> Dental</option>
-            // <option value="Paediatric">Paediatric</option>
-            // <option value="Others">Other</option>
