@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {DepartmentOptions, SourceOptions, CategoryOptions, CenterOptions, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
+import { Grid, FormControl, Slider, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
+import {SourceOptions, CenterOptions, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CommonFilters = ({filterValue, updateData}) => {
   const classes = useStyles();
+  const [value, setValue] = React.useState([1,5]);
   const [buttonColor, setButtonColor] = useState("");
   const [disabledStatus, setDisabledStatus] = useState(false);
   const [filterData, setFilterData] = useState(filterValue);
@@ -27,6 +28,11 @@ const CommonFilters = ({filterValue, updateData}) => {
     setFilterData({ ...filterData, [key]: event.target.value });
   }
 
+  const handleSliderChange = (event, newValue) => {
+    setValue(newValue);
+    setFilterData({ ...filterData, minValue:newValue[0], maxValue:newValue[1] });
+  };  
+  
   const handleStartDate = (date) => {
     // console.log(date);
     setFilterData({ ...filterData, startDate: date });// [key]: event.target.
@@ -77,25 +83,7 @@ const CommonFilters = ({filterValue, updateData}) => {
   return (
     <Widget header="Search Filters">
       <Grid container spacing={1} className={classes.gridContainer}>
-        { filterData.organization==="radix" ? 
-        <Grid item md={2} xs={6} sm={3}>
-          <FormControl className={classes.selectStyle}>
-            <TextField
-              size="small"
-              select
-              label="Department"
-              name="radixDepartment"
-              value={filterData.radixDepartment}
-              onChange={handleChange()}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {DepartmentOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-            </TextField>
-          </FormControl>
-        </Grid>
-        :""}
-         { filterData.organization==="anardana" ? 
+        { filterData.organization==="anardana" ? 
         <Grid item md={2} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
@@ -109,24 +97,6 @@ const CommonFilters = ({filterValue, updateData}) => {
                 <em>None</em>
               </MenuItem>
               {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-            </TextField>
-          </FormControl>
-        </Grid>
-        :""}
-          { filterData.organization==="woodapple" ? 
-        <Grid item md={2} xs={6} sm={3}>
-          <FormControl className={classes.selectStyle}>
-            <TextField
-              size="small"
-              select
-              label="Category"
-              name="category"
-              value={filterData.category}
-              onChange={handleChange()}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {CategoryOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
         </Grid>
@@ -148,20 +118,17 @@ const CommonFilters = ({filterValue, updateData}) => {
           </FormControl>
         </Grid>
         <Grid item md={1} xs={6} sm={4}>
-          <FormControl className={classes.selectStyle}>
-            <TextField
-              size="small"
-              select
-              label="Status"
-              name="status"
-              value={filterData.status}
-              onChange={handleChange()}>
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {PriorityOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-            </TextField>
-          </FormControl>
+            <Typography id="discrete-slider" >
+                Ratings
+            </Typography>
+            <Slider 
+                min={1}
+                max={5}
+                value={value}
+                onChange={handleSliderChange}
+                step={1}
+                valueLabelDisplay="auto"
+            />
         </Grid>
         <Grid item md={3} xs={12} sm={4}>
           <ButtonGroup color="primary" aria-label="outlined primary button group">

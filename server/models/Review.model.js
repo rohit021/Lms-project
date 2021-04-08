@@ -15,7 +15,7 @@ const ReviewSchema = new Schema({
         lowercase: true, 
         required: true 
     },
-    comment:{
+    review:{
         type: String,
         required:true
     },
@@ -41,8 +41,7 @@ const ReviewSchema = new Schema({
     },
     center:{
         type: String, 
-        maxlength: 30,
-        required:true
+        maxlength: 30,        
     },
     platform:{
         type: String, 

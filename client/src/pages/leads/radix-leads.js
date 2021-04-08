@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
-import RadixFilter from "../../components/filters/filter";
+import CommonFilter from "../../components/filters/filter";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
 import Modal from '../../components/modals/modal';
@@ -139,7 +139,7 @@ const RadixLeads = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
-        <RadixFilter filterValue={filterValue} updateData={updateData} />
+        <CommonFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           ()=>{
             setOpenModal(true);
