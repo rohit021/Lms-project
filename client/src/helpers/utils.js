@@ -3,7 +3,8 @@ import {
     Home as HomeIcon,
     AssignmentOutlined as AssignmentIcon,
     FiberManualRecord as DotIcon,
-    Stars as StarsIcon
+    Stars as StarsIcon,
+    Receipt as ReceiptIcon 
     // FormatSize as TypographyIcon,
     // FilterNone as UIElementsIcon,
     // BorderAll as TableIcon,
@@ -18,18 +19,22 @@ export const Steps = ['User Information', 'Organization Information', 'Lead  Inf
 export const mainListItems = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
   { id: 1, label: "Lead Menu", link: "/app/leads", icon: <AssignmentIcon /> ,children: [
-    { label: "Radix Leads", link: "/app/leads/radixLeads", icon: <DotIcon fontSize = "small" /> },
-    { label: "Anardana Leads", link: "/app/leads/anardanaLeads" , icon: <DotIcon fontSize="small"/> },
-    { label: "Woodapple Leads", link: "/app/leads/woodappleLeads" , icon: <DotIcon fontSize="small"/> },
-    { label: "Relp Leads", link: "/app/leads/relpLeads" , icon: <DotIcon fontSize="small" /> },
+    { label: "Radix Leads", link: "/app/leads/radix-leads", icon: <DotIcon fontSize = "small" /> },
+    { label: "Anardana Leads", link: "/app/leads/anardana-leads" , icon: <DotIcon fontSize="small"/> },
+    { label: "Woodapple Leads", link: "/app/leads/woodapple-leads" , icon: <DotIcon fontSize="small"/> },
+    { label: "Relp Leads", link: "/app/leads/relp-leads" , icon: <DotIcon fontSize="small" /> },
     ],   
   },
   { id: 2, label: "Review Menu", link: "/app/reviews", icon: <StarsIcon /> ,children: [
-    { label: "Radix Review", link: "/app/reviews/radixReviews", icon: <DotIcon fontSize = "small" /> },
-    { label: "Anardana Review", link: "/app/reviews/anardanaReviews" , icon: <DotIcon fontSize="small"/> },
-    { label: "Woodapple Review", link: "/app/reviews/woodappleReviews" , icon: <DotIcon fontSize="small"/> },
-    { label: "Relp Review", link: "/app/reviews/relpReviews" , icon: <DotIcon fontSize="small" /> },
+    { label: "Radix Review", link: "/app/reviews/radix-reviews", icon: <DotIcon fontSize = "small" /> },
+    { label: "Anardana Review", link: "/app/reviews/anardana-reviews" , icon: <DotIcon fontSize="small"/> },
+    ],
+  },
+  { id: 3, label: "Physical Review Menu", link: "/app/physicalreviews", icon: <ReceiptIcon /> ,children: [    
+    { label: "Anardana Physical", link: "/app/reviews/anardana-physical-reviews" , icon: <DotIcon fontSize="small"/> },    
   ],   
+  
+  
 }   
     // {'text': 'Lead Menu', 'link': '/viewleads', 'page': 'Leads', 'icon': <AssignmentOutlined />},
     // {'text': 'DateWise Status', 'link': '/datewiseStatus', 'page': 'datewiseStatus', 'icon': <TrendingUp />},
@@ -42,13 +47,13 @@ export const OrganizationOptions = [
     { "key": 'relp', "text": 'RELP', "value": 'relp' },
 ]
 export const SourceOptions = [
-    { "key": 'friends', "text": 'Friends', "value": 'friends' },
-    { "key": 'google', "text": 'Google', "value": 'google' },
-    { "key": 'social', "text": 'Social Media', "value": 'social' },
-    { "key": 'email', "text": 'Email Marketing', "value": 'email' },
-    { "key": 'radix practo', "text": 'Radix Practo', "value": 'radix practo' },
-    { "key": 'dental practo', "text": 'Dental Practo', "value": 'dental practo' },
-    { "key": 'housing', "text": 'Housing', "value": 'housing' },
+    { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+    { "key": 'google', "text": 'Google', "value": 'Google' },
+    { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+    { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+    { "key": 'radix practo', "text": 'Radix Practo', "value": 'Radix Practo' },
+    { "key": 'dental practo', "text": 'Dental Practo', "value": 'Dental Practo' },
+    { "key": 'housing', "text": 'Housing', "value": 'Housing' },
     { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
 ]
 export const DateFilterOptions = [
@@ -70,27 +75,27 @@ export const CommonLeadHeadCells = [
     
   ];
   export const CenterOptions = [
-    { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'nirman vihar' },
-    { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'preet vihar' },
-    { "key": 'janakpuri', "text": 'Janakpuri', "value": 'janakpuri' },
-    { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'vikasmarg' },
-    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'chandigarh' },
+    { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'Nirman Vihar' },
+    { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'Preet Vihar' },
+    { "key": 'janakpuri', "text": 'Janakpuri', "value": 'Janakpuri' },
+    { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
+    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },
     
 ]
 
 export const PropertyNameOptions = [
-  { "key": '1704', "text": 'Amrapali B-1704', "value": 'amrapali_B-1704' },
-  { "key": '1204', "text": 'Amrapali G-1204', "value": 'amrapali_G-1204' },
-  { "key": '201', "text": 'Amrapali G-201', "value": 'amrapali_G-201' },
-  { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'grand_omaxe' },
-  { "key": 'palla-plot', "text": 'Palla Plot', "value": 'palla_plot' },
-  { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'ramprastha_plot' },
+  { "key": '1704', "text": 'Amrapali B-1704', "value": 'Amrapali B-1704' },
+  { "key": '1204', "text": 'Amrapali G-1204', "value": 'Amrapali G-1204' },
+  { "key": '201', "text": 'Amrapali G-201', "value": 'Amrapali G-201' },
+  { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'Grand Omaxe' },
+  { "key": 'palla-plot', "text": 'Palla Plot', "value": 'Palla Plot' },
+  { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'Ramprastha Plot' },
   
 
 ]
 export const CategoryOptions= [
-  { "key": 'banquet', "text": 'Banquet ', "value": 'banquet' },
-  { "key": 'room', "text": 'Room ', "value": 'room' },
+  { "key": 'banquet', "text": 'Banquet ', "value": 'Banquet' },
+  { "key": 'room', "text": 'Room ', "value": 'Room' },
 
 ]
 export const DepartmentOptions = [
@@ -138,9 +143,9 @@ export const DoctorOptions = [
 ]
 
 export const PriorityOptions = [
-    { "key": 'hot', "text": 'Hot', "value": 'hot' },
-    { "key": 'neutral', "text": 'Neutral', "value": 'neutral' },
-    { "key": 'cold', "text": 'Cold', "value": 'cold' },    
+    { "key": 'hot', "text": 'Hot', "value": 'Hot' },
+    { "key": 'neutral', "text": 'Neutral', "value": 'Neutral' },
+    { "key": 'cold', "text": 'Cold', "value": 'Cold' },    
 ]
 
             // <option value="Dermatology">Dermatology</option>
