@@ -101,7 +101,7 @@ const Layout = (props)=> {
           <Route path="/app/reviews/anardana-reviews" component={AnardanaReviews} />
           
           {/* Route for Physical Reviews */}
-          <Route path="/app/physicalreviews/anardana-physical-reviews" component={RadixReviews} />
+          <Route path="/app/physicalreviews/anardana-physical-reviews" component={AnardanaPhysicalReviews} />
           
         </Switch>
           {/* <footer className={classes.footer}>

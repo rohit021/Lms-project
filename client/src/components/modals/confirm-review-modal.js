@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
  
 const ConfirmLeadModal = ({ReviewData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name,date, review, rating, platform} = ReviewData;
+  const { name,date, review, rating,isNegative, platform} = ReviewData;
   return (
     <React.Fragment>
         <Divider/>
@@ -32,28 +32,35 @@ const ConfirmLeadModal = ({ReviewData, handleBack, handleSubmit}) => {
             <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
                     primary='Name'
-                    secondary={name}
+                    secondary={ReviewData.name}
                     className={classes.textCenter}
                 />
             </Grid>
             <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
-                    primary='review'
+                    primary='Review'
                     secondary={review}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={6} xs={6} sm={6}>
+            <Grid item md={4} xs={4} sm={4}>
                 <ListItemText
-                    primary='rating'
+                    primary='Rating'
                     secondary={rating}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={6} xs={6} sm={6}>
+            <Grid item md={4} xs={4} sm={4}>
                 <ListItemText
-                    primary='platform'
+                    primary='Platform'
                     secondary={platform}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={4} xs={4} sm={4}>
+                <ListItemText
+                    primary='IsNegative'
+                    secondary={isNegative}
                     className={classes.textCenter}
                 />
             </Grid>

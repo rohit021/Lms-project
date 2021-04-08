@@ -47,7 +47,7 @@ const ReviewModal = ({ReviewData, setReviewData,handleSubmit, handleNext}) => {
       // enableReinitialize
         initialValues={ReviewData}
         onSubmit={values=>{
-        //   setReviewData(values);
+        setReviewData(values);
           console.log("inside review model", ReviewData)
           console.log(values.isNegative)
           handleNext();
@@ -95,7 +95,7 @@ const ReviewModal = ({ReviewData, setReviewData,handleSubmit, handleNext}) => {
                                 </Typography>
                               <Rating 
                               type="number"
-                                    style={{textAlign:"center", "text-align":"center"}}
+                                    style={{textAlign:"center"}}
                                     name="rating"
                                     // value={value}
                                   onChange={handleChange}

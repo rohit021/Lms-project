@@ -4,7 +4,7 @@ import ReviewTable from "../../components/review/reviewtable";
 import ReviewFilter from "../../components/review/review-filter";
 import AuthService from "../../authServices/apicalls";
 import ReviewModal from '../../components/modals/review-modal'
-import ConfirmLeadModal from '../../components/modals/confirm-lead-modal'
+import ConfirmLeadModal from '../../components/modals/confirm-review-modal'
 import Modal from '../../components/modals/modal';
 import {Steps, CommonLeadHeadCells} from '../../helpers/utils';
 
