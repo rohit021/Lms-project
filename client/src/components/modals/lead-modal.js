@@ -70,6 +70,7 @@ const LeadDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                     type="number"
                     placeholder="Placeholder" 
                     onChange={handleChange}
+                    InputProps={{ inputProps: { min: 0 } }}
                     value={values.expectedAmount}
                     error={errors.expectedAmount && touched.expectedAmount}
                     helperText={errors.expectedAmount && touched.expectedAmount ? errors.expectedAmount : ""}

@@ -19,11 +19,10 @@ import WoodappleLeads from "../../pages/leads/woodapple-leads";
 // import Charts from "../../pages/charts";
 
   //Reviews
-  import RadixReviews from "../../pages/reviews/radixReviews";
-  import AnardanaReviews from "../../pages/reviews/anardanaReviews";
-  import RelpReviews from "../../pages/reviews/relpReviews";
-  import WoodappleReviews from "../../pages/reviews/woodappleReviews";
-
+  import RadixReviews from "../../pages/reviews/radix-reviews";
+  import AnardanaReviews from "../../pages/reviews/anardana-reviews";
+  import AnardanaPhysicalReviews from "../../pages/physicalreviews/anardana-physical-review";
+  
   // context
 import { useLayoutState } from "../../context/LayoutContext";
 
@@ -69,15 +68,20 @@ const Layout = (props)=> {
           {/* <Route path="/app/dashboard" component={Dashboard} /> */}
           {/* <Route path="/app/leads" component={Leads} /> */}
           <Route
-                exact
-                path="/app/leads"
-                render={() => <Redirect to="/app/leads/radixLeads" />}
-              />
-                  <Route
-                exact
-                path="/app/reviews"
-                render={() => <Redirect to="/app/reviews/radixReviews" />}
-              />
+            exact
+            path="/app/leads"
+            render={() => <Redirect to="/app/leads/radixLeads" />}
+          />
+          <Route
+            exact
+            path="/app/physicalreviews"
+            render={() => <Redirect to="/app/physicalreviews/anardana-physical-reviews" />}
+          />
+          <Route
+            exact
+            path="/app/reviews"
+            render={() => <Redirect to="/app/reviews/radix-reviews" />}
+          />
           {/* <Route path="/app/typography" component={Typography} />
           <Route path="/app/tables" component={Tables} />
           <Route path="/app/notifications" component={Notifications} />
@@ -86,17 +90,19 @@ const Layout = (props)=> {
               path="/app/ui"
             render={() => <Redirect to="/app/ui/icons" />}
           /> */}
-          <Route path="/app/leads/radixLeads" component={RadixLeads} />
-          <Route path="/app/leads/anardanaLeads" component={AnardanaLeads} />
-          <Route path="/app/leads/woodappleLeads" component={WoodappleLeads} />
-          <Route path="/app/leads/relpLeads" component={RelpLeads}/>
+          <Route path="/app/leads/radix-leads" component={RadixLeads} />
+          <Route path="/app/leads/anardana-leads" component={AnardanaLeads} />
+          <Route path="/app/leads/woodapple-leads" component={WoodappleLeads} />
+          <Route path="/app/leads/relp-leads" component={RelpLeads}/>
 
-            {/* Route for Reviews */}
+          {/* Route for Reviews */}
 
-          <Route path="/app/reviews/radixReviews" component={RadixReviews} />
-          <Route path="/app/reviews/anardanaReviews" component={AnardanaReviews} />
-          <Route path="/app/reviews/woodappleReviews" component={WoodappleReviews} />
-          <Route path="/app/reviews/relpReviews" component={RelpReviews}/>
+          <Route path="/app/reviews/radix-reviews" component={RadixReviews} />
+          <Route path="/app/reviews/anardana-reviews" component={AnardanaReviews} />
+          
+          {/* Route for Physical Reviews */}
+          <Route path="/app/physicalreviews/anardana-physical-reviews" component={RadixReviews} />
+          
         </Switch>
           {/* <footer className={classes.footer}>
             <Copyright />

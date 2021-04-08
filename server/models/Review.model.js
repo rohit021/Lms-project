@@ -30,6 +30,10 @@ const ReviewSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    isNegative:{
+        type: Boolean,
+        required:true
+    },
     organization: {
         type: String, 
         maxlength: 30,
