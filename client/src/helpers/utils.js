@@ -31,7 +31,7 @@ export const mainListItems = [
     ],
   },
   { id: 3, label: "Physical Review Menu", link: "/app/physicalreviews", icon: <ReceiptIcon /> ,children: [    
-    { label: "Anardana Physical", link: "/app/reviews/anardana-physical-reviews" , icon: <DotIcon fontSize="small"/> },    
+    { label: "Anardana Physical", link: "/app/physicalreviews/anardana-physical-reviews" , icon: <DotIcon fontSize="small"/> },    
   ],   
   
   

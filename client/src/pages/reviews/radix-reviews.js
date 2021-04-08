@@ -34,7 +34,7 @@ const RadixReviews = () => {
     name:"",
    review:"",
    rating:"",
-  //  isNegative:"",
+   isNegative:false,
    platform:"",
     organization:"radix",
     date: formattedTodayDate,
@@ -43,6 +43,7 @@ const RadixReviews = () => {
   const handleChange = () => {
     if (openmodal) {
       setOpenModal(false);
+      handleReset();
     } else {
       setOpenModal(true);
       handleNext();
@@ -51,7 +52,6 @@ const RadixReviews = () => {
   
   const ModalChange = () => {
     if (openmodal) {
-      
       setOpenModal(false);
     } else {
       setOpenModal(true);
@@ -138,7 +138,7 @@ const RadixReviews = () => {
         >
         Add Data
         </Button>
-        <Modal openModal={openmodal} Title="Create New Review" ReviewData={ReviewData} setReviewData={setReviewData }  organization="radix" closeModal={ModalChange}>
+        <Modal openModal={openmodal} Title="Create New Review"   organization="radix" closeModal={ModalChange}>
         <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
             {Steps.map(label => (
               <Step key={label}>

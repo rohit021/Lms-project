@@ -1,201 +1,161 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, FormControl, MenuItem, DialogTitle, DialogContent, Label, TextField, Button, IconButton, makeStyles, Dialog, Typography} from '@material-ui/core';
-import {Alert, Rating} from '@material-ui/lab';
-import CloseIcon from '@material-ui/icons/Close';
-import moment from 'moment';
-import { SourceOptions, CenterOptions, PriorityOptions, DepartmentOptions} from "../../helpers/utils";
+import React from "react";
+import {Formik, Field, Form} from 'formik';
+import * as yup from 'yup';
+import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
+import {PlatfromOptions} from "../../helpers/utils";
+import {Alert, Rating} from '@material-ui/lab'
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import AuthService from "../../authServices/apicalls";
-
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        width: "50px",
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    dialogPaper: {
-        position: 'absolute',
-        width: "33%",
-        left: "65%",
-        top: "-5%",
-        minHeight: '101%',
-        [theme.breakpoints.down("xs")]: {
-            width: "80%",
-            top: "0",
-            left: "0%",
-            minHeight: '50%',
-      },
-      },
-      ratingStyle:{
-        textAlign:"center"
-      },
-
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-    },
-    submit: {
-        margin:"20px auto",
-        background:"#01579b", 
-        color:"#fff" ,
-
-    },
-    selectStyle: {
-        minWidth: '100%'
-    },
+  Button: {
+    margin: "10px auto",
+    background: "#01579b",
+    color: "#fff",
+  },
+  selectStyle: {
+    minWidth: '100%'
+  },
 }));
 
-const FormModal = (props) => {
-    const classes = useStyles();
-    const [Name, setName] = useState("");
-    const [StarRating, setStarRating] = useState("");
-    const [Date, setDate] = useState("");
-    const [error, setError] = useState("");
-    const [Comment, setComment] = useState('')
-    const [Reply, setReply] = useState("")
-    const [Center, setCenter] = useState("")
-    const [Platform, setPlatform] = useState("")
-    const formattedTodayDate = moment().format("YYYY-MM-DD");
+const ValidationSchema = yup.object().shape({
+       name: yup
+      .string()
+      .required("This field is required"),
+      review: yup
+      .string()
+      .required("This field is required"),
+      rating: yup
+      .number()
+      .required("This field is required"),
+      platform: yup
+      .string()
+      .required("This field is required"),
+ })
+  
+const ReviewModal = ({ReviewData, setReviewData,handleSubmit, handleNext}) => {
+  const classes = useStyles();
+//  console.log(leadData)
 
-    useEffect(() => {
-        // console.log(formattedTodayDate);
-        setDate(formattedTodayDate);        
-    }, []);
-    
-    const onSubmit = async (event) => {
-        let payload ={
-            name: Name,
-            date: Date,
-            comment:Comment,
-            rating: StarRating,
-            organization:props.organization,
-            center: Center,
-            platform: Platform,
-            reply: Reply
+  return (
+    <React.Fragment>
+      <Typography variant="h6" gutterBottom align="center">
+      Review Information
+      </Typography>
+      <Formik
+      // enableReinitialize
+        initialValues={ReviewData}
+        onSubmit={values=>{
+        //   setReviewData(values);
+          console.log("inside review model", ReviewData)
+          console.log(values.isNegative)
+          handleNext();
+          // console.log(ReviewData)
+        
         }
-        AuthService.createNewReview(payload)
-            .then(function (response) {
-                props.closeModal();
-                window.location.reload();
-            })
-            .catch(function (error) {
-                setTimeout(() => {
-                    setError("");
-                }, 5000);
-                return setError(error.response.data.message);   
-            })  
-        event.preventDefault(event);      
-    };
-
-    return (
-        <React.Fragment>             
-            <Dialog classes={{paper: classes.dialogPaper }}
-                open={props.openModal}  disableBackdropClick fullWidth maxWidth="md" >
-                <DialogTitle>
-                    <IconButton style={{ backgroundColor: "#3f51b5",color:"#fff", float: "right" }} onClick={props.closeModal} >
-                        <CloseIcon />
-                    </IconButton>
-                    {error ?<Alert severity="error">{error}</Alert>:''}
-                </DialogTitle>
-                <DialogContent>
-                    <form onSubmit={onSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <TextField
-                                    variant="outlined"
-                                    onChange={(e) => setComment(e.target.value)}
-                                    id="comment"
-                                    label="Customer Comment"
-                                    name="comment"
-                                    required
-                                    fullWidth
-                                    autoFocus
-                                />
-                                </Grid>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <TextField
-                                    variant="outlined"
-                                    onChange={(e) => setName(e.target.value)}
-                                    id="name"
-                                    label="User Name"
-                                    name="name"
-                                    required
-                                    fullWidth
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <Typography variant="h6" component="h5" >
-                                    Ratings
+        
+      }
+        validationSchema={ValidationSchema}
+        >
+          {({errors, touched, values, handleChange})=>(
+            <Form className={classes.form}>
+              <Grid container spacing={2}>
+                <Grid item md={12} xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    id="name"
+                    label="User Name *"
+                    name="name"
+                    onChange={handleChange}
+                    value={values.name}
+                    error={errors.name && touched.name}
+                    helperText={errors.name && touched.name ? errors.name : ""}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item md={12} xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    multiline
+                    id="review"
+                    label="Review *"
+                    name="review"
+                    type="string"
+                    onChange={handleChange}
+                    value={values.review}
+                    error={errors.review && touched.review}
+                    helperText={errors.review && touched.review ? errors.review : ""}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item md={6} xs={6} sm={6}>
+                                <Typography variant="h6" component="h5" align="center" >
+                                    Ratings *
                                 </Typography>
-                                <Rating
-                                    style={{textAlign:"center"}}
+                              <Rating 
+                              type="number"
+                                    style={{textAlign:"center", "text-align":"center"}}
                                     name="rating"
                                     // value={value}
-                                    onChange={(event, newValue) => {
-                                        setStarRating(newValue);
-                                    }}
+                                  onChange={handleChange}
+                                  value={values.rating}
                                 />
-                            </Grid>
-                            <Grid item md={12} xs={12} sm={12}>
-                                <FormControl className={classes.selectStyle}>
-                                    <TextField
-                                         variant="outlined"
-                                         onChange={(e) => setReply(e.target.value)}
-                                         id="reply"
-                                         label="Reply"
-                                         name="reply"
-                                         fullWidth
-                                         autoFocus/>
-                                </FormControl>
-                            </Grid>        
-                            <Grid item md={12} xs={12} sm={12}>
-                                <FormControl className={classes.selectStyle}>
-                                    <TextField
-                                        size="small"
-                                        select
-                                        label="Center"
-                                        name="center"                                        
-                                        required
-                                        value={Center}
-                                        onChange={(e) => setCenter(e.target.value)}
-                                        defaultValue="Choose any Value" >
-                                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-                                    </TextField>
-                                </FormControl>
-                            </Grid>                           
-                            <Grid item md={12} xs={12} sm={12}>
-                                    <FormControl className={classes.selectStyle}>
-                                        <TextField
-                                            size="small"
-                                            select
-                                            label="Platform"
-                                            name="platform"                                        
-                                            required
-                                            value={Platform}
-                                            onChange={(e) => setPlatform(e.target.value)}
-                                            defaultValue="Choose any Value" >
-                                            {SourceOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
-                                        </TextField>
-                                    </FormControl>
-                                </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            className={classes.submit}
-                        >
-                            Submit Data
-                        </Button>
+                </Grid>
+                <Grid item md={6} xs={6} sm={6}>
+                <FormControl component="fieldset"  value={values.isNegative} className={classes.selectStyle} onChange={handleChange} label="isNegative">
+                   <Typography align="center">
+                        IsNegative?
+                  
+                    <Typography  style={
+                       {
+                        justifyContent: "space-around",
+                        width: "80%",
+                        display: "flex",
+                        alignItems: "center"
+                    }}  >
+                    <Field type="radio" name="isNegative" value="true" />
+                    True
+                    {/* </Typography>
+                    <Typography> */}
+                    <Field type="radio" name="isNegative" value="false" />
+                    False
+                    </Typography>
+                    </Typography>
+                </FormControl>
+                </Grid>
+                <Grid item md={12} xs={12} sm={12}>
+                <FormControl className={classes.selectStyle}>
+                  <TextField
+                    size="small"
+                    select
+                    label="Platform *"
+                    name="platform"
+                    value={values.platform}
+                     onChange={handleChange}
+                    error={errors.platform && touched.platform}
+                    helperText={errors.platform && touched.platform ? errors.platform : ""}
+                   
+                    >
+                    {PlatfromOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                  </TextField>
+                </FormControl>
+                </Grid>                
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  className={classes.Button}
+                  // onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Form>
+          )}
+        </Formik>
+    </React.Fragment>
+  );
+};
 
-                    </form>
-                </DialogContent>
-
-            </Dialog>
-        </React.Fragment>
-    );
-}
-
-export default FormModal;
+export default ReviewModal;
