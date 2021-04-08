@@ -11,7 +11,6 @@ import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
 import {Steps} from '../../helpers/utils';
-// import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
@@ -24,19 +23,7 @@ const defaultData = {
   order: 'desc',
   organization: "radix",
 };
-
-// const topBarValues = [
-// 	{text: 'S.No', md:1, xs:3, sm:1},
-// 	{text: 'Name', md:2, xs:3, sm:2},
-// 	{text: 'Date', md:1, xs:3, sm:2},
-// 	{text: 'Email', md:2, xs:3, sm:1},
-// 	{text: 'Phone', md:2, xs:2, sm:2},
-// 	{text: 'Organization', md:2, xs:3, sm:2},
-// 	{text: 'Source', md:1, xs:3, sm:2},
-//   {text: 'Actions', md:1, xs:3, sm:2},    
-// ]
-
-const RadixLeads = () => {
+const RadixReviews = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
@@ -122,9 +109,10 @@ const RadixLeads = () => {
         
   const fetchData = async () => {
     setLoading(true);
-    AuthService.getAllLeads(filterValue).then(
+    AuthService.getAllReviews(filterValue).then(
       (data) => {
-        setleadData(data.leads);
+        console.log(data);
+        setleadData(data.reviews);
       },
       (error) => {
         console.log(error);
@@ -170,4 +158,4 @@ const RadixLeads = () => {
   )
 }
 
-export default RadixLeads;
+export default RadixReviews;
