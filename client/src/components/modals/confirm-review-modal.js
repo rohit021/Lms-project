@@ -1,8 +1,7 @@
-import React,{useState} from "react";
-import { Grid, ListItem, ListItemText, Typography, Divider } from '@material-ui/core/';
+import React from "react";
+import { Grid, ListItemText, Typography, Divider } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     textCenter: {
@@ -15,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
  
-const ConfirmLeadModal = ({ReviewData, handleBack, handleSubmit}) => {
+const ConfirmReviewModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name,date, review, rating,isNegative, platform} = ReviewData;
+  const { name, date, review, center, rating,isNegative, platform} = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -32,35 +31,49 @@ const ConfirmLeadModal = ({ReviewData, handleBack, handleSubmit}) => {
             <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
                     primary='Name'
-                    secondary={ReviewData.name}
+                    secondary={name}
                     className={classes.textCenter}
                 />
             </Grid>
             <Grid item md={6} xs={6} sm={6}>
-                <ListItemText
-                    primary='Review'
-                    secondary={review}
-                    className={classes.textCenter}
-                />
-            </Grid>
-            <Grid item md={4} xs={4} sm={4}>
                 <ListItemText
                     primary='Rating'
                     secondary={rating}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
+            <Grid item md={12} xs={12} sm={12}>
+                <ListItemText
+                    primary='Review'
+                    secondary={review}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={3} xs={3} sm={3}>
+                <ListItemText
+                    primary='Center'
+                    secondary={center}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={3} xs={3} sm={3}>
                 <ListItemText
                     primary='Platform'
                     secondary={platform}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
+            <Grid item md={3} xs={3} sm={3}>
                 <ListItemText
                     primary='IsNegative'
                     secondary={isNegative}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={3} xs={3} sm={3}>
+                <ListItemText
+                    primary='Date'
+                    secondary={date}
                     className={classes.textCenter}
                 />
             </Grid>
@@ -96,4 +109,4 @@ const ConfirmLeadModal = ({ReviewData, handleBack, handleSubmit}) => {
   );
 };
 
-export default ConfirmLeadModal;
+export default ConfirmReviewModal;

@@ -5,9 +5,7 @@ const { authenticatateJWT } = require('../middleware/auth');
 // Single event Routes
 router.route('/data')
       .post(authenticatateJWT, physicalreviewcontroller.createPhysicalReview)
-      .get(authenticatateJWT, physicalreviewcontroller.getPhysicalReview) 
-
-router.route('/data:id')
+      .get(authenticatateJWT, physicalreviewcontroller.getPhysicalReview)
       .put(authenticatateJWT, physicalreviewcontroller.updatePhysicalReview)    
       .delete(authenticatateJWT, physicalreviewcontroller.deletePhysicalReview)  
     

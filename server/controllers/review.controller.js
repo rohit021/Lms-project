@@ -4,75 +4,35 @@
  * Module dependencies.
  */
 var Review = require('../models/Review.model'),
-    errorHandler = require('../helpers/dbErrorHandler'),
-    async = require('async');
+    errorHandler = require('../helpers/dbErrorHandler');
 
 // Method to Create Review
 exports.createReview = function (req, res) {
     var data = req.body;
-    // console.log(req.body)
-    var errorResult = {
-        error: true,
-        message: "",
-    }
-    async.waterfall([
-        function (done) {
-            if (!data.name) {
-                errorResult.message += "name is missing ";
+    var reviewdata = new Review(data);
+    reviewdata.save(function (err, result) {
+        if (err) {
+            // console.log("error----------", err);
+            return res.status(400).json({
+                error: errorHandler.getErrorMessage(err)
+            })
+        } else {
+            var outputResult = {
+                id: result._id,
+                name: result.name,
+                comment:result.comment,
+                rating:result.rating
             }
-            if (!data.date) {
-                errorResult.message += " date is missing";                
-            }
-            if (!data.rating) {
-                errorResult.message += " rating is missing";                
-            }
-            if(!data.comment){
-                errorResult.message+=" comment is missing";
-            }
-            if (!data.organization) {
-                errorResult.message += " organization is missing";
-            }
-            if (!data.center) {
-                errorResult.message += " center is missing";
-            }
-            if (!data.platform) {
-                errorResult.message += " platform is missing";
-            }
-            if (errorResult.message) done(errorResult);
-            else done(null, data)
-        },
-        function (data) {
-            var reviewdata = new Review(data);
-            reviewdata.save(function (err, result) {
-                if (err) {
-                    // console.log("error----------", err);
-                    return res.status(400).json({
-                        error: errorHandler.getErrorMessage(err)
-                    })
-                } else {
-                    var outputResult = {
-                        id: result._id,
-                        name: result.name,
-                        comment:result.comment,
-                        rating:result.rating
-                    }
-                    res.json({
-                        success: 1,
-                        "message": "Review Added Successfully",
-                        outputResult
-                    });
-                }
+            res.json({
+                success: 1,
+                "message": "Review Added Successfully",
+                outputResult
             });
         }
-
-    ], function (err) {
-        console.log("error----------", err);
-        return res.status(400).send({
-            message: err.message
-        });
     });
-}
-    // method to get all reviews
+};
+
+// method to get all reviews
 exports.getAllReview = function (req, res) {
     var data = req.body;
     // console.log(req.body);
