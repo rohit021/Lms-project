@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
-import RadixFilter from "../../components/filters/filter";
+import CommonFilter from "../../components/filters/filter";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
 import Modal from '../../components/modals/modal';
@@ -155,6 +155,7 @@ const RadixLeads = ({}) => {
         <AddButton handleChange={handleClick}  >Alert</AddButton>
        {Open?<SnackBar open={Open} variant="success"  >Rohit</SnackBar> :""}
         {/* {openmodal ? <WoodAppleModal status="add" openModal={openmodal} organization="woodapple" closeModal={handleChange} /> : ''} */}
+        <CommonFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           ()=>{
             setOpenModal(true);

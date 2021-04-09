@@ -70,7 +70,7 @@ const Layout = (props)=> {
           <Route
             exact
             path="/app/leads"
-            render={() => <Redirect to="/app/leads/radixLeads" />}
+            render={() => <Redirect to="/app/leads/radix-leads" />}
           />
           <Route
             exact

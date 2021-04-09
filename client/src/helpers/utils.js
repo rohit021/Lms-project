@@ -33,8 +33,6 @@ export const mainListItems = [
   { id: 3, label: "Physical Review Menu", link: "/app/physicalreviews", icon: <ReceiptIcon /> ,children: [    
     { label: "Anardana Physical", link: "/app/physicalreviews/anardana-physical-reviews" , icon: <DotIcon fontSize="small"/> },    
   ],   
-  
-  
 }   
     // {'text': 'Lead Menu', 'link': '/viewleads', 'page': 'Leads', 'icon': <AssignmentOutlined />},
     // {'text': 'DateWise Status', 'link': '/datewiseStatus', 'page': 'datewiseStatus', 'icon': <TrendingUp />},

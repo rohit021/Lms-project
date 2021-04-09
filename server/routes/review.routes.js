@@ -9,10 +9,6 @@ router.route('/data')
       .put(authenticatateJWT, reviewcontroller.updateReview)    
       .delete(authenticatateJWT, reviewcontroller.deleteReview)  
     
-router.route('/data:id')
-      .put(authenticatateJWT, reviewcontroller.updateReview)    
-      .delete(authenticatateJWT, reviewcontroller.deleteReview)  
-    
 //Multiple Events Routes
 router.route('/datas')
       .post(authenticatateJWT,reviewcontroller.getAllReview)
