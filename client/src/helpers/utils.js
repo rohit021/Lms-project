@@ -14,7 +14,8 @@ import {
     // ArrowBack as ArrowBackIcon,
   } from "@material-ui/icons";
 
-export const Steps = ['User Information', 'Organization Information', 'Lead  Information'];  
+export const Steps = ['User Information', 'Organization Information', 'Lead Information'];  
+export const ReviewSteps = ['Review Information', 'Confirm Information'];  
   
 export const mainListItems = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },

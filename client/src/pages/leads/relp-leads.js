@@ -24,7 +24,7 @@ const defaultData = {
   organization: "relp",
 };
 
-const RadixLeads = () => {
+const RelpLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
@@ -157,4 +157,4 @@ const RadixLeads = () => {
   )
 }
 
-export default RadixLeads;
+export default RelpLeads;

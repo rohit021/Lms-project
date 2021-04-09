@@ -17,7 +17,7 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
     console.log(organization);
     useEffect(() => {
         setLoading(true);
-        AuthService.FindLeadbyId(id).then(
+        AuthService.getLeadById(id).then(
             (data) => {
                 setFormData(data);                // setName(data.name);
             },
@@ -68,7 +68,7 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
         setActiveStep(0);
       };
       const handleSubmit = ()=>{
-        AuthService.updateLead(FormData)
+        AuthService.updateLeadById(FormData)
         .then(function (response) {
             reload();
 

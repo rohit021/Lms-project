@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
  
-const ConfirmPhysicalModal = ({ReviewData, handleBack, handleSubmit}) => {
+const ConfirmPhysicalModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name,date, review, rating,isNegative, platform} = ReviewData;
+  const { name, phone, email, date, starFood, starClean, starPlace, starService, starMusic, isNegative} = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -26,44 +26,79 @@ const ConfirmPhysicalModal = ({ReviewData, handleBack, handleSubmit}) => {
         </Typography>
         <Divider/>
         <Typography variant="h6" gutterBottom >
-            Review Data
+            Physical Review Data
         </Typography>
         <Grid container spacing={2}>
-            <Grid item md={6} xs={6} sm={6}>
+            <Grid item md={3} xs={3} sm={3}>
                 <ListItemText
                     primary='Name'
-                    secondary={ReviewData.name}
+                    secondary={name}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={3} xs={3} sm={3}>
+                <ListItemText
+                    primary='Phone'
+                    secondary={phone}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={3} xs={3} sm={3}>
+                <ListItemText
+                    primary='Email'
+                    secondary={email}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={3} xs={3} sm={3}>
+                <ListItemText
+                    primary='Date'
+                    secondary={date}
                     className={classes.textCenter}
                 />
             </Grid>
             <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
-                    primary='Review'
-                    secondary={review}
+                    primary='Food'
+                    secondary={starFood}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
+            <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
-                    primary='Rating'
-                    secondary={rating}
+                    primary='Clean'
+                    secondary={starClean}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
+            <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
-                    primary='Platform'
-                    secondary={platform}
+                    primary='Place'
+                    secondary={starPlace}
                     className={classes.textCenter}
                 />
             </Grid>
-            <Grid item md={4} xs={4} sm={4}>
+            <Grid item md={6} xs={6} sm={6}>
+                <ListItemText
+                    primary='Service'
+                    secondary={starService}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={6} xs={6} sm={6}>
+                <ListItemText
+                    primary='Music'
+                    secondary={starMusic}
+                    className={classes.textCenter}
+                />
+            </Grid>
+            <Grid item md={6} xs={6} sm={6}>
                 <ListItemText
                     primary='IsNegative'
                     secondary={isNegative}
                     className={classes.textCenter}
                 />
-            </Grid>
+            </Grid>         
         </Grid>
         
         <Grid container spacing={2}>

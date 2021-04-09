@@ -11,8 +11,6 @@ import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
 import {Steps, CommonLeadHeadCells} from '../../helpers/utils';
-import SnackBar from '../../components/modals/snackbar-modal'
-// import ListTopBar from '../../components/layout/listTopBar'
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
@@ -26,34 +24,20 @@ const defaultData = {
   organization: "radix",
 };
 
-// const topBarValues = [
-// 	{text: 'S.No', md:1, xs:3, sm:1},
-// 	{text: 'Name', md:2, xs:3, sm:2},
-// 	{text: 'Date', md:1, xs:3, sm:2},
-// 	{text: 'Email', md:2, xs:3, sm:1},
-// 	{text: 'Phone', md:2, xs:2, sm:2},
-// 	{text: 'Organization', md:2, xs:3, sm:2},
-// 	{text: 'Source', md:1, xs:3, sm:2},
-//   {text: 'Actions', md:1, xs:3, sm:2},    
-// ]
-
-const RadixLeads = ({}) => {
+const RadixLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
   const [activeStep, setActiveStep]  = useState(0);
   const [openmodal, setOpenModal] = useState(false);
-  const [Open, setOpen]=useState(false)
   const [FormData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     source: "",
-    center: "",
     radixDepartment: "",
     doctor: "",
     location: "",
-    otherspecify: "",
     priority: "",
     expectedAmount: "",
     organization: "radix",
@@ -66,11 +50,8 @@ const RadixLeads = ({}) => {
       setOpenModal(false);
     } else {
       setOpenModal(true);
-
     }
   };
-
- 
 
   const handleNext = () => {
     // console.log(activeStep);
@@ -91,9 +72,6 @@ const RadixLeads = ({}) => {
     .then(function (response) {
       ModalChange();
       fetchData();
-      
-
-      
     })
     .catch(function (error) {
       //  setTimeout(() => {
@@ -112,7 +90,7 @@ const RadixLeads = ({}) => {
       case 3:
         return <LeadModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
       case 4:
-        return <ConfirmModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;        
+          return <ConfirmModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;        
       default:
         return <div>Not Found</div>;
     }
@@ -138,23 +116,10 @@ const RadixLeads = ({}) => {
     );
     setLoading(false);
   };
-  const handleClick=()=>{
-   if(Open){
-      setOpen(false);
-    }
-    else{
-      setOpen(true) ; 
-    }
-   
-  }
-  
+
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
-        <RadixFilter filterValue={filterValue} updateData={updateData} />
-        <AddButton handleChange={handleClick}  >Alert</AddButton>
-       {Open?<SnackBar open={Open} variant="success"  >Rohit</SnackBar> :""}
-        {/* {openmodal ? <WoodAppleModal status="add" openModal={openmodal} organization="woodapple" closeModal={handleChange} /> : ''} */}
         <CommonFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           ()=>{
@@ -163,8 +128,7 @@ const RadixLeads = ({}) => {
           }
         }>
           Add data
-        </AddButton>    
-        {/* <Alert mdg="vpdf" vsr ="df"/>      */}
+        </AddButton>          
         <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
           <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
             {Steps.map(label => (
@@ -181,7 +145,6 @@ const RadixLeads = ({}) => {
           !loading && leadData &&
           <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData} fetchData={fetchData}/>
         }
-
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}

@@ -104,7 +104,7 @@ const signout = function (next) {
     deleteCookie("authToken");
     deleteLocalStorage("authUser");
     return fetch(`${API_URL}/auth/logout`, {
-      method: "GET",
+      method: "get",
     })
       .then((response) => console.log("signout success"))
       .catch((err) => console.log(err));
@@ -125,7 +125,7 @@ const createNewLead = function (data) {
     });
 };
 
-const GetLeadById = function (data) {
+const getLeadById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
@@ -135,7 +135,7 @@ const GetLeadById = function (data) {
       return response.data;
     });
 };
-const GetAllLeads = function (filterValue) {
+const getAllLeads = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
@@ -179,7 +179,7 @@ const deleteLeadById = function (data) {
   };
 
     
-const GetReviewById = function (data) {
+const getReviewById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
@@ -190,7 +190,7 @@ const GetReviewById = function (data) {
     });
 };
 
-const GetAllReviews = function (filterValue) {
+const getAllReviews = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
@@ -238,7 +238,7 @@ const createNewPhysicalReview = function (data) {
     });
 };
 
-const GetPhysicalReviewById = function (data) {
+const getPhysicalReviewById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
@@ -248,10 +248,11 @@ const GetPhysicalReviewById = function (data) {
       return response.data;
     });
 };
-const GetAllPhysicalReview = function (filterValue) {
+const getAllPhysicalReview = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
+  console.log(filterValue)
   return axios
     .post(API_URL + "/api/physical-review/datas", filterValue, config)
     .then((response) => {
@@ -282,7 +283,7 @@ const deletePhysicalReviewById = function (data) {
 };
 
 export default { login, register, reset, newpassword, isAuthenticated, signout,
-                 createNewLead, GetLeadById, GetAllLeads, updateLeadById, deleteLeadById,
-                 createNewReview, GetReviewById, GetAllReviews, updateReviewById, deleteReviewById,
-                 createNewPhysicalReview, GetPhysicalReviewById, GetAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
+                 createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
+                 createNewReview, getReviewById, getAllReviews, updateReviewById, deleteReviewById,
+                 createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
 };

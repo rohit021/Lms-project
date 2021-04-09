@@ -24,7 +24,7 @@ const defaultData = {
   organization: "anardana",
 };
 
-const RadixLeads = () => {
+const AnardanaLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
@@ -156,4 +156,4 @@ const RadixLeads = () => {
   )
 }
 
-export default RadixLeads;
+export default AnardanaLeads;

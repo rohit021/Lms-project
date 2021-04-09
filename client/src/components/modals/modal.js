@@ -71,8 +71,7 @@ const CommonModal = ({ Title, children, openModal, closeModal }) => {
                         onClick={closeModal}
                     >
                         <CloseIcon />
-                    </IconButton>
-                    {/* {error ? <Alert severity="error">{error}</Alert> : ""} */}
+                    </IconButton>                   
                 </DialogTitle>
                 <DialogContent>{children}</DialogContent>
             </Dialog>

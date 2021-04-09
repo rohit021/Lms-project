@@ -1,74 +1,58 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
+import moment from "moment";
 import ReviewTable from "../../components/table/review-table";
 import ReviewFilter from "../../components/filters/review-filter";
-import AuthService from "../../authServices/apicalls";
-import AddButton from '../../components/addbutton/addbutton'
+import ReviewModal from '../../components/modals/review-modal'
 import Modal from '../../components/modals/modal';
-import UserModal from '../../components/modals/user-modal';
-import RadixModal from '../../components/modals/radix-modal';
-import LeadModal from '../../components/modals/lead-modal';
-import ConfirmModal from '../../components/modals/confirm-modal';
+import ConfirmReviewModal from '../../components/modals/confirm-review-modal'
+import AddButton from '../../components/addbutton/addbutton'
 import NotFound from "../../components/widget/notfound";
-import {Steps} from '../../helpers/utils';
-// import ListTopBar from '../../components/layout/listTopBar'
-import moment from "moment";
+import { ReviewSteps } from '../../helpers/utils';
+import AuthService from "../../authServices/apicalls";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
 const defaultData = {
   startDate: moment().format("YYYY-MM-01"),
   endDate: moment().format("YYYY-MM-DD"),
-  source:'',
-  status:'',
-  orderBy:'date',
+  source: '',
+  status: '',
+  orderBy: 'date',
   order: 'desc',
-  organization: "radix",
+  organization: "anardana",
 };
 
-// const topBarValues = [
-// 	{text: 'S.No', md:1, xs:3, sm:1},
-// 	{text: 'Name', md:2, xs:3, sm:2},
-// 	{text: 'Date', md:1, xs:3, sm:2},
-// 	{text: 'Email', md:2, xs:3, sm:1},
-// 	{text: 'Phone', md:2, xs:2, sm:2},
-// 	{text: 'Organization', md:2, xs:3, sm:2},
-// 	{text: 'Source', md:1, xs:3, sm:2},
-//   {text: 'Actions', md:1, xs:3, sm:2},    
-// ]
-
-const RadixLeads = () => {
+const RadixReviews = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
-  const [leadData, setleadData] = useState(null);
-  const [activeStep, setActiveStep]  = useState(0);
   const [openmodal, setOpenModal] = useState(false);
+  const [ReviewData, setReviewData] = useState(null);
+  const [activeStep, setActiveStep] = useState(0);
   const [FormData, setFormData] = useState({
     name: "",
-    email: "",
-    phone: "",
-    source: "",
+    review: "",
+    rating: "",
+    isNegative: false,
+    platform: "",
     center: "",
-    radixDepartment: "",
-    doctor: "",
-    location: "",
-    otherspecify: "",
-    priority: "",
-    expectedAmount: "",
     organization: "anardana",
     date: formattedTodayDate,
   });
-  
+
   const ModalChange = () => {
     if (openmodal) {
       handleReset();
       setOpenModal(false);
     } else {
       setOpenModal(true);
+      handleNext();
     }
   };
+
   const CommonLeadHeadCells = [
     { id: 'date', disablePadding: false, label: 'Date' },
   ];
+
   const handleNext = () => {
     // console.log(activeStep);
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -81,32 +65,29 @@ const RadixLeads = () => {
   const handleReset = () => {
     setFormData("");
     setActiveStep(0);
+    setFormData({organization: "anardana"})
   };
 
-  const handleSubmit = ()=>{
-    AuthService.createNewLead(FormData)
-    .then(function (response) {
-      ModalChange();
-      fetchData();
-    })
-    .catch(function (error) {
-      //  setTimeout(() => {
-      //      setError("");
-      //  }, 5000);
-       // return setError(error.response.data.message);   
-    })  
+  const handleSubmit = () => {
+    AuthService.createNewReview(FormData)
+      .then(function (response) {
+        ModalChange();
+        fetchData();
+      })
+      .catch(function (error) {
+        //  setTimeout(() => {
+        //      setError("");
+        //  }, 5000);
+        // return setError(error.response.data.message);   
+      })
   }
 
   const renderStepContent = (step) => {
     switch (step) {
       case 1:
-        return <UserModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} />;
+        return <ReviewModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} />;
       case 2:
-        return <RadixModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;
-      case 3:
-        return <LeadModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
-      case 4:
-        return <ConfirmModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;        
+        return <ConfirmReviewModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;
       default:
         return <div>Not Found</div>;
     }
@@ -119,12 +100,12 @@ const RadixLeads = () => {
   useEffect(() => {
     fetchData();
   }, [filterValue]);
-        
+
   const fetchData = async () => {
     setLoading(true);
     AuthService.getAllReviews(filterValue).then(
       (data) => {
-        setleadData(data.reviews);
+        setReviewData(data.reviews);
       },
       (error) => {
         console.log(error);
@@ -138,16 +119,16 @@ const RadixLeads = () => {
       <Grid item md={12} xs={12} sm={12}>
         <ReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
-          ()=>{
+          () => {
             setOpenModal(true);
             handleNext();
           }
         }>
           Add Review
-        </AddButton>          
-        <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
-          <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
-            {Steps.map(label => (
+        </AddButton>
+        <Modal openModal={openmodal} Title="Create New Review" closeModal={ModalChange}>
+          <Stepper activeStep={activeStep} alternativeLabel color="#fff">
+            {ReviewSteps.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
@@ -158,16 +139,16 @@ const RadixLeads = () => {
           </React.Fragment>
         </Modal>
         {
-          !loading && leadData &&
-          <ReviewTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData} fetchData={fetchData}/>
+          !loading && ReviewData &&
+          <ReviewTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={ReviewData} updateData={updateData} fetchData={fetchData} />
         }
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}
-        {!loading && !leadData && <NotFound/> }
+        {!loading && !ReviewData && <NotFound />}
       </Grid>
     </Grid>
   )
 }
 
-export default RadixLeads;
+export default RadixReviews;
