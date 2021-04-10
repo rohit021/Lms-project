@@ -3,7 +3,7 @@ import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, 
 import { Dialog,DialogActions, DialogTitle, DialogContentText, DialogContent, Slide }from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
-import EditModal from '../modals/edit-modal';
+import EditReviewModal from '../modals/edit-review-modal';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
 
@@ -150,7 +150,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     });
     return (
         <Paper className={classes.paper}>
-            {openmodal && <EditModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
+            {openmodal && <EditReviewModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
             {deleteModal && <DeleteDialog /> }
             <TableContainer>
                 <Table
@@ -203,7 +203,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
                                 <TableCell className={classes.text}>{data.review}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
-                                <TableCell className={classes.text}>{data.ratings}</TableCell>
+                                <TableCell className={classes.text}>{data.rating}</TableCell>
                                 <TableCell className={classes.text}>{data.reply}</TableCell>
                                 <TableCell className={classes.text}>{data.platform}</TableCell>
                                 <TableCell>

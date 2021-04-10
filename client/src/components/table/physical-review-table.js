@@ -3,7 +3,7 @@ import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, 
 import { Dialog,DialogActions, DialogTitle, DialogContentText, DialogContent, Slide }from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
-import EditModal from '../modals/edit-modal';
+import EditPhysicalModal from '../modals/edit-physical-modal';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
 
@@ -105,7 +105,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
         const payload ={
             id:dataId
         }
-        AuthService.deleteLeadbyId(payload).then(
+        AuthService.deletePhysicalReviewById(payload).then(
             (data) => {
                 setdeleteModal(false);
                 fetchData();
@@ -150,7 +150,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     });
     return (
         <Paper className={classes.paper}>
-            {openmodal && <EditModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
+            {openmodal && <EditPhysicalModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
             {deleteModal && <DeleteDialog /> }
             <TableContainer>
                 <Table
@@ -203,11 +203,13 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                             >
                                 <TableCell className={classes.text}>{index+1}</TableCell>
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
-                                <TableCell className={classes.text}>{data.review}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
-                                <TableCell className={classes.text}>{data.ratings}</TableCell>
-                                <TableCell className={classes.text}>{data.reply}</TableCell>
-                                <TableCell className={classes.text}>{data.platform}</TableCell>
+                                <TableCell className={classes.text}>{data.phone}</TableCell>
+                                <TableCell className={classes.text}>{data.starFood}</TableCell>
+                                <TableCell className={classes.text}>{data.starClean}</TableCell>
+                                <TableCell className={classes.text}>{data.starPlace}</TableCell>
+                                <TableCell className={classes.text}>{data.starService}</TableCell>
+                                <TableCell className={classes.text}>{data.starMusic}</TableCell>                                
                                 <TableCell>
                                     <Button
                                      variant="contained"

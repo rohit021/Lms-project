@@ -29,6 +29,10 @@ const PhysicalReviewSchema = new Schema({
         type:  String,
         required: true
     },
+    organization: {
+        type:  String,
+        required: true
+    },
     isNegative:{
         type: Boolean,
         required:true

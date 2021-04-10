@@ -4,8 +4,7 @@
  * Module dependencies.
  */
 var PhysicalReview = require('../models/PhysicalReview.model'),
-    errorHandler = require('../helpers/dbErrorHandler'),
-    async = require('async');
+    errorHandler = require('../helpers/dbErrorHandler');
 
 // Method to Create Review
 exports.createPhysicalReview = function (req, res) {
@@ -46,16 +45,14 @@ exports.getAllPhysicalReview = function (req, res) {
     sort[sort_parameter] = sort_order;
     sort['_id'] = sort_order ==1? -1 : 1;    
     var matchQuery = {};
-
-
-    var data = req.body;
     // console.log(data);
     var matchQuery = {};
     if(data.organization)
     matchQuery.organization = data.organization;
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    PhysicalReview.find(matchQuery).sort(sort).exec(function (err, reviews) {
+    console.log(matchQuery);
+    PhysicalReview.find({}).sort(sort).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -99,7 +96,7 @@ exports.getPhysicalReview = function (req, res) {
 // Method to Update Review By ID
 exports.updatePhysicalReview = function (req, res) {
     var data = req.body;
-    PhysicalReview.findOne({ _id: data.id }).exec(function (err, review) {
+    PhysicalReview.findOne({ _id: data._id }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -113,14 +110,26 @@ exports.updatePhysicalReview = function (req, res) {
             if (data.phone) {
                 review.date = data.date;
             }
-            if (data.platform) {
-                review.platform = data.platform;
+            if (data.email) {
+                review.email = data.email;
             }
-            if (review.organization) {
-                review.organization = data.organization;
+            if (data.isNegative) {
+                review.isNegative = data.isNegative;
             }
-            if (data.rating) {
-                review.rating = data.rating;
+            if (data.starFood) {
+                review.starFood = data.starFood;
+            }
+            if (data.starClean) {
+                review.starClean = data.starClean;
+            }
+            if (data.starPlace) {
+                review.starPlace = data.starPlace;
+            }
+            if (data.starService) {
+                review.starService = data.starService;
+            }
+            if (data.starMusic) {
+                review.starMusic = data.starMusic;
             }
             review.save(function (err, result) {
                 if (err) {
@@ -153,7 +162,7 @@ exports.updatePhysicalReview = function (req, res) {
 
 // Method to delete a particular Review
 exports.deletePhysicalReview = function (req, res) {
-    var reviewID = req.query.id;
+    var reviewID = req.body.id;
     PhysicalReview.findOneAndDelete({ _id: reviewID }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({

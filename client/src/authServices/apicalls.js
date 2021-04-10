@@ -16,7 +16,7 @@ const config = {
     "Content-Type": "application/json",
   },
 };
-
+//USER AUTHENTICATION DETAILS
 const setAuthentication = (token, user) => {
   setCookie("authToken", token);
   setLocalStorage("authUser", user);
@@ -104,19 +104,33 @@ const signout = function (next) {
     deleteCookie("authToken");
     deleteLocalStorage("authUser");
     return fetch(`${API_URL}/auth/logout`, {
-      method: "GET",
+      method: "get",
     })
       .then((response) => console.log("signout success"))
       .catch((err) => console.log(err));
   }
 };
 
-const getAllReviews = function (filterValue) {
+
+// Leads Calls
+
+const createNewLead = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .post(API_URL + "/api/review/datas", filterValue, config)
+    .post(API_URL + "/api/leads/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const getLeadById = function (id) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/leads/data/" + id, config)
     .then((response) => {
       return response.data;
     });
@@ -131,18 +145,28 @@ const getAllLeads = function (filterValue) {
       return response.data;
     });
 };
-
-const createNewLead = function (data) {
+const updateLeadById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .post(API_URL + "/api/leads/data", data, config)
+    .put(API_URL + "/api/leads/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+const deleteLeadById = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .delete(API_URL + "/api/leads/data", { data }, config)
     .then((response) => {
       return response.data;
     });
 };
 
+// Review Api Calls
 const createNewReview = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -153,51 +177,114 @@ const createNewReview = function (data) {
       return response.data;
     });
 };
-const deleteLeadbyId = function (data) {
+
+
+const getReviewById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/leads/data",{data}, config )
+    .get(API_URL + "/api/review/data", { params: { id: data } }, config)
     .then((response) => {
       return response.data;
     });
 };
 
-const FindLeadbyId = function (data) {
+const getAllReviews = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .get(API_URL + "/api/leads/data", { params: { id: data } }, config)
+    .post(API_URL + "/api/review/datas", filterValue, config)
     .then((response) => {
       return response.data;
     });
 };
 
-const updateLead = function (data) {
+const updateReviewById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .put(API_URL + "/api/leads/data", data, config)
+    .put(API_URL + "/api/review/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const deleteReviewById = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .delete(API_URL + "/api/review/data", { data }, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+
+//Physcial review Api Calls
+
+
+const createNewPhysicalReview = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/physical-review/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const getPhysicalReviewById = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/physical-review/data", { params: { id: data } }, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+const getAllPhysicalReview = function (filterValue) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  console.log(filterValue)
+  return axios
+    .post(API_URL + "/api/physical-review/datas", filterValue, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const updatePhysicalReviewById = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .put(API_URL + "/api/physical-review/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const deletePhysicalReviewById = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .delete(API_URL + "/api/physical-review/data", { data }, config)
     .then((response) => {
       return response.data;
     });
 };
 
 export default {
-  login,
-  register,
-  isAuthenticated,
-  reset,
-  newpassword,
-  getAllLeads,
-  deleteLeadbyId,
-  createNewLead,
-  createNewReview,
-  signout,
-  getAllReviews,
-  FindLeadbyId,
-  updateLead,
+  login, register, reset, newpassword, isAuthenticated, signout,
+  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
+  createNewReview, getReviewById, getAllReviews, updateReviewById, deleteReviewById,
+  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
 };
