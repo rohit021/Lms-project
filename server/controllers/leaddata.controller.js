@@ -105,8 +105,8 @@ exports.getAllLeads = function (req, res) {
 
 // Method to Get a particlular Form By ID
 exports.getLead = function (req, res) {
-    var leadID = req.query.id;
-    Lead.findOne({ _id: leadID }).exec(function (err, lead) {
+    var leadId = req.params.id;
+    Lead.findOne({ _id: leadId }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -204,7 +204,7 @@ exports.updateLead = function (req, res) {
 
 // Method to delete a particular Lead
 exports.deleteLead = function (req, res) {
-    var leadId = req.body.id;
+    var leadId = req.params.id;
     Lead.findOneAndDelete({ _id: leadId }).exec(function (err, lead) {
         if (err) {
             return res.status(400).send({

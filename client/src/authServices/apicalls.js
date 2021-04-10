@@ -16,12 +16,12 @@ const config = {
     "Content-Type": "application/json",
   },
 };
-    //USER AUTHENTICATION DETAILS
+//USER AUTHENTICATION DETAILS
 const setAuthentication = (token, user) => {
-    setCookie("authToken", token);
-    setLocalStorage("authUser", user);
+  setCookie("authToken", token);
+  setLocalStorage("authUser", user);
 };
-   
+
 const login = (email, password) => {
   return axios
     .post(
@@ -125,12 +125,12 @@ const createNewLead = function (data) {
     });
 };
 
-const getLeadById = function (data) {
+const getLeadById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .get(API_URL + "/api/leads/data", { params: { id: data } }, config)
+    .get(API_URL + "/api/leads/data/" + id, config)
     .then((response) => {
       return response.data;
     });
@@ -160,25 +160,25 @@ const deleteLeadById = function (data) {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/leads/data",{data}, config )
+    .delete(API_URL + "/api/leads/data", { data }, config)
     .then((response) => {
       return response.data;
     });
 };
 
-  // Review Api Calls
-  const createNewReview = function (data) {
-    axios.defaults.headers.common = {
-      Authorization: "Bearer " + getCookie("authToken"),
-    };
-    return axios
-      .post(API_URL + "/api/review/data", data, config)
-      .then((response) => {
-        return response.data;
-      });
+// Review Api Calls
+const createNewReview = function (data) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
   };
+  return axios
+    .post(API_URL + "/api/review/data", data, config)
+    .then((response) => {
+      return response.data;
+    });
+};
 
-    
+
 const getReviewById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -217,7 +217,7 @@ const deleteReviewById = function (data) {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/review/data",{data}, config )
+    .delete(API_URL + "/api/review/data", { data }, config)
     .then((response) => {
       return response.data;
     });
@@ -276,14 +276,15 @@ const deletePhysicalReviewById = function (data) {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/physical-review/data",{data}, config )
+    .delete(API_URL + "/api/physical-review/data", { data }, config)
     .then((response) => {
       return response.data;
     });
 };
 
-export default { login, register, reset, newpassword, isAuthenticated, signout,
-                 createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
-                 createNewReview, getReviewById, getAllReviews, updateReviewById, deleteReviewById,
-                 createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
+export default {
+  login, register, reset, newpassword, isAuthenticated, signout,
+  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
+  createNewReview, getReviewById, getAllReviews, updateReviewById, deleteReviewById,
+  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
 };
