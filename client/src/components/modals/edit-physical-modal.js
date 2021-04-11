@@ -9,11 +9,11 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
     const [activeStep, setActiveStep]  = useState(0);
     const [FormData, setFormData] = useState("");
     const [loading, setLoading] = useState(false);
-    console.log(organization);
     useEffect(() => {
         setLoading(true);
         AuthService.getPhysicalReviewById(id).then(
             (data) => {
+              console.log(data);
                 setFormData(data);                // setName(data.name);
             },
             (error) => {

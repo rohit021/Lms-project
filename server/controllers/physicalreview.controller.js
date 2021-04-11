@@ -19,9 +19,7 @@ exports.createPhysicalReview = function (req, res) {
         } else {
             var outputResult = {
                 id: result._id,
-                name: result.name,
-                comment:result.comment,
-                rating:result.rating
+                name: result.name,           
             }
             res.json({
                 success: 1,
@@ -34,25 +32,23 @@ exports.createPhysicalReview = function (req, res) {
     // method to get all reviews
 exports.getAllPhysicalReview = function (req, res) {
     var data = req.body;
-    // console.log(req.body);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
     if (order == "desc") {
         sort_order = -1;
     }
-    var sort = {};
+    var sort = {}, matchQuery = {};
     sort[sort_parameter] = sort_order;
     sort['_id'] = sort_order ==1? -1 : 1;    
-    var matchQuery = {};
-    // console.log(data);
-    var matchQuery = {};
     if(data.organization)
-    matchQuery.organization = data.organization;
+        matchQuery.organization = data.organization;
+    if(data.center)
+        matchQuery.center = data.center;
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     console.log(matchQuery);
-    PhysicalReview.find({}).sort(sort).exec(function (err, reviews) {
+    PhysicalReview.find(matchQuery).sort(sort).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -75,8 +71,8 @@ exports.getAllPhysicalReview = function (req, res) {
 
 // Method to Get a Review Form By ID
 exports.getPhysicalReview = function (req, res) {
-    var reviewID = req.query.id;
-    PhysicalReview.findOne({ _id: reviewID }).exec(function (err, review) {
+    var reviewId = req.params.id;
+    PhysicalReview.findOne({ _id: reviewId }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -100,7 +96,7 @@ exports.updatePhysicalReview = function (req, res) {
         if (err) {
             return res.status(400).send({
                 status: 0,
-                message: 'Form Id is not correct'
+                message: 'Physical Review Id is not correct'
             })
         }
         if (review) {
@@ -162,8 +158,8 @@ exports.updatePhysicalReview = function (req, res) {
 
 // Method to delete a particular Review
 exports.deletePhysicalReview = function (req, res) {
-    var reviewID = req.body.id;
-    PhysicalReview.findOneAndDelete({ _id: reviewID }).exec(function (err, review) {
+    var reviewId = req.params.id;
+    PhysicalReview.findOneAndDelete({ _id: reviewId }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -189,7 +185,7 @@ exports.deleteAllPhysicalReviews = function (req, res) {
         if (err) {
             return res.status(400).send({
                 status: 0,
-                message: 'No Form found'
+                message: 'No Physical Review found'
             })
         }
         res.send({

@@ -102,10 +102,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     };
     
     const deleteHandler = () =>{
-        const payload ={
-            id:dataId
-        }
-        AuthService.deletePhysicalReviewById(payload).then(
+        AuthService.deletePhysicalReviewById(dataId).then(
             (data) => {
                 setdeleteModal(false);
                 fetchData();

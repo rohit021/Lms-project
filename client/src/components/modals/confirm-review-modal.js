@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, ListItemText, Typography, Divider } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     textCenter: {
@@ -14,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
  
-const ConfirmReviewModal = ({FormData, handleBack, handleSubmit}) => {
+const ConfirmReviewModal = ({edit, FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name, date, review, center, rating,isNegative, platform} = FormData;
+  const { name, date, review, reply, center, rating,isNegative, platform} = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -43,12 +44,21 @@ const ConfirmReviewModal = ({FormData, handleBack, handleSubmit}) => {
                 />
             </Grid>
             <Grid item md={12} xs={12} sm={12}>
-                <ListItemText
+                <ListItemText style={{wordBreak: "break-all" }}
                     primary='Review'
                     secondary={review}
                     className={classes.textCenter}
                 />
             </Grid>
+            {
+                edit &&  <Grid item md={12} xs={12} sm={12}>
+                 <ListItemText style={{wordBreak: "break-all" }}
+                     primary='Reply'
+                     secondary={reply}
+                     className={classes.textCenter}
+                 />
+                </Grid>
+            }
             <Grid item md={3} xs={3} sm={3}>
                 <ListItemText
                     primary='Center'
@@ -73,7 +83,7 @@ const ConfirmReviewModal = ({FormData, handleBack, handleSubmit}) => {
             <Grid item md={3} xs={3} sm={3}>
                 <ListItemText
                     primary='Date'
-                    secondary={date}
+                    secondary={moment(date).format("YYYY-MM-DD")}
                     className={classes.textCenter}
                 />
             </Grid>

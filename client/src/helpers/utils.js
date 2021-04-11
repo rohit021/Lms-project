@@ -14,7 +14,7 @@ import {
     // ArrowBack as ArrowBackIcon,
   } from "@material-ui/icons";
 
-export const Steps = ['User Information', 'Organization Information', 'Lead Information','Confirm Information'];  
+export const Steps = ['User Information', 'Organization Information', 'Lead Information'];  
 export const ReviewSteps = ['Review Information', 'Confirm Information'];  
   
 export const mainListItems = [
@@ -41,47 +41,47 @@ export const mainListItems = [
     // {'text': 'Physical Review', 'link': '/physical-reviews', 'page': 'physicalreview', 'icon': <ThumbUpAlt />},
 ]
 export const OrganizationOptions = [
-    { "key": 'radix', "text": 'Radix Healthcare', "value": 'radix' },
-    { "key": 'anardana', "text": 'Anardana', "value": 'anardana' },
-    { "key": 'relp', "text": 'RELP', "value": 'relp' },
+  { "key": 'radix', "text": 'Radix Healthcare', "value": 'radix' },
+  { "key": 'anardana', "text": 'Anardana', "value": 'anardana' },
+  { "key": 'relp', "text": 'RELP', "value": 'relp' },
 ]
 export const SourceOptions = [
-    { "key": 'friends', "text": 'Friends', "value": 'Friends' },
-    { "key": 'google', "text": 'Google', "value": 'Google' },
-    { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
-    { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
-    { "key": 'radix practo', "text": 'Radix Practo', "value": 'Radix Practo' },
-    { "key": 'dental practo', "text": 'Dental Practo', "value": 'Dental Practo' },
-    { "key": 'housing', "text": 'Housing', "value": 'Housing' },
-    { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
+  { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+  { "key": 'google', "text": 'Google', "value": 'Google' },
+  { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+  { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+  { "key": 'radix practo', "text": 'Radix Practo', "value": 'Radix Practo' },
+  { "key": 'dental practo', "text": 'Dental Practo', "value": 'Dental Practo' },
+  { "key": 'housing', "text": 'Housing', "value": 'Housing' },
+  { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
+]
+export const AnardanaOutlets = [
+  { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
+  { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },  
 ]
 export const DateFilterOptions = [
-    { key: 'week', text: 'WEEKLY', value: 'week' },
-    { key: 'month', text: 'MONTHLY', value: 'month' },
-    { key: 'year', text: 'YEARLY', value: 'year' },
-  ]
-//did
-export const CommonLeadHeadCells = [
-    { id: 'date', disablePadding: false, label: 'Date' },
-    { id: 'name', disablePadding: true, label: 'Name' },    
-    { id: 'phone', disablePadding: false, label: 'Phone' },
-    { id: 'source', disablePadding: false, label: 'Source' },
-    // { id: 'status', disablePadding: false, label: 'Status' },
-  ];
-  export const ReviewHeadCells = [
-    { id: 'date', disablePadding: false, label: 'Date' },
-    { id: 'rating', disablePadding: true, label: 'Rating' },    
-    
-  ];
-  export const CenterOptions = [
-    { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'Nirman Vihar' },
-    { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'Preet Vihar' },
-    { "key": 'janakpuri', "text": 'Janakpuri', "value": 'Janakpuri' },
-    { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
-    { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },
-    
+  { key: 'week', text: 'WEEKLY', value: 'week' },
+  { key: 'month', text: 'MONTHLY', value: 'month' },
+  { key: 'year', text: 'YEARLY', value: 'year' },
 ]
-
+export const CommonLeadHeadCells = [
+  { id: 'date', disablePadding: false, label: 'Date' },
+  { id: 'name', disablePadding: true, label: 'Name' },    
+  { id: 'phone', disablePadding: false, label: 'Phone' },
+  { id: 'source', disablePadding: false, label: 'Source' },
+  // { id: 'status', disablePadding: false, label: 'Status' },
+];
+export const ReviewHeadCells = [
+  { id: 'date', disablePadding: false, label: 'Date' },
+  { id: 'rating', disablePadding: true, label: 'Rating' },    
+];
+export const CenterOptions = [
+  { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'Nirman Vihar' },
+  { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'Preet Vihar' },
+  { "key": 'janakpuri', "text": 'Janakpuri', "value": 'Janakpuri' },
+  { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
+  { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },  
+]
 export const PropertyNameOptions = [
   { "key": '1704', "text": 'Amrapali B-1704', "value": 'Amrapali B-1704' },
   { "key": '1204', "text": 'Amrapali G-1204', "value": 'Amrapali G-1204' },
@@ -89,8 +89,6 @@ export const PropertyNameOptions = [
   { "key": 'grand_omaxe', "text": 'Grand Omaxe', "value": 'Grand Omaxe' },
   { "key": 'palla-plot', "text": 'Palla Plot', "value": 'Palla Plot' },
   { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'Ramprastha Plot' },
-  
-
 ]
 
 export const PlatfromOptions=[
@@ -102,14 +100,12 @@ export const PlatfromOptions=[
   { "key": 'practo', "text": 'Practo ', "value": 'Practo' },
   { "key": 'justdial', "text": 'Justdial ', "value": 'Justdial' },
   { "key": 'lybrate', "text": 'Lybrate ', "value": 'Lybrate' },
-
 ]
 
 
 export const CategoryOptions= [
   { "key": 'banquet', "text": 'Banquet ', "value": 'Banquet' },
   { "key": 'room', "text": 'Room ', "value": 'Room' },
-
 ]
 export const DepartmentOptions = [
   { "key": 'medicine', "text": 'Medicine', "value": 'Medicine' },
@@ -152,11 +148,10 @@ export const DoctorOptions = [
 { "key": 'rahulgupta', "text": 'Dr.Rahul Gupta', "value": 'Dr.Rahul Gupta',"dept":"Neurosciences" },
 { "key": 'sandeepgovil', "text": 'Dr.Sandeep Govil', "value": 'Dr.Sandeep Govil',"dept":"Psychiatry" },
 { "key": 'mohitsharma', "text": 'Dr.Mohit Sharma', "value": 'Dr.Mohit Sharma',"dept":"Psychiatry" },
-
 ]
 
 export const PriorityOptions = [
-    { "key": 'hot', "text": 'Hot', "value": 'Hot' },
-    { "key": 'neutral', "text": 'Neutral', "value": 'Neutral' },
-    { "key": 'cold', "text": 'Cold', "value": 'Cold' },    
+  { "key": 'hot', "text": 'Hot', "value": 'Hot' },
+  { "key": 'neutral', "text": 'Neutral', "value": 'Neutral' },
+  { "key": 'cold', "text": 'Cold', "value": 'Cold' },    
 ]

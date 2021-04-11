@@ -4,10 +4,8 @@
  * Module dependencies.
  */
 var User = require('../models/User.model'),
-    mongoose = require('mongoose'),
     async = require('async'), 
     crypto = require('crypto'),
-    path = require('path'),
     config = require('../config/config'),
     nodemailer = require('nodemailer'),
     smtpTransport = nodemailer.createTransport(config.smtp),

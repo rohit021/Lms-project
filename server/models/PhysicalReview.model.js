@@ -34,7 +34,7 @@ const PhysicalReviewSchema = new Schema({
         required: true
     },
     isNegative:{
-        type: Boolean,
+        type: String,
         required:true
     },
     starFood: {
@@ -57,7 +57,7 @@ const PhysicalReviewSchema = new Schema({
         type:  String,
         // required: true
     },
-    created_at: {
+    date: {
         type: Date,
         default: Date.now
     },

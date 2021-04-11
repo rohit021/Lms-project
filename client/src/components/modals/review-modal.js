@@ -21,13 +21,11 @@ const useStyles = makeStyles((theme) => ({
 const ValidationSchema = yup.object().shape({
   name: yup.string().required("This field is required"),
   review: yup.string().required("This field is required"),
-  isNegative:yup.string().required("This field is required"),
   rating: yup.number().required("This field is required"),
   platform: yup.string().required("This field is required"),
-  center: yup.string().required("This field is required"),
 });
 
-const ReviewModal = ({ FormData, setFormData, handleNext }) => {
+const ReviewModal = ({ edit, FormData, setFormData, handleNext }) => {
   const classes = useStyles();
 
   return (
@@ -74,6 +72,23 @@ const ReviewModal = ({ FormData, setFormData, handleNext }) => {
                   fullWidth
                 />
               </Grid>
+              {
+                edit && <Grid item md={12} xs={12} sm={12}>
+                  <TextField
+                    variant="outlined"
+                    multiline
+                    id="reply"
+                    label="Reply"
+                    name="reply"
+                    type="string"
+                    onChange={handleChange}
+                    value={values.reply}
+                    error={errors.reply && touched.reply}
+                    helperText={errors.reply && touched.reply ? errors.reply : ""}
+                    fullWidth
+                  />
+                </Grid>
+              } 
               <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
                 <Typography variant="h6" component="h5" align="center">
                   Ratings *
@@ -89,15 +104,13 @@ const ReviewModal = ({ FormData, setFormData, handleNext }) => {
               </Grid>
               <Grid item md={6} xs={6} sm={6}>
                 <FormControl
-                  component="fieldset"
-                  value={values.isNegative}
                   className={classes.selectStyle}
                   onChange={handleChange}
                   label="isNegative"                  
                 >
                  <Typography variant="h6" component="h5" align="center">
-                    IsNegative ?
-                    <Typography style={{justifyContent: "space-around",width:"60%",margin:" 0 auto",display: "flex",alignItems: "center"}}>
+                   IsNegative ?
+                   <Typography style={{justifyContent: "space-around",width:"60%",margin:" 0 auto",display: "flex",alignItems: "center"}}>
                       <Field type="radio" name="isNegative" value="true" />
                         True
                       <Field type="radio" name="isNegative" value="false" />
@@ -123,28 +136,7 @@ const ReviewModal = ({ FormData, setFormData, handleNext }) => {
                     {PlatfromOptions.map((option, index) => (<MenuItem key={index} value={option.value}>{option.text}</MenuItem>))}
                   </TextField>
                 </FormControl>
-              </Grid>
-              {FormData.organization==="anardana" ? 
-                <Grid item md={12} xs={12} sm={12}>
-                  <FormControl className={classes.selectStyle}>
-                    <TextField
-                      size="small"
-                      select
-                      label="Center *"
-                      name="center"
-                      value={values.center}
-                      onChange={handleChange}
-                      error={errors.center && touched.center}
-                      helperText={
-                        errors.center && touched.center ? errors.center : ""
-                      }
-                    >
-                      {CenterOptions.map((option, index) => (<MenuItem key={index} value={option.value}>{option.text}</MenuItem>))}
-                    </TextField>
-                  </FormControl>
-                </Grid>
-                :""
-              }
+              </Grid>              
               <Button
                 type="submit"
                 variant="contained"
