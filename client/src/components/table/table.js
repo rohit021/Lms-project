@@ -102,10 +102,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     };
     
     const deleteHandler = () =>{
-        const payload ={
-            id:dataId
-        }
-        AuthService.deleteLeadbyId(payload).then(
+        AuthService.deleteLeadById(dataId).then(
             (data) => {
                 setdeleteModal(false);
                 fetchData();
@@ -117,7 +114,6 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     }
 
     const PriorityChecker =(value) =>{
-        console.log(value,value.toLowerCase())
         return(
             <React.Fragment>
                 {value === 'hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}

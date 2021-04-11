@@ -130,7 +130,7 @@ const RadixLeads = () => {
           Add data
         </AddButton>          
         <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
-          <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
+          <Stepper activeStep={activeStep-1} alternativeLabel  color="#fff">
             {Steps.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

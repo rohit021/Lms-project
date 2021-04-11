@@ -14,12 +14,11 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
     const [activeStep, setActiveStep]  = useState(0);
     const [FormData, setFormData] = useState("");
     const [loading, setLoading] = useState(false);
-    console.log(organization);
     useEffect(() => {
         setLoading(true);
         AuthService.getLeadById(id).then(
             (data) => {
-                setFormData(data);                // setName(data.name);
+                setFormData(data);
             },
             (error) => {
                 console.log(error);

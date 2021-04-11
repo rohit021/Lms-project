@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {DepartmentOptions, SourceOptions, CategoryOptions, CenterOptions, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
+import {DepartmentOptions, SourceOptions, CategoryOptions, AnardanaOutlets, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
@@ -108,7 +108,7 @@ const CommonFilters = ({filterValue, updateData}) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+              {AnardanaOutlets.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
         </Grid>

@@ -52,6 +52,8 @@ exports.getAllLeads = function (req, res) {
         matchQuery.organization = data.organization;
     if(data.source)
         matchQuery.source = data.source;
+    if(data.center)
+        matchQuery.center = data.center;
     if(data.category)
         matchQuery.category = data.category;
     if(data.status)
@@ -171,6 +173,12 @@ exports.updateLead = function (req, res) {
             }
             if(data.expectedAmount){
                 lead.expectedAmount=data.expectedAmount;
+            }
+            if (data.visit) {
+                lead.visit = data.visit;
+            }
+            if (data.remark) {
+                lead.remark = data.remark;
             }
             lead.save(function (err, result) {
                 if (err) {

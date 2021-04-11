@@ -102,7 +102,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     };
     
     const deleteHandler = () =>{
-        AuthService.deleteLeadbyId(dataId).then(
+        AuthService.deleteReviewById(dataId).then(
             (data) => {
                 setdeleteModal(false);
                 fetchData();
