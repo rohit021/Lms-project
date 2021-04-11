@@ -34,7 +34,7 @@ const RadixDetailsModal = ({ FormData, setFormData, handleBack, handleNext}) => 
       (newData) => newdepartment === newData.dept
     );
     setNewDoctorOptions(DoctorList);
-    // console.log(DoctorList)
+    console.log(DoctorList)
   };
 
   return (
@@ -50,7 +50,7 @@ const RadixDetailsModal = ({ FormData, setFormData, handleBack, handleNext}) => 
         }}
         validationSchema={ValidationSchema}
       >
-        {({ errors, touched, values, handleChange }) => (
+        {({ errors, touched, values, setFieldValue, handleChange }) => (
           <Form className={classes.form}>
             <Grid container spacing={2}>
               <Grid item md={12} xs={12} sm={12}>
@@ -81,30 +81,25 @@ const RadixDetailsModal = ({ FormData, setFormData, handleBack, handleNext}) => 
                 </FormControl>
               </Grid>
               <Grid item md={12} xs={12} sm={12}>
-                <FormControl className={classes.selectStyle}>
-                  <Autocomplete
-                    freeSolo
-                    label="doctor"
-                    disableClearable
-                    onChange={handleChange}
-                    options={newDoctorOptions.map((option) => option.text)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Search Doctors"
-                        margin="normal"
-                        name="doctor"
-                        variant="outlined"                    
-                        value={values.doctor}
-                        error={errors.doctor && touched.doctor}
-                        helperText={
-                          errors.doctor && touched.doctor ? errors.doctor : ""
-                        }
-                        InputProps={{ ...params.InputProps, type: "search" }}
-                      />
-                    )}
-                  />
-                </FormControl>
+              <Autocomplete
+                id="free-solo-demo"
+                freeSolo
+                options={newDoctorOptions.map((option) => option.text)}
+                renderInput={(params) => (
+                  <TextField {...params} 
+                  name="doctor"
+                  label="doctor"
+                  margin="normal" variant="outlined" />
+                )}
+                onChange={(e, value) => setFieldValue("doctor", value)}
+                value={values.doctor}
+                error={errors.doctor && touched.doctor}
+                helperText={
+                  errors.doctor && touched.doctor ? errors.doctor : ""
+                }
+                fullWidth
+              />
+             
               </Grid>
               <Grid item md={12} xs={12} sm={12}>
                 <TextField

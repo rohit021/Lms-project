@@ -210,6 +210,7 @@ exports.getratingReviews= function(req,res){
             })
         }
         if (review) {
+            // console.log(review.length);
             let posCount = 0 , negCount = 0, nps = 0 ;
             for(let i= 0; i< review.length; i++){
                 if(review[i].rating == 4 || review[i].rating == 5){
