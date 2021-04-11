@@ -23,8 +23,8 @@ module.exports = {
         "rejectUnauthorized": false
     },
     "auth": {
-        "user": "59c881224efa4390b418",
-        "pass": "e052084acbf942e9b181c25f679c8ad3"
+        "user": "731f4c7653fb4e5ab87c",
+        "pass": "ab130aa16e82471bb8973e3b08f196d5"
     }
   },
 }

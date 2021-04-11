@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
  
 const ConfirmPhysicalModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name, phone, email, date, starFood, starClean, starPlace, starService, starMusic, isNegative} = FormData;
+  const { name, phone, email, date, center,  starFood, starClean, starPlace, starService, starMusic, isNegative} = FormData;
   return (
     <React.Fragment>
         <Divider/>
@@ -50,10 +50,17 @@ const ConfirmPhysicalModal = ({FormData, handleBack, handleSubmit}) => {
                     className={classes.textCenter}
                 />
             </Grid>
+            {/* <Grid item md={3} xs={3} sm={3}>
+                <ListItemText
+                    primary='center'
+                    secondary={center}
+                    className={classes.textCenter}
+                />
+            </Grid> */}
             <Grid item md={3} xs={3} sm={3}>
                 <ListItemText
                     primary='Date'
-                    secondary={date}
+                    secondary={moment(date).format("YYYY-MM-DD")}
                     className={classes.textCenter}
                 />
             </Grid>

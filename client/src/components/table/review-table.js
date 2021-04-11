@@ -102,10 +102,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     };
     
     const deleteHandler = () =>{
-        const payload ={
-            id:dataId
-        }
-        AuthService.deleteLeadbyId(payload).then(
+        AuthService.deleteLeadbyId(dataId).then(
             (data) => {
                 setdeleteModal(false);
                 fetchData();
@@ -150,7 +147,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     });
     return (
         <Paper className={classes.paper}>
-            {openmodal && <EditReviewModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
+            {openmodal && <EditReviewModal edit="true" id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
             {deleteModal && <DeleteDialog /> }
             <TableContainer>
                 <Table
@@ -201,10 +198,10 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                             >
                                 <TableCell className={classes.text}>{index+1}</TableCell>
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
-                                <TableCell className={classes.text}>{data.review}</TableCell>
+                                <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.review}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
                                 <TableCell className={classes.text}>{data.rating}</TableCell>
-                                <TableCell className={classes.text}>{data.reply}</TableCell>
+                                <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.reply}</TableCell>
                                 <TableCell className={classes.text}>{data.platform}</TableCell>
                                 <TableCell>
                                     <Button

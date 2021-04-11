@@ -39,8 +39,7 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
       </Typography>
       <Formik
         initialValues={FormData}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={(values) => {       
           setFormData(values);
           handleNext();
         }}
@@ -91,15 +90,13 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
               </Grid>
               <Grid item md={6} xs={6} sm={6}>
                 <FormControl
-                  component="fieldset"
-                  value={values.isNegative}
                   className={classes.selectStyle}
                   onChange={handleChange}
                   label="isNegative"                  
                 >
                  <Typography variant="h6" component="h5" align="center">
-                    IsNegative ?
-                    <Typography style={{justifyContent: "space-around",width:"60%",margin:" 0 auto",display: "flex",alignItems: "center"}}>
+                   IsNegative ?
+                   <Typography style={{justifyContent: "space-around",width:"60%",margin:" 0 auto",display: "flex",alignItems: "center"}}>
                       <Field type="radio" name="isNegative" value="true" />
                         True
                       <Field type="radio" name="isNegative" value="false" />
@@ -108,8 +105,7 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
                   </Typography>
                 </FormControl>
               </Grid>
-
-                  <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
+              <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
                 <Typography variant="h6" component="h5" align="center">
                   Food *
                 </Typography>
@@ -121,7 +117,7 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
                   value={values.starFood}
                 />
               </Grid>
-                  <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
+              <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
                 <Typography variant="h6" component="h5" align="center">
                   Clean *
                 </Typography>
@@ -132,7 +128,7 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
                   value={values.starClean}
                 />
               </Grid>
-                  <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
+              <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
                 <Typography variant="h6" component="h5" align="center">
                   Place *
                 </Typography>
@@ -143,7 +139,7 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
                   value={values.starPlace}
                 />
               </Grid>
-                  <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
+              <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
                 <Typography variant="h6" component="h5" align="center">
                   Service *
                 </Typography>
@@ -154,7 +150,7 @@ const PhysicalModal = ({ FormData, setFormData, handleNext }) => {
                   value={values.starService}
                 />
               </Grid>
-                  <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
+              <Grid item md={6} xs={6} sm={6} className={classes.AlignText}>
                 <Typography variant="h6" component="h5" align="center">
                   Music *
                 </Typography>

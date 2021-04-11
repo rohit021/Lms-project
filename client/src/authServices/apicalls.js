@@ -1,14 +1,7 @@
 import axios from "axios";
 import { setCookie, getCookie, deleteCookie } from "../helpers/cookies";
-import {
-  setLocalStorage,
-  getLocalStorage,
-  deleteLocalStorage,
-} from "../helpers/localStorage";
-const API_URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_BASE_URL
-    : "http://localhost:5000";
+import { setLocalStorage, getLocalStorage, deleteLocalStorage } from "../helpers/localStorage";
+const API_URL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_BASE_URL : "http://localhost:5000";
 
 const config = {
   header: {
@@ -16,6 +9,7 @@ const config = {
     "Content-Type": "application/json",
   },
 };
+
 //USER AUTHENTICATION DETAILS
 const setAuthentication = (token, user) => {
   setCookie("authToken", token);
@@ -23,68 +17,37 @@ const setAuthentication = (token, user) => {
 };
 
 const login = (email, password) => {
-  return axios
-    .post(
-      API_URL + "/auth/login",
-      {
-        email,
-        password,
-      },
-      config
-    )
-    .then((response) => {
-      if (response.data) {
-        setAuthentication(response.data.token, response.data.user);
-      }
-      return response.data;
-    });
+  return axios.post( API_URL + "/auth/login", {email, password },config )
+  .then((response) => {
+    if (response.data) {
+      setAuthentication(response.data.token, response.data.user);
+    }
+    return response.data;
+  });
 };
 
 const register = (username, email, password) => {
-  return axios
-    .post(
-      API_URL + "/auth/register",
-      {
-        username,
-        email,
-        password,
-      },
-      config
-    )
-    .then((response) => {
-      if (response.data) {
-        setAuthentication(response.data.token, response.data.user);
-      }
-      return response.data;
-    });
+  return axios.post( API_URL + "/auth/register", {username, email, password }, config )
+  .then((response) => {
+    if (response.data) {
+      setAuthentication(response.data.token, response.data.user);
+    }
+    return response.data;
+  });
 };
 
 const reset = (email) => {
-  return axios
-    .post(
-      API_URL + "/auth/reset-password",
-      {
-        email,
-      },
-      config
-    )
-    .then((response) => {
-      return response.data;
-    });
+  return axios.post( API_URL + "/auth/reset-password", {email }, config )
+  .then((response) => {
+    return response.data;
+  });
 };
 
 const newpassword = (password, token) => {
-  return axios
-    .post(
-      API_URL + "/auth/reset/" + token,
-      {
-        password,
-      },
-      config
-    )
-    .then((response) => {
-      return response.data;
-    });
+  return axios.post( API_URL + "/auth/reset/" + token, { password }, config )
+  .then((response) => {
+    return response.data;
+  });
 };
 
 // checking user is loggeg in
@@ -106,11 +69,10 @@ const signout = function (next) {
     return fetch(`${API_URL}/auth/logout`, {
       method: "get",
     })
-      .then((response) => console.log("signout success"))
-      .catch((err) => console.log(err));
+    .then((response) => console.log("signout success"))
+    .catch((err) => console.log(err));
   }
 };
-
 
 // Leads Calls
 
@@ -118,8 +80,7 @@ const createNewLead = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
-  return axios
-    .post(API_URL + "/api/leads/data", data, config)
+  return axios.post(API_URL + "/api/leads/data", data, config)
     .then((response) => {
       return response.data;
     });
@@ -135,6 +96,7 @@ const getLeadById = function (id) {
       return response.data;
     });
 };
+
 const getAllLeads = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -145,6 +107,7 @@ const getAllLeads = function (filterValue) {
       return response.data;
     });
 };
+
 const updateLeadById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -155,18 +118,20 @@ const updateLeadById = function (data) {
       return response.data;
     });
 };
-const deleteLeadById = function (data) {
+
+const deleteLeadById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/leads/data", { data }, config)
+    .delete(API_URL + "/api/leads/data/" + id, config)
     .then((response) => {
       return response.data;
     });
 };
 
 // Review Api Calls
+
 const createNewReview = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -179,12 +144,23 @@ const createNewReview = function (data) {
 };
 
 
-const getReviewById = function (data) {
+const getReviewById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .get(API_URL + "/api/review/data", { params: { id: data } }, config)
+    .get(API_URL + "/api/review/data/" + id, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+const getReviewRatings = function (filterValue) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/review/rating", filterValue, config)
     .then((response) => {
       return response.data;
     });
@@ -212,12 +188,12 @@ const updateReviewById = function (data) {
     });
 };
 
-const deleteReviewById = function (data) {
+const deleteReviewById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/review/data", { data }, config)
+    .delete(API_URL + "/api/review/data/" + id, config)
     .then((response) => {
       return response.data;
     });
@@ -225,7 +201,6 @@ const deleteReviewById = function (data) {
 
 
 //Physcial review Api Calls
-
 
 const createNewPhysicalReview = function (data) {
   axios.defaults.headers.common = {
@@ -238,12 +213,12 @@ const createNewPhysicalReview = function (data) {
     });
 };
 
-const getPhysicalReviewById = function (data) {
+const getPhysicalReviewById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .get(API_URL + "/api/physical-review/data", { params: { id: data } }, config)
+    .get(API_URL + "/api/physical-review/data/" + id, config)
     .then((response) => {
       return response.data;
     });
@@ -252,7 +227,6 @@ const getAllPhysicalReview = function (filterValue) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
-  console.log(filterValue)
   return axios
     .post(API_URL + "/api/physical-review/datas", filterValue, config)
     .then((response) => {
@@ -271,12 +245,12 @@ const updatePhysicalReviewById = function (data) {
     });
 };
 
-const deletePhysicalReviewById = function (data) {
+const deletePhysicalReviewById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .delete(API_URL + "/api/physical-review/data", { data }, config)
+    .delete(API_URL + "/api/physical-review/data/" + id, config)
     .then((response) => {
       return response.data;
     });
@@ -285,6 +259,6 @@ const deletePhysicalReviewById = function (data) {
 export default {
   login, register, reset, newpassword, isAuthenticated, signout,
   createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
-  createNewReview, getReviewById, getAllReviews, updateReviewById, deleteReviewById,
+  createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
   createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
 };

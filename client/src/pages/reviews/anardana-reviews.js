@@ -4,6 +4,7 @@ import moment from "moment";
 import ReviewTable from "../../components/table/review-table";
 import ReviewFilter from "../../components/filters/review-filter";
 import ReviewModal from '../../components/modals/review-modal'
+import CardGroup from '../../components/cardgroup/cardgroup';
 import Modal from '../../components/modals/modal';
 import ConfirmReviewModal from '../../components/modals/confirm-review-modal'
 import AddButton from '../../components/addbutton/addbutton'
@@ -15,26 +16,26 @@ const formattedTodayDate = moment().format("YYYY-MM-DD");
 const defaultData = {
   startDate: moment().format("YYYY-MM-01"),
   endDate: moment().format("YYYY-MM-DD"),
-  source: '',
-  status: '',
+  center: 'Vikas Marg',
   orderBy: 'date',
   order: 'desc',
   organization: "anardana",
 };
 
-const RadixReviews = () => {
+const AnardanaReviews = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [openmodal, setOpenModal] = useState(false);
   const [ReviewData, setReviewData] = useState(null);
+  const [CardData, setCardData] = useState(null);  
   const [activeStep, setActiveStep] = useState(0);
   const [FormData, setFormData] = useState({
     name: "",
     review: "",
     rating: "",
     isNegative: false,
-    platform: "",
-    center: "",
+    center:filterValue.center,
+    platform: "",    
     organization: "anardana",
     date: formattedTodayDate,
   });
@@ -93,13 +94,29 @@ const RadixReviews = () => {
     }
   }
 
-  function updateData(filters) {
+  function updateData(filters) {    
+    setFormData({ ...FormData, "center":filters.center });
     setFilterValue(filters);
   }
-
   useEffect(() => {
     fetchData();
   }, [filterValue]);
+
+  useEffect(() => {
+    fetchRatingData();
+  }, [filterValue]);
+
+  const fetchRatingData = async () => {
+    AuthService.getReviewRatings(filterValue).then(
+      (data) => {
+        setCardData(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    setLoading(false);
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -117,6 +134,7 @@ const RadixReviews = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
+        {CardData && <CardGroup data={CardData} />} 
         <ReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           () => {
@@ -151,4 +169,4 @@ const RadixReviews = () => {
   )
 }
 
-export default RadixReviews;
+export default AnardanaReviews;
