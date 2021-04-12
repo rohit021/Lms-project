@@ -1,5 +1,5 @@
-import React,{useState} from "react";
-import {Formik, Form} from 'formik';
+import React from "react";
+import {Formik, Field, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
 import {PropertyNameOptions} from "../../helpers/utils";
@@ -21,9 +21,6 @@ const ValidationSchema = yup.object().shape({
   // location: yup
   //     .string()
   //     .required("This field is required"),
-   visit: yup
-      .string()
-      .required("This field is required"),
 })
   
 const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
@@ -87,18 +84,22 @@ const RelpDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
                   />
                 </Grid>
                 <Grid item md={12} xs={12} sm={12}>
-                  <TextField
-                    variant="outlined"
-                    id="visit"
-                    label="visit"
-                    name="visit"
-                    onChange={handleChange}
-                    value={values.visit}
-                    error={errors.visit && touched.visit}
-                    helperText={errors.visit && touched.visit ? errors.visit : ""}
-                    fullWidth
-                  />
-                </Grid>
+                <FormControl
+                  className={classes.selectStyle}
+                  onChange={handleChange}
+                  label="visit"                  
+                >
+                 <Typography variant="h6" component="h5" align="center">
+                   Visit ?
+                   <Typography style={{justifyContent: "space-around",width:"40%",margin:" 0 auto",display: "flex",alignItems: "center"}}>
+                      <Field type="radio" name="visit" value="true" />
+                        Yes
+                      <Field type="radio" name="visit" value="false" />
+                        No
+                    </Typography>
+                  </Typography>
+                </FormControl>
+              </Grid>
                 <Grid item md={6} xs={6} sm={6}>
                 <Button
                     variant='contained'

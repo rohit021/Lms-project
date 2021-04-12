@@ -40,7 +40,7 @@ const RelpLeads = () => {
     propertyName: "",
     location: "",
     remark:"",
-    visit:"",
+    visit: false,
     priority: "",
     expectedAmount: "",
     organization: "relp",
@@ -133,7 +133,7 @@ const RelpLeads = () => {
           Add data
         </AddButton>          
         <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange}>
-          <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
+          <Stepper activeStep={activeStep-1} alternativeLabel  color="#fff">
             {Steps.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

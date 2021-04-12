@@ -132,7 +132,7 @@ const AnardanaLeads = () => {
           }>
            Add data </AddButton>          
           <Modal openModal={openmodal} Title="Create New Leads" organization="radix" closeModal={ModalChange} fetchData={fetchData}>
-            <Stepper activeStep={activeStep} alternativeLabel  color="#fff">
+            <Stepper activeStep={activeStep-1} alternativeLabel  color="#fff">
               {Steps.map(label => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>
@@ -145,7 +145,7 @@ const AnardanaLeads = () => {
           </Modal>
         {
           !loading && leadData &&
-            <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData}/>
+            <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData}  fetchData={fetchData} />
         }
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />

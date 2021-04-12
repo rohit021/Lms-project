@@ -26,12 +26,8 @@ const ReviewSchema = new Schema({
         type:Number,
         required:true
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     isNegative:{
-        type: Boolean,
+        type: String,
         required:true
     },
     organization: {
@@ -47,7 +43,7 @@ const ReviewSchema = new Schema({
         type: String, 
         maxlength: 30,
     },
-    created_at: {
+    date: {
         type: Date,
         default: Date.now
     },

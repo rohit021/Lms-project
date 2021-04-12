@@ -20,7 +20,7 @@ exports.createReview = function (req, res) {
             var outputResult = {
                 id: result._id,
                 name: result.name,
-                comment:result.comment,
+                review:result.review,
                 rating:result.rating
             }
             res.json({
@@ -35,7 +35,7 @@ exports.createReview = function (req, res) {
 // method to get all reviews
 exports.getAllReview = function (req, res) {
     var data = req.body;
-    // console.log(req.body);
+    console.log(req.body);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
@@ -46,15 +46,17 @@ exports.getAllReview = function (req, res) {
     sort[sort_parameter] = sort_order;
     sort['_id'] = sort_order ==1? -1 : 1;    
     var matchQuery = {};
-
-
-    var data = req.body;
-    // console.log(data);
-    var matchQuery = {};
     if(data.organization)
-    matchQuery.organization = data.organization;
+        matchQuery.organization = data.organization;
+    if(data.platform)
+        matchQuery.platform = data.platform;
+    if(data.center)
+        matchQuery.center = data.center;
+    if( data.minValue)
+        matchQuery.rating = { $gte: data.minValue, $lte: data.maxValue };
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
+    // console.log(matchQuery);
     Review.find(matchQuery).sort(sort).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
@@ -78,8 +80,8 @@ exports.getAllReview = function (req, res) {
 
 // Method to Get a Review Form By ID
 exports.getReview = function (req, res) {
-    var reviewID = req.query.id;
-    Review.findOne({ _id: reviewID }).exec(function (err, review) {
+    var reviewId = req.params.id;
+    Review.findOne({ _id: reviewId }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -99,28 +101,31 @@ exports.getReview = function (req, res) {
 // Method to Update Review By ID
 exports.updateReview = function (req, res) {
     var data = req.body;
-    Review.findOne({ _id: data.id }).exec(function (err, review) {
+    Review.findOne({ _id: data._id }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
-                message: 'Form Id is not correct'
+                message: 'Review Id is not correct'
             })
         }
         if (review) {
             if (data.name) {
                 review.name = data.name
             }
-            if (data.date) {
-                review.date = data.date;
+            if (data.review) {
+                review.review = data.review;
             }
-            if (data.platform) {
-                review.platform = data.platform;
-            }
-            if (review.organization) {
-                review.organization = data.organization;
+            if (data.reply) {
+                review.reply = data.reply;
             }
             if (data.rating) {
                 review.rating = data.rating;
+            }
+            if (review.isNegative) {
+                review.isNegative = data.isNegative;
+            }
+            if (data.platform) {
+                review.platform = data.platform;
             }
             review.save(function (err, result) {
                 if (err) {
@@ -153,8 +158,8 @@ exports.updateReview = function (req, res) {
 
 // Method to delete a particular Review
 exports.deleteReview = function (req, res) {
-    var reviewID = req.query.id;
-    Review.findOneAndDelete({ _id: reviewID }).exec(function (err, review) {
+    var reviewId = req.params.id;
+    Review.findOneAndDelete({ _id: reviewId }).exec(function (err, review) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -180,7 +185,7 @@ exports.deleteAllReviews = function (req, res) {
         if (err) {
             return res.status(400).send({
                 status: 0,
-                message: 'No Form found'
+                message: 'No Review found'
             })
         }
         res.send({
@@ -191,7 +196,13 @@ exports.deleteAllReviews = function (req, res) {
 }
 
 exports.getratingReviews= function(req,res){
-    Review.find({}).exec(function(err,review){
+    var data = req.body;
+    var matchQuery = {};
+    if(data.organization)
+        matchQuery.organization = data.organization;
+    if(data.center)
+        matchQuery.center = data.center;
+    Review.find(matchQuery).exec(function(err,review){
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -199,6 +210,7 @@ exports.getratingReviews= function(req,res){
             })
         }
         if (review) {
+            // console.log(review.length);
             let posCount = 0 , negCount = 0, nps = 0 ;
             for(let i= 0; i< review.length; i++){
                 if(review[i].rating == 4 || review[i].rating == 5){
@@ -209,6 +221,7 @@ exports.getratingReviews= function(req,res){
                 }                
             }
             nps =( posCount - negCount)/review.length *100;
+            nps = Math.round(nps);
             // return res.json(review);
             return res.json({posCount, negCount, nps})
         }

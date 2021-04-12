@@ -80,7 +80,7 @@ const LeadSchema = new Schema({
     otherspecify: {
         type:String,     
     },  
-    created_at: {
+    date: {
         type: Date,
         default: Date.now
     },

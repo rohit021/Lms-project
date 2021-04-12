@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import moment from "moment";
 import PhysicalReviewTable from "../../components/table/physical-review-table";
-import ReviewFilter from "../../components/filters/review-filter";
+import PhysicalReviewFilter from "../../components/filters/physical-filter";
 import PhysicalReviewModal from '../../components/modals/physical-modal'
 import Modal from '../../components/modals/modal';
 import ConfirmPhysicalReviewModal from '../../components/modals/confirm-physical-modal'
@@ -10,12 +10,14 @@ import AddButton from '../../components/addbutton/addbutton'
 import NotFound from "../../components/widget/notfound";
 import { ReviewSteps } from '../../helpers/utils';
 import AuthService from "../../authServices/apicalls";
+import Alert from "../../components/alert/toaster"
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
 const defaultData = {
   startDate: moment().format("YYYY-MM-01"),
   endDate: moment().format("YYYY-MM-DD"),
   orderBy: 'date',
+  center: 'Vikas Marg',
   order: 'desc',
   organization: "anardana",
 };
@@ -26,12 +28,15 @@ const RadixReviews = () => {
   const [openmodal, setOpenModal] = useState(false);
   const [ReviewData, setReviewData] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
+  const [AlertCheck, setAlertCheck] = useState(false);
+  const [AlertType, setAlertType] = useState('');
+  const [AlertMsg, setAlertMsg] = useState('');
   const [FormData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
-    center: 'preet vihar',
     isNegative: false,
+    center:filterValue.center,
     starFood: "",
     starClean: "",
     starPlace: "",
@@ -72,14 +77,17 @@ const RadixReviews = () => {
   const handleSubmit = () => {
     AuthService.createNewPhysicalReview(FormData)
       .then(function (response) {
+        setAlertMsg(response.message);
         ModalChange();
         fetchData();
+        setAlertType("success");
+        setAlertCheck(true);
       })
       .catch(function (error) {
-        //  setTimeout(() => {
-        //      setError("");
-        //  }, 5000);
-        // return setError(error.response.data.message);   
+        ModalChange();
+        setAlertCheck(true); 
+        setAlertType("error");
+        setAlertMsg("Something went Wrong");        
       })
   }
 
@@ -94,10 +102,10 @@ const RadixReviews = () => {
     }
   }
 
-  function updateData(filters) {
+  function updateData(filters) {    
+    setFormData({ ...FormData, "center":filters.center });
     setFilterValue(filters);
   }
-
   useEffect(() => {
     fetchData();
   }, [filterValue]);
@@ -118,7 +126,7 @@ const RadixReviews = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
-        {/* <ReviewFilter filterValue={filterValue} updateData={updateData} /> */}
+        <PhysicalReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           () => {
             setOpenModal(true);
@@ -127,8 +135,9 @@ const RadixReviews = () => {
         }>
           Add Review
         </AddButton>
+        {AlertCheck && <Alert msg={AlertMsg} type={AlertType}/> }
         <Modal openModal={openmodal} Title="Create New Physical Review" closeModal={ModalChange}>
-          <Stepper activeStep={activeStep} alternativeLabel color="#fff">
+          <Stepper activeStep={activeStep-1} alternativeLabel color="#fff">
             {ReviewSteps.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

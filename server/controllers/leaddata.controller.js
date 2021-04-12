@@ -4,8 +4,7 @@
  * Module dependencies.d
  */
 var Lead = require('../models/Lead.model'),
-    errorHandler = require('../helpers/dbErrorHandler'),
-    async = require('async');
+    errorHandler = require('../helpers/dbErrorHandler');
 
 // Method to Create Form
 exports.createLead = function (req, res) {
@@ -53,6 +52,8 @@ exports.getAllLeads = function (req, res) {
         matchQuery.organization = data.organization;
     if(data.source)
         matchQuery.source = data.source;
+    if(data.center)
+        matchQuery.center = data.center;
     if(data.category)
         matchQuery.category = data.category;
     if(data.status)
@@ -118,7 +119,7 @@ exports.getLead = function (req, res) {
         }
         return res.status(200).send({
             status: 1,
-            message: 'No Form Stored with this ID'
+            message: 'No Lead Stored with this ID'
         })
     })
 }
@@ -130,7 +131,7 @@ exports.updateLead = function (req, res) {
         if (err) {
             return res.status(400).send({
                 status: 0,
-                message: 'Form Id is not correct'
+                message: 'Lead Id is not correct'
             })
         }
         if (lead) {
@@ -172,6 +173,12 @@ exports.updateLead = function (req, res) {
             }
             if(data.expectedAmount){
                 lead.expectedAmount=data.expectedAmount;
+            }
+            if (data.visit) {
+                lead.visit = data.visit;
+            }
+            if (data.remark) {
+                lead.remark = data.remark;
             }
             lead.save(function (err, result) {
                 if (err) {
@@ -220,7 +227,7 @@ exports.deleteLead = function (req, res) {
             })
         }
         else {
-            return res.status(200).send("No Data found with this Id")
+            return res.status(200).send("No Lead data found with this Id")
         }
     })
 }
@@ -231,12 +238,12 @@ exports.deleteAllLeads = function (req, res) {
         if (err) {
             return res.status(400).send({
                 status: 0,
-                message: 'No Form found'
+                message: 'No Lead found'
             })
         }
         res.send({
             status: 1,
-            message: "All Forms Successfully Deleted ",
+            message: "All Leads Successfully Deleted ",
         })
     })
 }

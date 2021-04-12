@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import {CenterOptions} from "../../helpers/utils";
+import {AnardanaOutlets} from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -54,7 +54,7 @@ const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) =
                         error={errors.center && touched.center}
                         helperText={errors.center && touched.center ? errors.center : ""}
                         onChange={handleChange}>
-                        {CenterOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
+                        {AnardanaOutlets.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}   
                     </TextField>
                 </FormControl>                
                 </Grid>

@@ -5,7 +5,7 @@ import ConfirmReviewModal from '../../components/modals/confirm-review-modal'
 import AuthService from "../../authServices/apicalls";
 import { CircularProgress } from "@material-ui/core";
 
-const EditModal = ({id, reload, openModal, organization, closeModal}) => {
+const EditModal = ({id, edit, reload, openModal, organization, closeModal}) => {
     const [activeStep, setActiveStep]  = useState(0);
     const [FormData, setFormData] = useState("");
     const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
         setLoading(true);
         AuthService.getReviewById(id).then(
             (data) => {
-                setFormData(data);                // setName(data.name);
+                setFormData(data);
             },
             (error) => {
                 console.log(error);
@@ -26,9 +26,9 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
       const renderStepContent = (step) => {
         switch (step) {
           case 0:
-            return <ReviewModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} />;
+            return <ReviewModal edit ={edit} FormData={FormData} setFormData={setFormData} handleNext={handleNext} />;
            case 1:
-              return <ConfirmReviewModal FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;
+              return <ConfirmReviewModal edit ={edit} FormData={FormData} setFormData={setFormData} handleSubmit={handleSubmit} handleBack={handleBack} />;
             default:
               return <div>Not Found</div>;
         }
