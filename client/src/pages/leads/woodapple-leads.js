@@ -63,7 +63,19 @@ const RadixLeads = () => {
   };
 
   const handleReset = () => {
-    setFormData("");
+    setFormData({
+      name: " ",
+      email: "",
+      phone: "",
+      source: "",
+      radixDepartment: "",
+      doctor: "",
+      location: "",
+      priority: "",
+      expectedAmount: "",
+      organization: "radix",
+      date: formattedTodayDate,
+    });
     setActiveStep(0);
   };
 

@@ -70,7 +70,20 @@ const RadixReviews = () => {
   };
 
   const handleReset = () => {
-    setFormData("");
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+      isNegative: false,
+      center:filterValue.center,
+      starFood: "",
+      starClean: "",
+      starPlace: "",
+      starService: "",
+      starMusic: "",
+      organization: "anardana",
+      date: formattedTodayDate,
+    });
     setActiveStep(0);
   };
 

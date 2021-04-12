@@ -31,7 +31,7 @@ const RadixLeads = () => {
   const [activeStep, setActiveStep]  = useState(0);
   const [openmodal, setOpenModal] = useState(false);
   const [FormData, setFormData] = useState({
-    name: "",
+    name: " ",
     email: "",
     phone: "",
     source: "",
@@ -63,7 +63,20 @@ const RadixLeads = () => {
   };
 
   const handleReset = () => {
-    setFormData("");
+    setFormData({
+      name: " ",
+      email: "",
+      phone: "",
+      source: "",
+      radixDepartment: "",
+      doctor: "",
+      location: "",
+      priority: "",
+      expectedAmount: "",
+      organization: "radix",
+      date: formattedTodayDate,
+
+    });
     setActiveStep(0);
   };
 

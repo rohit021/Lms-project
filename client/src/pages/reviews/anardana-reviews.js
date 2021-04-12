@@ -64,7 +64,16 @@ const AnardanaReviews = () => {
   };
 
   const handleReset = () => {
-    setFormData("");
+    setFormData({
+      name: "",
+      review: "",
+      rating: "",
+      isNegative: false,
+      center:filterValue.center,
+      platform: "",    
+      organization: "anardana",
+      date: formattedTodayDate,
+    });
     setActiveStep(0);
     setFormData({organization: "anardana"})
   };
