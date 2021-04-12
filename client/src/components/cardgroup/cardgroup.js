@@ -46,7 +46,7 @@ const CardGroup = ({data}) => {
                         NPS
                     </Typography>
                     <Typography style={{color:"#01579b", fontSize:"28px",fontWeight:"bold"}}>
-                        {data.nps>0? data.nps :"0"}
+                        {data.nps}
                     </Typography>
                 </Grid>
             </Grid>
