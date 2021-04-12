@@ -9,6 +9,7 @@ import Modal from '../../components/modals/modal';
 import ConfirmReviewModal from '../../components/modals/confirm-review-modal'
 import AddButton from '../../components/addbutton/addbutton'
 import NotFound from "../../components/widget/notfound";
+import Alert from "../../components/alert/toaster"
 import { ReviewSteps } from '../../helpers/utils';
 import AuthService from "../../authServices/apicalls";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
@@ -27,15 +28,18 @@ const AnardanaReviews = () => {
   const [loading, setLoading] = useState(false);
   const [openmodal, setOpenModal] = useState(false);
   const [ReviewData, setReviewData] = useState(null);
-  const [CardData, setCardData] = useState(null);  
+  const [AlertCheck, setAlertCheck] = useState(false);
+  const [AlertType, setAlertType] = useState('');
+  const [AlertMsg, setAlertMsg] = useState('');
+  const [CardData, setCardData] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
   const [FormData, setFormData] = useState({
     name: "",
     review: "",
     rating: "",
     isNegative: false,
-    center:filterValue.center,
-    platform: "",    
+    center: filterValue.center,
+    platform: "",
     organization: "anardana",
     date: formattedTodayDate,
   });
@@ -69,13 +73,13 @@ const AnardanaReviews = () => {
       review: "",
       rating: "",
       isNegative: false,
-      center:filterValue.center,
-      platform: "",    
+      center: filterValue.center,
+      platform: "",
       organization: "anardana",
       date: formattedTodayDate,
     });
     setActiveStep(0);
-    setFormData({organization: "anardana"})
+    setFormData({ organization: "anardana" })
   };
 
   const handleSubmit = () => {
@@ -83,12 +87,18 @@ const AnardanaReviews = () => {
       .then(function (response) {
         ModalChange();
         fetchData();
+        setAlertMsg(response.message);
+        setAlertType("success");
+        setAlertCheck(true);
+        setTimeout(() => {
+          setAlertCheck(false)
+        }, 3000)
       })
       .catch(function (error) {
-        //  setTimeout(() => {
-        //      setError("");
-        //  }, 5000);
-        // return setError(error.response.data.message);   
+        ModalChange();
+        setAlertCheck(true);
+        setAlertType("error");
+        setAlertMsg("Something went Wrong");
       })
   }
 
@@ -103,8 +113,8 @@ const AnardanaReviews = () => {
     }
   }
 
-  function updateData(filters) {    
-    setFormData({ ...FormData, "center":filters.center });
+  function updateData(filters) {
+    setFormData({ ...FormData, "center": filters.center });
     setFilterValue(filters);
   }
   useEffect(() => {
@@ -143,7 +153,7 @@ const AnardanaReviews = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
-        {CardData && <CardGroup data={CardData} />} 
+        {CardData && <CardGroup data={CardData} />}
         <ReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           () => {
@@ -153,6 +163,7 @@ const AnardanaReviews = () => {
         }>
           Add Review
         </AddButton>
+        {AlertCheck && <Alert msg={AlertMsg} type={AlertType} />}
         <Modal openModal={openmodal} Title="Create New Review" closeModal={ModalChange}>
           <Stepper activeStep={activeStep} alternativeLabel color="#fff">
             {ReviewSteps.map(label => (
