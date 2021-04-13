@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, FormControl, Slider, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
+import { Grid, FormControl, Slider, FormControlLabel, Checkbox, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
 import {PlatfromOptions, AnardanaOutlets, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
@@ -25,9 +25,14 @@ const CommonFilters = ({filterValue, updateData}) => {
   // console.log(filterData);
   const handleChange = (prop) => (event) => {
     const key = event.target.name;
+    console.log(key);
     setFilterData({ ...filterData, [key]: event.target.value });
   }
 
+  const handleCheckedChange = (event) => {
+    const key = event.target.name;
+    setFilterData({ ...filterData, [key]: event.target.checked });
+  };
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
     setFilterData({ ...filterData, minValue:newValue[0], maxValue:newValue[1] });
@@ -113,6 +118,19 @@ const CommonFilters = ({filterValue, updateData}) => {
               {PlatfromOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
+        </Grid>
+        <Grid item md={1} xs={1} sm={1}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={filterData.isNegative}
+                onChange={handleCheckedChange}
+                name="isNegative"
+                color="primary"
+              />
+            }
+            label="Is Negative"
+          />
         </Grid>
         <Grid item md={1} xs={6} sm={4}>
             <Typography id="discrete-slider" >

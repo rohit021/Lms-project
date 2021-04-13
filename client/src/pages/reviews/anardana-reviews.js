@@ -20,6 +20,7 @@ const defaultData = {
   center: 'Vikas Marg',
   orderBy: 'date',
   order: 'desc',
+  isNegative:false,
   organization: "anardana",
 };
 
