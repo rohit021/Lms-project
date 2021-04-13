@@ -116,9 +116,9 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
     const PriorityChecker =(value) =>{
         return(
             <React.Fragment>
-                {value === 'hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}
-                {value === 'neutral' ? (<div className={classes.priority} style={{backgroundColor: "#ff8800"}}>{value}</div>):''}
-                {value === 'cold' ? (<div className={classes.priority} style={{backgroundColor: "#01579b"}}>{value}</div>):''}
+                {value === 'Hot' ? (<div className={classes.priority} style={{backgroundColor: "#ef3d00"}}>{value}</div>):''}
+                {value === 'Neutral' ? (<div className={classes.priority} style={{backgroundColor: "#ff8800"}}>{value}</div>):''}
+                {value === 'Cold' ? (<div className={classes.priority} style={{backgroundColor: "#01579b"}}>{value}</div>):''}
             </React.Fragment>
         )
     }
@@ -259,7 +259,7 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                                         <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.remark}</TableCell>
                                         :" "
                                 }
-                                <TableCell className={classes.text}>{PriorityChecker(data.priority.toLowerCase())}</TableCell>
+                                <TableCell className={classes.text}>{PriorityChecker(data.priority)}</TableCell>
                                 <TableCell>
                                     <Button
                                      variant="contained"

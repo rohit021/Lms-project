@@ -19,6 +19,7 @@ const defaultData = {
   endDate: moment().format("YYYY-MM-DD"),
   orderBy: 'date',
   order: 'desc',
+  isNegative:false,
   organization: "radix",
 };
 
