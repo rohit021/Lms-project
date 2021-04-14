@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 var Review = require('../models/Review.model'),
+    Lead = require('../models/Lead.model'),
+    moment = require('moment'),
     errorHandler = require('../helpers/dbErrorHandler');
 
 // Method to Create Review
@@ -35,7 +37,6 @@ exports.createReview = function (req, res) {
 // method to get all reviews
 exports.getAllReview = function (req, res) {
     var data = req.body;
-    console.log(req.body);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
@@ -52,11 +53,13 @@ exports.getAllReview = function (req, res) {
         matchQuery.platform = data.platform;
     if(data.center)
         matchQuery.center = data.center;
+    if(data.isNegative)
+        matchQuery.isNegative = data.isNegative;
     if( data.minValue)
         matchQuery.rating = { $gte: data.minValue, $lte: data.maxValue };
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    // console.log(matchQuery);
+    console.log(matchQuery);
     Review.find(matchQuery).sort(sort).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
@@ -202,6 +205,10 @@ exports.getratingReviews= function(req,res){
         matchQuery.organization = data.organization;
     if(data.center)
         matchQuery.center = data.center;
+    if(data.isNegative)
+        matchQuery.isNegative = data.isNegative;
+    if(data.startDate && data.endDate)
+        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
     Review.find(matchQuery).exec(function(err,review){
         if (err) {
             return res.status(400).send({
@@ -221,7 +228,7 @@ exports.getratingReviews= function(req,res){
                 }                
             }
             nps =( posCount - negCount)/review.length *100;
-            nps = Math.round(nps);
+            nps = nps ? Math.round(nps) : 0;
             // return res.json(review);
             return res.json({posCount, negCount, nps})
         }

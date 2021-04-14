@@ -194,14 +194,13 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                     <TableBody>
                     {
                         tableData.map((data, index) => (
-                            <TableRow key={index} className={classes.li}
-                            >
+                            <TableRow key={index} className={classes.li}>
                                 <TableCell className={classes.text}>{index+1}</TableCell>
                                 <TableCell className={classes.text}>{moment(data.date).format('DD-MM-YYYY')}</TableCell>
-                                <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.review}</TableCell>
+                                <TableCell className={classes.text}>{data.review}</TableCell>
                                 <TableCell className={classes.text}>{data.name}</TableCell>
                                 <TableCell className={classes.text}>{data.rating}</TableCell>
-                                <TableCell className={classes.text} style={{wordBreak: "break-all" }}>{data.reply}</TableCell>
+                                <TableCell className={classes.text}>{data.reply}</TableCell>
                                 <TableCell className={classes.text}>{data.platform}</TableCell>
                                 <TableCell>
                                     <Button

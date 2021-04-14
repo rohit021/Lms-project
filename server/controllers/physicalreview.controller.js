@@ -45,10 +45,14 @@ exports.getAllPhysicalReview = function (req, res) {
         matchQuery.organization = data.organization;
     if(data.center)
         matchQuery.center = data.center;
+    if(data.isNegative)
+        matchQuery.isNegative = data.isNegative;
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    console.log(matchQuery);
-    PhysicalReview.find(matchQuery).sort(sort).exec(function (err, reviews) {
+    var limit = parseInt(data.limit);
+    var skip = (data.currentPage - 1) * limit;
+    console.log(limit, skip);
+    PhysicalReview.find(matchQuery).sort(sort).limit(limit).skip(skip).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,

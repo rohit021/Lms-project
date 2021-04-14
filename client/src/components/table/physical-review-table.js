@@ -205,8 +205,8 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                                 <TableCell className={classes.text}>{data.starFood}</TableCell>
                                 <TableCell className={classes.text}>{data.starClean}</TableCell>
                                 <TableCell className={classes.text}>{data.starPlace}</TableCell>
-                                <TableCell className={classes.text}>{data.starService}</TableCell>
                                 <TableCell className={classes.text}>{data.starMusic}</TableCell>                                
+                                <TableCell className={classes.text}>{data.starService}</TableCell>
                                 <TableCell>
                                     <Button
                                      variant="contained"

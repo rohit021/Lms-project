@@ -36,7 +36,7 @@ const RadixReviews = () => {
     phone: "",
     email: "",
     isNegative: false,
-    center:filterValue.center,
+    center: filterValue.center,
     starFood: "",
     starClean: "",
     starPlace: "",
@@ -70,7 +70,20 @@ const RadixReviews = () => {
   };
 
   const handleReset = () => {
-    setFormData("");
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+      isNegative: false,
+      center: filterValue.center,
+      starFood: "",
+      starClean: "",
+      starPlace: "",
+      starService: "",
+      starMusic: "",
+      organization: "anardana",
+      date: formattedTodayDate,
+    });
     setActiveStep(0);
   };
 
@@ -82,12 +95,15 @@ const RadixReviews = () => {
         fetchData();
         setAlertType("success");
         setAlertCheck(true);
+        setTimeout(() => {
+          setAlertCheck(false)
+        }, 3000)
       })
       .catch(function (error) {
         ModalChange();
-        setAlertCheck(true); 
+        setAlertCheck(true);
         setAlertType("error");
-        setAlertMsg("Something went Wrong");        
+        setAlertMsg("Something went Wrong");
       })
   }
 
@@ -102,8 +118,8 @@ const RadixReviews = () => {
     }
   }
 
-  function updateData(filters) {    
-    setFormData({ ...FormData, "center":filters.center });
+  function updateData(filters) {
+    setFormData({ ...FormData, "center": filters.center });
     setFilterValue(filters);
   }
   useEffect(() => {
@@ -135,9 +151,9 @@ const RadixReviews = () => {
         }>
           Add Review
         </AddButton>
-        {AlertCheck && <Alert msg={AlertMsg} type={AlertType}/> }
+        {AlertCheck && <Alert msg={AlertMsg} type={AlertType} />}
         <Modal openModal={openmodal} Title="Create New Physical Review" closeModal={ModalChange}>
-          <Stepper activeStep={activeStep-1} alternativeLabel color="#fff">
+          <Stepper activeStep={activeStep - 1} alternativeLabel color="#fff">
             {ReviewSteps.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

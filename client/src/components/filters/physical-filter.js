@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
+import { Grid, FormControl, FormControlLabel, Checkbox, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
 import { AnardanaOutlets, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
@@ -26,6 +26,10 @@ const CommonFilters = ({filterValue, updateData}) => {
     const key = event.target.name;
     setFilterData({ ...filterData, [key]: event.target.value });
   }
+  const handleCheckedChange = (event) => {
+    const key = event.target.name;
+    setFilterData({ ...filterData, [key]: event.target.checked });
+  };
 
   const handleStartDate = (date) => {
     // console.log(date);
@@ -92,6 +96,19 @@ const CommonFilters = ({filterValue, updateData}) => {
           </FormControl>
         </Grid>
         :""}
+        <Grid item md={1} xs={1} sm={1}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={filterData.isNegative}
+                onChange={handleCheckedChange}
+                name="isNegative"
+                color="primary"
+              />
+            }
+            label="Is Negative"
+          />
+        </Grid>
         <Grid item md={3} xs={12} sm={4}>
           <ButtonGroup color="primary" aria-label="outlined primary button group">
             {
