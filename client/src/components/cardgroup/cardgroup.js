@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Paper, Slider, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {PlatfromOptions, CenterOptions, DateFilterOptions} from "../../helpers/utils";
-import Widget from '../widget/widget';
-import moment from 'moment';
+import React from 'react';
+import { Grid, Paper, Typography, makeStyles} from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
     textAlign:"center",
