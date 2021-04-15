@@ -256,9 +256,22 @@ const deletePhysicalReviewById = function (id) {
     });
 };
 
+/* Api for Fetching List */
+const getAnardanaOutletList = function () {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/lists/anardana-outlets" , config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export default {
   login, register, reset, newpassword, isAuthenticated, signout,
   createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
   createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
-  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
+  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById,
+  getAnardanaOutletList
 };
