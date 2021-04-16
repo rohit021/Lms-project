@@ -223,12 +223,12 @@ const getPhysicalReviewById = function (id) {
       return response.data;
     });
 };
-const getAllPhysicalReview = function (filterValue) {
+const getAllPhysicalReview = function (filterValue, limit, skip) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .post(API_URL + "/api/physical-review/datas", filterValue, config)
+    .post(API_URL + `/api/physical-review/datas?limit=${limit}&skip=${skip}`, filterValue, config)
     .then((response) => {
       return response.data;
     });

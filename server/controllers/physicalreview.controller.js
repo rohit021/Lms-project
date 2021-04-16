@@ -32,6 +32,8 @@ exports.createPhysicalReview = function (req, res) {
     // method to get all reviews
 exports.getAllPhysicalReview = function (req, res) {
     var data = req.body;
+    const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+    const skip = parseInt(req.query.skip);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
@@ -49,10 +51,8 @@ exports.getAllPhysicalReview = function (req, res) {
         matchQuery.isNegative = data.isNegative;
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    var limit = parseInt(data.limit);
-    var skip = (data.currentPage - 1) * limit;
     console.log(limit, skip);
-    PhysicalReview.find(matchQuery).sort(sort).limit(limit).skip(skip).exec(function (err, reviews) {
+    PhysicalReview.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,
