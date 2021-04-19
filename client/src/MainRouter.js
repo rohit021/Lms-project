@@ -1,17 +1,16 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
-import LoginPage from "./pages/authentication/login/login";
+import LoginPage from "./pages/authentication/login/Login";
 import RegisterPage from "./pages/authentication/register/Register";
 import ResetPass from "./pages/authentication/resetpass";
 import NewPass from "./pages/authentication/newpass";
-import Dashboard from './pages/dashboard/dashboard'
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Layout from "./components/layout/layout";
 const MainRouter = () => {
   return (
     <div>
       <Switch>
-        <Route exact path="/"  render={() => <Redirect to="/app/dashboard" />} />
+        <Route exact path="/" render={() => <Redirect to="/app/dashboard" />} />
         <PrivateRoute path="/app" component={Layout} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/login" component={LoginPage} />
