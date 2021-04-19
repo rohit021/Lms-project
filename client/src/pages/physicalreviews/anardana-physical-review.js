@@ -28,12 +28,13 @@ const RadixReviews = () => {
   const [loading, setLoading] = useState(false);
   const [openmodal, setOpenModal] = useState(false);
   const [ReviewData, setReviewData] = useState(null);
-  const [limit, setLimit] = useState(30);
+  const [limit, setLimit] = useState(10);
   const [IsFetching, setIsFetching] = useState(false);
   const [skip, setSkip] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [AlertCheck, setAlertCheck] = useState(false);
   const [AlertType, setAlertType] = useState('');
+  const[moreData,setMoreData]=useState(false)
   const [AlertMsg, setAlertMsg] = useState('');
   const [FormData, setFormData] = useState({
     name: "",
@@ -66,7 +67,7 @@ const RadixReviews = () => {
   const nextPage = () => {
     setSkip(skip + limit);
     setLimit(10);
-    setIsFetching(true);      
+    setIsFetching(true)  
 }
 
 const previousPage = () => {
@@ -134,7 +135,7 @@ const previousPage = () => {
   function updateData(filters) {
     setFormData({ ...FormData, "center": filters.center });
     setSkip(0);
-    setLimit(30);
+    setLimit(10);
     setFilterValue(filters);
   }
   useEffect(() => {
@@ -142,20 +143,42 @@ const previousPage = () => {
   }, [filterValue]);
   
   useEffect(() => {
-    if(IsFetching){
-      FetchMoreData();
+    if(moreData){
+      if(IsFetching){
+        console.log(IsFetching)
+      FetchMoreData(); }
+      else{
+        setIsFetching(false)
+        console.log("useEffect",IsFetching)
+
+      }
     }    
   }, [IsFetching]);
 
   const FetchMoreData=()=>{
-    setIsFetching(true);
+    
     AuthService.getAllPhysicalReview(filterValue, limit, skip).then(
       (data) => {
-        for (var i = 0; i < data.reviews.length; i++) {
-          var newData = data.reviews[i];
-          setReviewData(currentArray => [...currentArray, newData]);
-        }       
-        setIsFetching(false);        
+        if(data.reviews){
+          setMoreData(true)
+          for (var i = 0; i < data.reviews.length; i++) {
+            var newData = data.reviews[i];
+            setReviewData(currentArray => [...currentArray, newData]);
+            // setIsFetching(false)
+            console.log("for",IsFetching)
+          }  
+        }
+        else{
+          if(data.status){
+            setMoreData(false)
+            setIsFetching(false);
+            console.log("inside else",IsFetching)
+          }
+        }    
+        // setMoreData(false)
+        // setIsFetching(false);
+        // console.log("getting false",IsFetching)
+        
       },
       (error) => {
         console.log(error);
@@ -169,8 +192,10 @@ const previousPage = () => {
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight-500) {
+    if (windowBottom >= docHeight-200) {
+       setMoreData(true)
       nextPage();
+     
     } else {    
     // x
     // console.log("windows bottom",windowBottom)
