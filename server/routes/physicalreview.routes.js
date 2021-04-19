@@ -15,8 +15,7 @@ router.route('/data/:id')
 router.route('/datas')
       .post(authenticatateJWT,physicalreviewcontroller.getAllPhysicalReview)
       .delete(authenticatateJWT, physicalreviewcontroller.deleteAllPhysicalReviews)  
-router.route('/total-physicalreviews')
-      .get(physicalreviewcontroller.getTotalPhyscialReviews)
+
         //getting rating
 // router.route('/rating')
 //       .get(authenticatateJWT, physicalreviewcontroller.getratingPhysicalReviews)

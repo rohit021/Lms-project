@@ -33,8 +33,6 @@ exports.createLead = function (req, res) {
     });
 }
 
-
-
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
@@ -105,72 +103,6 @@ exports.getAllLeads = function (req, res) {
         })
     })
 }
-
-// exports.getTotalLeads = function (req, res) {
-//     var data = req.body; 
-//  var matchQuery ={};
-//     if(data.organization)
-//         matchQuery.organization = data.organization;
-//    Lead.find(matchQuery).exec(function (err, leads) {    
-//         if (err) {
-//             return res.status(400).send({
-//                 status: 0,
-//                 message: "Something went wrong"
-//             })
-//         }
-//         if (leads.length) {
-//             return res.json({
-//                 status: 1,
-//                 "Total Leads Found": leads.length,
-//             });
-//         }
-//         return res.status(200).send({
-//             status: 1,
-//             message: 'No Data found'
-//         })
-//     })
-// }
-exports.getTotalLeads = function(req, res){
-    Lead.aggregate([
-        {
-            $group: {
-                _id:{
-                    organization: "$organization",                   
-                  }, 
-                quantity: { $sum: 1 },
-            }                
-        },        
-        {
-            $project: {
-              _id: 0,
-              organization: "$_id.organization",
-              count: "$quantity",
-            }
-        },
-        {
-            $sort: {
-              'date': 1
-            }
-          }
-    ], function (err, leads) {
-        if (err) {
-            return res.status(400).send({
-                status: 0,
-                message: 'No Lead found'
-            })
-        }
-        var totalCount = 0;
-        for( let i =0; i< leads.length; i++){
-            totalCount += leads[i].count;
-        }
-        // console.log(totalCount);         
-        res.json({
-            status: 1,
-            "total count": totalCount,
-            "lead Detail": leads
-        })
-    })
-};
 
 // Method to Get a particlular Form By ID
 exports.getLead = function (req, res) {

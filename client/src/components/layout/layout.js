@@ -5,9 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Header from "../header/header";
 import Sidebar from "../sidebar/sidebar";
 import classnames from "classnames";
-//pages
-
-import Dashboard from "../../pages/dashboard/dashboard";
+// pages
+// import Dashboard from "../../pages/dashboard";
 import RadixLeads from "../../pages/leads/radix-leads";
 import AnardanaLeads from "../../pages/leads/anardana-leads";
 import RelpLeads from "../../pages/leads/relp-leads";
@@ -66,7 +65,7 @@ const Layout = (props)=> {
       >
         <div className={classes.fakeToolbar} />
         <Switch>
-          <Route path="/app/dashboard" component={Dashboard} />
+          {/* <Route path="/app/dashboard" component={Dashboard} /> */}
           {/* <Route path="/app/leads" component={Leads} /> */}
           <Route
             exact

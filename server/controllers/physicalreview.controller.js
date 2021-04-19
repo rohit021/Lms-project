@@ -73,32 +73,6 @@ exports.getAllPhysicalReview = function (req, res) {
     })
 }
 
-exports.getTotalPhyscialReviews = function (req, res) {
-    // var data = req.body; 
-//  var matchQuery ={};
-//     if(data.organization)
-//         matchQuery.organization = data.organization;
-PhysicalReview.find({}).exec(function (err, reviews) {    
-        if (err) {
-            return res.status(400).send({
-                status: 0,
-                message: "Something went wrong"
-            })
-        }
-        if (reviews.length) {
-            return res.json({
-                status: 1,
-                "Total Physical Reviews Found": reviews.length,
-            });
-        }
-        return res.status(200).send({
-            status: 1,
-            message: 'No Data found'
-        })
-    })
-}
-
-
 // Method to Get a Review Form By ID
 exports.getPhysicalReview = function (req, res) {
     var reviewId = req.params.id;

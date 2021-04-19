@@ -107,16 +107,6 @@ const getAllLeads = function (filterValue) {
       return response.data;
     });
 };
-const getTotalLeads = function (totalValue) {
-  axios.defaults.headers.common = {
-    Authorization: "Bearer " + getCookie("authToken"),
-  };
-  return axios
-    .get(API_URL + "/api/leads/total-leads",config)
-    .then((response) => {
-      return response.data;
-    });
-};
 
 const updateLeadById = function (data) {
   axios.defaults.headers.common = {
@@ -280,7 +270,7 @@ const getAnardanaOutletList = function () {
 
 export default {
   login, register, reset, newpassword, isAuthenticated, signout,
-  createNewLead, getLeadById, getAllLeads, updateLeadById ,getTotalLeads, deleteLeadById,
+  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
   createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
   createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById,
   getAnardanaOutletList
