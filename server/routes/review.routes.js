@@ -16,8 +16,11 @@ router.route('/datas')
       .post(authenticatateJWT,reviewcontroller.getAllReview)
       .delete(authenticatateJWT, reviewcontroller.deleteAllReviews)  
 
-        //getting rating
+//getting rating
 router.route('/rating')
       .post(authenticatateJWT, reviewcontroller.getratingReviews)
-      
+
+router.route('/total_reviews')
+      .get(reviewcontroller.getTotalReviews)   
+
 module.exports = router;
