@@ -6,6 +6,7 @@ import ResetPass from "./pages/authentication/resetpass";
 import NewPass from "./pages/authentication/newpass";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Layout from "./components/layout/layout";
+import My404Component from "./components/widget/my404component"
 const MainRouter = () => {
   return (
     <div>
@@ -16,6 +17,7 @@ const MainRouter = () => {
         <Route path="/login" component={LoginPage} />
         <Route path="/reset-password" component={ResetPass} />
         <Route path="/auth/reset/:id" component={NewPass} />
+        <Route exact path='*' component={My404Component} />
       </Switch>
     </div>
   );
