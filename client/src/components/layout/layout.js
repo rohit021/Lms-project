@@ -65,6 +65,11 @@ const Layout = (props)=> {
       >
         <div className={classes.fakeToolbar} />
         <Switch>
+          <Route
+              exact
+              path="/app/"
+              render={() => <Redirect to="/app/dashboard" />}
+            />
           <Route path="/app/dashboard" component={Dashboard} />
           <Route
             exact
