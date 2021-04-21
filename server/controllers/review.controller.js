@@ -238,3 +238,45 @@ exports.getratingReviews= function(req,res){
         })
     })
 }
+
+exports.getTotalReviews = function(req, res){
+    Review.aggregate([
+        {
+            $group: {
+                _id:{
+                    organization: "$organization",                   
+                  }, 
+                quantity: { $sum: 1 },
+            }                
+        },        
+        {
+            $project: {
+              _id: 0,
+              organization: "$_id.organization",
+              count: "$quantity",
+            }
+        },
+        {
+            $sort: {
+              'date': 1
+            }
+        }
+    ], function (err, reviews) {
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: 'No Review found'
+            })
+        }
+        var totalCount = 0;
+        for( let i =0; i< reviews.length; i++){
+            totalCount += reviews[i].count;
+        }
+        // console.log(totalCount);         
+        res.json({
+            status: 1,
+            "total count": totalCount,
+            "Reviews Detail": reviews
+        })
+    })
+};

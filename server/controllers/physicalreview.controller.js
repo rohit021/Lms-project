@@ -226,3 +226,45 @@ exports.getratingReviews= function(req,res){
         })
     })
 }
+
+exports.getTotalPhysicalReviews = function(req, res){
+    PhysicalReview.aggregate([
+        {
+            $group: {
+                _id:{
+                    organization: "$organization",                   
+                  }, 
+                quantity: { $sum: 1 },
+            }                
+        },        
+        {
+            $project: {
+              _id: 0,
+              organization: "$_id.organization",
+              count: "$quantity",
+            }
+        },
+        {
+            $sort: {
+              'date': 1
+            }
+        }
+    ], function (err, physicalReviews) {
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: 'No Physical Review found'
+            })
+        }
+        var totalCount = 0;
+        for( let i =0; i< physicalReviews.length; i++){
+            totalCount += physicalReviews[i].count;
+        }
+        // console.log(totalCount);         
+        res.json({
+            status: 1,
+            "total count": totalCount,
+            "Physical Reviews Detail": physicalReviews
+        })
+    })
+};
