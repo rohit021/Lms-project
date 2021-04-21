@@ -14,7 +14,10 @@ router.route('/data/:id')
 //Multiple Events Routes
 router.route('/datas')
       .post(authenticatateJWT,leadcontroller.getAllLeads)       
-      .delete(authenticatateJWT, leadcontroller.deleteAllLeads)       
+      .delete(authenticatateJWT, leadcontroller.deleteAllLeads)     
+
+router.route('/total_leads')
+      .get(leadcontroller.getTotalLeads)   
 
 module.exports = router;
 

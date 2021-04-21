@@ -16,8 +16,11 @@ router.route('/datas')
       .post(authenticatateJWT,physicalreviewcontroller.getAllPhysicalReview)
       .delete(authenticatateJWT, physicalreviewcontroller.deleteAllPhysicalReviews)  
 
-        //getting rating
+//getting rating
 // router.route('/rating')
 //       .get(authenticatateJWT, physicalreviewcontroller.getratingPhysicalReviews)
-      
+ 
+router.route('/total_physical_reviews')
+      .get(physicalreviewcontroller.getTotalPhysicalReviews)   
+
 module.exports = router;
