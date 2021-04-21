@@ -247,3 +247,45 @@ exports.deleteAllLeads = function (req, res) {
         })
     })
 }
+
+exports.getTotalLeads = function(req, res){
+    Lead.aggregate([
+        {
+            $group: {
+                _id:{
+                    organization: "$organization",                   
+                  }, 
+                quantity: { $sum: 1 },
+            }                
+        },        
+        {
+            $project: {
+              _id: 0,
+              organization: "$_id.organization",
+              count: "$quantity",
+            }
+        },
+        {
+            $sort: {
+              'date': 1
+            }
+        }
+    ], function (err, leads) {
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: 'No Lead found'
+            })
+        }
+        var totalCount = 0;
+        for( let i =0; i< leads.length; i++){
+            totalCount += leads[i].count;
+        }
+        // console.log(totalCount);         
+        res.json({
+            status: 1,
+            "total count": totalCount,
+            "lead Detail": leads
+        })
+    })
+};
