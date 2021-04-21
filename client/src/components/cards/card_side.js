@@ -9,21 +9,14 @@ const useStyles = makeStyles((theme) =>({
         minWidth: "25%",
         width: "300px",
         borderRadius:"10px",
+        textAlign:"center",
         flexDirection: "column"
     },
     title: {
         textAlign: "center",
-        fontSize: "16px",
-        fontWeight: "700"
-    },
-    SvgIcon: {
-        fontSize:"3.4rem"
-    },
-
-    dataValue: {
-        justifyContent: "space-between",
-        alignItems: "center",
-        display: "flex"
+        fontWeight: "700",
+        color:theme.palette.primary.blue,
+        fontSize:"20px"
     },
     ButtonStyle: {
         backgroundColor:theme.palette.primary.blue,
@@ -47,18 +40,26 @@ const SimpleCard = ({ CardsData }) => {
                                 {data.title}
                             </Typography>
                             <Grid container spacing={1}>
-                                <Grid item md={3} xs={3} sm={3} className={classes.SvgIcon}>
-                                    {data.icon}
-                                </Grid>
-                                <Grid item md={6} xs={6} sm={6} className={classes.dataValue}>
+                                <Grid item md={6} xs={6} sm={6} >
                                     <Typography variant="h3" component="h2">
-                                        {data.value}
+                                        {data.leadsvalue}
+                                    </Typography>
+                                    <Typography>
+                                       Leads
+                                    </Typography>
+                                </Grid>
+                                <Grid item md={6} xs={6} sm={6}>
+                                    <Typography variant="h3" component="h2">
+                                        {data.reviewvalue}
+                                    </Typography>
+                                    <Typography>
+                                       Reviews
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </CardContent>
                         <CardActions className={classes.ButtonStyle} >
-                            <Button size="small" className={classes.ButtonStyle} >{data.footer}</Button>
+                            <Button size="small" className={classes.ButtonStyle} >Show More</Button>
                         </CardActions>
                     </Card>
                 ))
