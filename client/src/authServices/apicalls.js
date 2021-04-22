@@ -108,6 +108,17 @@ const getAllLeads = function (filterValue) {
     });
 };
 
+const getTotalLeads = function () {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/leads/total_leads", config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
 const updateLeadById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -176,6 +187,17 @@ const getAllReviews = function (filterValue) {
       return response.data;
     });
 };
+const getTotalReviews = function () {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/review/total_reviews", config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
 
 const updateReviewById = function (data) {
   axios.defaults.headers.common = {
@@ -234,6 +256,17 @@ const getAllPhysicalReview = function (filterValue, limit, skip) {
     });
 };
 
+const getTotalPhysicalReviews = function () {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + '/api/physical-review/total_physical_reviews', config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
 const updatePhysicalReviewById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -256,9 +289,22 @@ const deletePhysicalReviewById = function (id) {
     });
 };
 
+/* Api for Fetching List */
+const getAnardanaOutletList = function () {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .get(API_URL + "/api/lists/anardana-outlets" , config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export default {
   login, register, reset, newpassword, isAuthenticated, signout,
-  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,
+  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,getTotalLeads,
   createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
-  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById
+  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById,
+  getAnardanaOutletList,getTotalPhysicalReviews,getTotalReviews
 };
