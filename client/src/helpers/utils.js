@@ -29,12 +29,13 @@ export const mainListItems = [
   { id: 2, label: "Review Menu", link: "/app/reviews", icon: <StarsIcon /> ,children: [
     { label: "Radix Review", link: "/app/reviews/radix-reviews", icon: <DotIcon fontSize = "small" /> },
     { label: "Anardana Review", link: "/app/reviews/anardana-reviews" , icon: <DotIcon fontSize="small"/> },
+    // { label: "Anardana Review", link: "/app/reviews/anardana-reviews/Physical" , icon: <DotIcon fontSize="small"/> },
     ],
   },
-  { id: 3, label: "Physical Review Menu", link: "/app/physicalreviews", icon: <ReceiptIcon /> ,children: [    
-    { label: "Anardana Physical", link: "/app/physicalreviews/anardana-physical-reviews" , icon: <DotIcon fontSize="small"/> },    
-  ],   
-}   
+//   { id: 3, label: "Physical Review Menu", link: "/app/physicalreviews", icon: <ReceiptIcon /> ,children: [    
+//     { label: "Anardana Physical", link: "/app/physicalreviews/anardana-physical-reviews" , icon: <DotIcon fontSize="small"/> },    
+//   ],   
+// }   
     // {'text': 'Lead Menu', 'link': '/viewleads', 'page': 'Leads', 'icon': <AssignmentOutlined />},
     // {'text': 'DateWise Status', 'link': '/datewiseStatus', 'page': 'datewiseStatus', 'icon': <TrendingUp />},
     // {'text': 'Reviews', 'link': '/reviews', 'page': 'review', 'icon': <ThumbUpAlt />},
