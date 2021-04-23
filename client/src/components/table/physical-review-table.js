@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {Paper, IconButton, Button, Menu, MenuItem, Table, TableHead, TableBody, TableSortLabel, TableRow, TableCell, TableContainer} from '@material-ui/core';
-import { Dialog,DialogActions, DialogTitle, DialogContentText, DialogContent, Slide }from '@material-ui/core';
 import {lighten, makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import EditPhysicalModal from '../modals/edit-physical-modal';
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import AuthService from "../../authServices/apicalls";
+import DeleteDialog from '../modals/delete-modal'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -113,42 +113,10 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
           );
     }
 
-    const DeleteDialog = () =>{
-        return(
-            <React.Fragment>
-                <Dialog 
-                    open={deleteModal} 
-                    TransitionComponent={Transition} 
-                    keepMounted 
-                    onClose={CloseDeleteModal}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
-                >
-                    <DialogTitle id="alert-dialog-slide-title">{"Delete Lead Details?"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            once you delete the lead details then you will not be able to see this in future.
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={CloseDeleteModal} color="primary">
-                            Disagree
-                        </Button>
-                        <Button onClick={deleteHandler} color="primary">
-                            Agree
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
-        )
-    }
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
     return (
         <Paper className={classes.paper}>
             {openmodal && <EditPhysicalModal id={dataId} reload={fetchData} openModal={openmodal} organization={filterData.organization} closeModal={editHandler} />}
-            {deleteModal && <DeleteDialog /> }
+            {deleteModal && <DeleteDialog  deleteModal={deleteModal} CloseDeleteModal={CloseDeleteModal} deleteHandler={deleteHandler}  /> }
             <TableContainer>
                 <Table
                     className={classes.table}
@@ -225,25 +193,26 @@ const CommonTable = ({fetchData, LeadHeadCells, filterValue, tableData, updateDa
                                     >
                                         <MoreIcon />
                                     </IconButton>
-                                    <Menu
-                                        id="widget-menu"
-                                        open={open}
-                                        anchorEl={ButtonRef}
-                                        keepMounted
-                                        onClose={handleClose}
-                                        disableAutoFocusItem
-                                        >
-                                            <MenuItem>
-                                            <Button onClick={editHandler}>Edit</Button>
-                                            </MenuItem>
-                                            <MenuItem>
-                                            <Button onClick={OpenDeleteModal}>Delete</Button>
-                                            </MenuItem>                                            
-                                        </Menu>
+                                  
                                 </TableCell>
                             </TableRow>
                         ))
                     }
+                    <Menu
+                        id="widget-menu"
+                        open={open}
+                        anchorEl={ButtonRef}
+                        keepMounted
+                        onClose={handleClose}
+                        disableAutoFocusItem
+                        >
+                            <MenuItem>
+                            <Button onClick={editHandler}>Edit</Button>
+                            </MenuItem>
+                            <MenuItem>
+                            <Button onClick={OpenDeleteModal}>Delete</Button>
+                            </MenuItem>                                            
+                    </Menu>
                     </TableBody>
                 </Table>
             </TableContainer>

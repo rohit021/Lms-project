@@ -21,6 +21,7 @@ import WoodappleLeads from "../../pages/leads/woodapple-leads";
   //Reviews
   import RadixReviews from "../../pages/reviews/radix-reviews";
   import AnardanaReviews from "../../pages/reviews/anardana-reviews";
+  import ReviewSwitcher from './reviewSwitcher'
   import AnardanaPhysicalReviews from "../../pages/physicalreviews/anardana-physical-review";
   
   // context
@@ -86,6 +87,11 @@ const Layout = (props)=> {
             path="/app/reviews"
             render={() => <Redirect to="/app/reviews/radix-reviews" />}
           />
+           <Route
+            exact
+            path="/app/reviews/anardana-reviews"
+            render={() => <Redirect to="/app/reviews/anardana-reviews/Online" />}
+          />
           {/* <Route path="/app/typography" component={Typography} />
           <Route path="/app/tables" component={Tables} />
           <Route path="/app/notifications" component={Notifications} />
@@ -102,11 +108,7 @@ const Layout = (props)=> {
           {/* Route for Reviews */}
 
           <Route path="/app/reviews/radix-reviews" component={RadixReviews} />
-          <Route path="/app/reviews/anardana-reviews" component={AnardanaReviews} />
-          
-          {/* Route for Physical Reviews */}
-          <Route path="/app/physicalreviews/anardana-physical-reviews" component={AnardanaPhysicalReviews} />
-          
+          <Route path="/app/reviews/anardana-reviews/:id"  component={() => <ReviewSwitcher/>}/>  
         </Switch>
           {/* <footer className={classes.footer}>
             <Copyright />
