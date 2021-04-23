@@ -36,7 +36,8 @@ exports.createLead = function (req, res) {
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    // console.log(req.body);
+    const limit = parseInt(req.query.limit);
+    const skip = parseInt(req.query.skip);
     var sort = {}, matchQuery ={};
     var sort_parameter = data.orderBy;
     var order = data.order;
@@ -63,7 +64,8 @@ exports.getAllLeads = function (req, res) {
     // console.log(sort);
     // console.log(matchQuery);
     // return;  
-   Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
+    // console.log(limit, skip);
+    Lead.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, leads) {
     // Lead.aggregate(
     //     [{
     //         "$project": {

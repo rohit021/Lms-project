@@ -32,18 +32,19 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
           case 0:
             return <UserModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} />;
           case 1:
-                switch (organization) {
-                    case "radix":
-                        return <RadixModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;
-                    case "anardana":
-                        return <AnardanaModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
-                    case "relp":
-                        return <RelpModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
-                    case "woodapple":
-                        return <WoodappleModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
-                    default:
-                        break;
-                }
+            switch (organization) {
+                case "radix":
+                    return <RadixModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;
+                case "anardana":
+                    return <AnardanaModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
+                case "relp":
+                    return <RelpModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
+                case "woodapple":
+                    return <WoodappleModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
+                default:
+                    break;
+            }
+            break;  
           case 2:
             return <LeadModal FormData={FormData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />;        
           case 3:
@@ -62,10 +63,11 @@ const EditModal = ({id, reload, openModal, organization, closeModal}) => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
       };
     
-      const handleReset = () => {
-        // setFormData("");
-        setActiveStep(0);
-      };
+      // const handleReset = () => {
+      //   // setFormData("");
+      //   setActiveStep(0);
+      // };
+
       const handleSubmit = ()=>{
         AuthService.updateLeadById(FormData)
         .then(function (response) {

@@ -34,7 +34,7 @@ const RadixDetailsModal = ({ FormData, setFormData, handleBack, handleNext}) => 
       (newData) => newdepartment === newData.dept
     );
     setNewDoctorOptions(DoctorList);
-    console.log(DoctorList)
+    // console.log(DoctorList)
   };
 
   return (

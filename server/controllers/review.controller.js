@@ -37,6 +37,8 @@ exports.createReview = function (req, res) {
 // method to get all reviews
 exports.getAllReview = function (req, res) {
     var data = req.body;
+    const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+    const skip = parseInt(req.query.skip);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
@@ -59,8 +61,8 @@ exports.getAllReview = function (req, res) {
         matchQuery.rating = { $gte: data.minValue, $lte: data.maxValue };
     if(data.startDate && data.endDate)
         matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    console.log(matchQuery);
-    Review.find(matchQuery).sort(sort).exec(function (err, reviews) {
+    // console.log(matchQuery);
+    Review.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,

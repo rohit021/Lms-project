@@ -1,7 +1,14 @@
 import axios from "axios";
 import { setCookie, getCookie, deleteCookie } from "../helpers/cookies";
-import { setLocalStorage, getLocalStorage, deleteLocalStorage } from "../helpers/localStorage";
-const API_URL = process.env.NODE_ENV === "production" ? process.env.REACT_APP_BASE_URL : "http://localhost:5000";
+import {
+  setLocalStorage,
+  getLocalStorage,
+  deleteLocalStorage,
+} from "../helpers/localStorage";
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_BASE_URL
+    : "http://localhost:5000";
 
 const config = {
   header: {
@@ -17,37 +24,41 @@ const setAuthentication = (token, user) => {
 };
 
 const login = (email, password) => {
-  return axios.post( API_URL + "/auth/login", {email, password },config )
-  .then((response) => {
-    if (response.data) {
-      setAuthentication(response.data.token, response.data.user);
-    }
-    return response.data;
-  });
+  return axios
+    .post(API_URL + "/auth/login", { email, password }, config)
+    .then((response) => {
+      if (response.data) {
+        setAuthentication(response.data.token, response.data.user);
+      }
+      return response.data;
+    });
 };
 
 const register = (username, email, password) => {
-  return axios.post( API_URL + "/auth/register", {username, email, password }, config )
-  .then((response) => {
-    if (response.data) {
-      setAuthentication(response.data.token, response.data.user);
-    }
-    return response.data;
-  });
+  return axios
+    .post(API_URL + "/auth/register", { username, email, password }, config)
+    .then((response) => {
+      if (response.data) {
+        setAuthentication(response.data.token, response.data.user);
+      }
+      return response.data;
+    });
 };
 
 const reset = (email) => {
-  return axios.post( API_URL + "/auth/reset-password", {email }, config )
-  .then((response) => {
-    return response.data;
-  });
+  return axios
+    .post(API_URL + "/auth/reset-password", { email }, config)
+    .then((response) => {
+      return response.data;
+    });
 };
 
 const newpassword = (password, token) => {
-  return axios.post( API_URL + "/auth/reset/" + token, { password }, config )
-  .then((response) => {
-    return response.data;
-  });
+  return axios
+    .post(API_URL + "/auth/reset/" + token, { password }, config)
+    .then((response) => {
+      return response.data;
+    });
 };
 
 // checking user is loggeg in
@@ -69,8 +80,8 @@ const signout = function (next) {
     return fetch(`${API_URL}/auth/logout`, {
       method: "get",
     })
-    .then((response) => console.log("signout success"))
-    .catch((err) => console.log(err));
+      .then((response) => console.log("signout success"))
+      .catch((err) => console.log(err));
   }
 };
 
@@ -80,7 +91,8 @@ const createNewLead = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
-  return axios.post(API_URL + "/api/leads/data", data, config)
+  return axios
+    .post(API_URL + "/api/leads/data", data, config)
     .then((response) => {
       return response.data;
     });
@@ -97,12 +109,16 @@ const getLeadById = function (id) {
     });
 };
 
-const getAllLeads = function (filterValue) {
+const getAllLeads = function (filterValue, limit, skip) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .post(API_URL + "/api/leads/datas", filterValue, config)
+    .post(
+      API_URL + `/api/leads/datas?limit=${limit}&skip=${skip}`,
+      filterValue,
+      config
+    )
     .then((response) => {
       return response.data;
     });
@@ -154,7 +170,6 @@ const createNewReview = function (data) {
     });
 };
 
-
 const getReviewById = function (id) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -177,12 +192,12 @@ const getReviewRatings = function (filterValue) {
     });
 };
 
-const getAllReviews = function (filterValue) {
+const getAllReviews = function (filterValue, limit, skip) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .post(API_URL + "/api/review/datas", filterValue, config)
+    .post(API_URL + `/api/review/datas?limit=${limit}&skip=${skip}`, filterValue, config)
     .then((response) => {
       return response.data;
     });
@@ -197,7 +212,6 @@ const getTotalReviews = function () {
       return response.data;
     });
 };
-
 
 const updateReviewById = function (data) {
   axios.defaults.headers.common = {
@@ -220,7 +234,6 @@ const deleteReviewById = function (id) {
       return response.data;
     });
 };
-
 
 //Physcial review Api Calls
 
@@ -250,7 +263,11 @@ const getAllPhysicalReview = function (filterValue, limit, skip) {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .post(API_URL + `/api/physical-review/datas?limit=${limit}&skip=${skip}`, filterValue, config)
+    .post(
+      API_URL + `/api/physical-review/datas?limit=${limit}&skip=${skip}`,
+      filterValue,
+      config
+    )
     .then((response) => {
       return response.data;
     });
@@ -261,7 +278,7 @@ const getTotalPhysicalReviews = function () {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .get(API_URL + '/api/physical-review/total_physical_reviews', config)
+    .get(API_URL + "/api/physical-review/total_physical_reviews", config)
     .then((response) => {
       return response.data;
     });
@@ -295,16 +312,37 @@ const getAnardanaOutletList = function () {
     Authorization: "Bearer " + getCookie("authToken"),
   };
   return axios
-    .get(API_URL + "/api/lists/anardana-outlets" , config)
+    .get(API_URL + "/api/lists/anardana-outlets", config)
     .then((response) => {
       return response.data;
     });
 };
 
 export default {
-  login, register, reset, newpassword, isAuthenticated, signout,
-  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,getTotalLeads,
-  createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
-  createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById,
-  getAnardanaOutletList,getTotalPhysicalReviews,getTotalReviews
+  login,
+  register,
+  reset,
+  newpassword,
+  isAuthenticated,
+  signout,
+  createNewLead,
+  getLeadById,
+  getAllLeads,
+  updateLeadById,
+  deleteLeadById,
+  getTotalLeads,
+  createNewReview,
+  getReviewById,
+  getAllReviews,
+  getReviewRatings,
+  updateReviewById,
+  deleteReviewById,
+  createNewPhysicalReview,
+  getPhysicalReviewById,
+  getAllPhysicalReview,
+  updatePhysicalReviewById,
+  deletePhysicalReviewById,
+  getAnardanaOutletList,
+  getTotalPhysicalReviews,
+  getTotalReviews,
 };

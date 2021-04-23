@@ -34,7 +34,7 @@ const ReviewSwitcher = () => {
                             name="mode"
                             value={value}
                             onChange={(event) => {
-                                setValue(event.target.value)
+                                setValue(event.target.value);
                                 history.push(`/app/reviews/anardana-reviews/${event.target.value}`);
                             }}
                         >

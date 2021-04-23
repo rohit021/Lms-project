@@ -1,5 +1,5 @@
-import React,{useState} from "react";
-import { Grid, ListItem, ListItemText, Typography, Divider } from '@material-ui/core/';
+import React from "react";
+import { Grid, ListItemText, Typography, Divider } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
  
 const ConfirmPhysicalModal = ({FormData, handleBack, handleSubmit}) => {
   const classes = useStyles();
-  const { name, phone, email, date, center,  starFood, starClean, starPlace, starService, starMusic, isNegative} = FormData;
+  const { name, phone, email, date, starFood, starClean, starPlace, starService, starMusic, isNegative} = FormData;
   return (
     <React.Fragment>
         <Divider/>
