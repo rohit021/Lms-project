@@ -6,6 +6,7 @@
 var User = require('../models/User.model'),
     async = require('async'), 
     crypto = require('crypto'),
+    moment = require('moment'),
     config = require('../config/config'),
     nodemailer = require('nodemailer'),
     smtpTransport = nodemailer.createTransport(config.smtp),
@@ -48,6 +49,7 @@ exports.createUser = function(req, res) {
                                     userId:result._id,
                                     email: result.email
                                 }
+                                setLastLoginTime(result,'web');
                                 jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' }, (err, token) => {
                                     // console.log(token);
                                     res.cookie("token", token, {
@@ -101,6 +103,7 @@ exports.loginUser = function(req, res) {
                                 userId:user.id,
                                 email: user.email
                             }
+                            setLastLoginTime(user,'web');
                             jwt.sign(payload, config.jwtSecret, { expiresIn: '24h' }, (err, token) => {
                                 res.cookie("token", token, {
                                     httpOnly:true,
@@ -269,3 +272,18 @@ exports.validateResetToken = function(req, res) {
         res.redirect('/login');
     });
 };
+
+const setLastLoginTime = function(user,platform){
+    console.log("last login time called --",user.email,platform)
+    User.findOne({email: user.email}).exec().then(
+        function(usr){
+            if(platform=='web'){
+                usr.lastLoginTime = new Date(moment().format("YYYY-MM-DD HH:mm:ss")+ "Z");
+            }
+            usr.save(function(err){
+                if(err) console.log("user lastlogintime not saved");
+                console.log("user last login time saved successsfully ",usr.lastLoginTime);
+            })
+        }
+    )
+}
