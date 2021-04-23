@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, Slider, FormControlLabel, Checkbox, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {PlatfromOptions, AnardanaOutlets, DateFilterOptions} from "../../helpers/utils";
+import {PlatformOptions, AnardanaOutlets, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
@@ -89,7 +89,7 @@ const CommonFilters = ({filterValue, updateData}) => {
     <Widget header="Search Filters">
       <Grid container spacing={1} className={classes.gridContainer}>
         { filterData.organization==="anardana" ? 
-        <Grid item md={2} xs={6} sm={3}>
+        <Grid item md={1} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -103,7 +103,7 @@ const CommonFilters = ({filterValue, updateData}) => {
           </FormControl>
         </Grid>
         :""}
-        <Grid item md={2} xs={6} sm={3}>
+        <Grid item md={1} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -115,7 +115,7 @@ const CommonFilters = ({filterValue, updateData}) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {PlatfromOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+              {PlatformOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
         </Grid>

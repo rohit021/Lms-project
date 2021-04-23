@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Grid, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import { Card, Grid, CardActions, CardContent, Typography } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -17,26 +18,30 @@ const useStyles = makeStyles((theme) =>({
         fontWeight: "700"
     },
     SvgIcon: {
+        textAlign:"center",
         fontSize:"3.4rem"
     },
 
     dataValue: {
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
         display: "flex"
     },
     ButtonStyle: {
         backgroundColor:theme.palette.primary.blue,
         fontWeight: "bold",  
+        width: "100%",
         display: "flex",
         justifyContent:"center",
-        color: "#fff"
+        color: "#fff",
+        "&:hover": {
+            backgroundColor:"#273d64",
+        },
     },
 }));
 
 const SimpleCard = ({ CardsData }) => {
     const classes = useStyles();
-    
     return (
         <Grid container spacing={1}>
             {
@@ -47,19 +52,23 @@ const SimpleCard = ({ CardsData }) => {
                                 {data.title}
                             </Typography>
                             <Grid container spacing={1}>
-                                <Grid item md={3} xs={3} sm={3} className={classes.SvgIcon}>
+                                <Grid item md={3} xs={2} sm={2} className={classes.SvgIcon}>
                                     {data.icon}
                                 </Grid>
-                                <Grid item md={6} xs={6} sm={6} className={classes.dataValue}>
+                                <Grid item md={9} xs={9} sm={9} className={classes.dataValue}>
                                     <Typography variant="h3" component="h2">
-                                        {data.value}
+                                        {data.value? data.value: 0}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </CardContent>
-                        <CardActions className={classes.ButtonStyle} >
-                            <Button size="small" className={classes.ButtonStyle} >{data.footer}</Button>
-                        </CardActions>
+                            <Link to={data.link}>
+                                <CardActions className={classes.ButtonStyle} >
+                                    <Typography variant="h6" component="h5">
+                                        {data.footer}
+                                    </Typography>
+                                </CardActions>
+                            </Link>
                     </Card>
                 ))
             }

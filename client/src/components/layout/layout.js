@@ -20,9 +20,9 @@ import WoodappleLeads from "../../pages/leads/woodapple-leads";
 
   //Reviews
   import RadixReviews from "../../pages/reviews/radix-reviews";
-  import AnardanaReviews from "../../pages/reviews/anardana-reviews";
+  // import AnardanaReviews from "../../pages/reviews/anardana-reviews";
   import ReviewSwitcher from './reviewSwitcher'
-  import AnardanaPhysicalReviews from "../../pages/physicalreviews/anardana-physical-review";
+  // import AnardanaPhysicalReviews from "../../pages/physicalreviews/anardana-physical-review";
   
   // context
 import { useLayoutState } from "../../context/LayoutContext";
@@ -110,6 +110,7 @@ const Layout = (props)=> {
           <Route path="/app/reviews/radix-reviews" component={RadixReviews} />
           <Route path="/app/reviews/anardana-reviews/:id"  component={() => <ReviewSwitcher/>}/>  
         </Switch>
+
           {/* <footer className={classes.footer}>
             <Copyright />
           </footer> */}
