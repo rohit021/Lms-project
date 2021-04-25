@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 var Review = require('../models/Review.model'),
-    Lead = require('../models/Lead.model'),
     moment = require('moment'),
+    async = require("async"),
     errorHandler = require('../helpers/dbErrorHandler');
 
 // Method to Create Review
@@ -57,11 +57,18 @@ exports.getAllReview = function (req, res) {
         matchQuery.center = data.center;
     if(data.isNegative)
         matchQuery.isNegative = data.isNegative;
-    if( data.minValue)
+    if(data.minValue)
         matchQuery.rating = { $gte: data.minValue, $lte: data.maxValue };
     if(data.startDate && data.endDate)
-        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    // console.log(matchQuery);
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate) };
+    if(data.search){
+        var regx = new RegExp(data.search, "i");
+        matchQuery.name = {
+            $regex: regx
+        };
+    }
+    // console.log(matchQuery, sort);
+    // return
     Review.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
@@ -210,7 +217,13 @@ exports.getratingReviews= function(req,res){
     if(data.isNegative)
         matchQuery.isNegative = data.isNegative;
     if(data.startDate && data.endDate)
-        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate) };
+    if(data.search){
+        var regx = new RegExp(data.search, "i");
+        matchQuery.name = {
+            $regex: regx
+        };
+    }
     Review.find(matchQuery).exec(function(err,review){
         if (err) {
             return res.status(400).send({

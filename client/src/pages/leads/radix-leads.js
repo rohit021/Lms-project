@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
+import { Grid, Stepper, Step, StepLabel, CircularProgress, Typography } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
+import PageTitle from "../../components/widget/pagetitle";
+import TotalLeadCard from "../../components/cards/simple-card";
 import CommonFilter from "../../components/filters/filter";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
@@ -30,6 +32,7 @@ const RadixLeads = () => {
   const [filterValue, setFilterValue] = useState(defaultData);
   const [loading, setLoading] = useState(false);
   const [leadData, setleadData] = useState(null);
+  const [Searched, setSearched] = useState("");
   const [activeStep, setActiveStep] = useState(0);
   const [AlertCheck, setAlertCheck] = useState(false);
   const [AlertType, setAlertType] = useState('');
@@ -38,6 +41,7 @@ const RadixLeads = () => {
   const [IsFetching, setIsFetching] = useState(false);
   const [moreData, setmoreData] = useState(false);
   const [skip, setSkip] = useState(0);
+  const [CardData, setCardData] = useState(null);
   const [openmodal, setOpenModal] = useState(false);
   const [FormData, setFormData] = useState({
     name: " ",
@@ -136,8 +140,22 @@ const RadixLeads = () => {
   }
   
   useEffect(() => {
+    const fetchLeadData = async () => {
+      await AuthService.getLeadCount(filterValue).then(
+        (data) => {
+          if(data.status)
+          setCardData(data['total records']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      setLoading(false);
+    };
+
     fetchData();
-  }, [filterValue]);
+    fetchLeadData();
+  }, [filterValue, Searched]);
 
   useEffect(() => {
     if(IsFetching){
@@ -147,7 +165,7 @@ const RadixLeads = () => {
 
   const fetchData = async () => {
     setLoading(true);
-    await AuthService.getAllLeads(filterValue, limit, skip).then(
+    await AuthService.getAllLeads(filterValue, limit, skip, Searched).then(
       (data) => {
         setleadData(data.leads);
       },
@@ -187,12 +205,19 @@ const RadixLeads = () => {
       nextPage();
     }
   };
-
+  
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
         <BackToTopButton />
+        <PageTitle title="Radix Leads" nodivider />
+        {CardData && <TotalLeadCard title="Total Leads" data={CardData} /> }
         <CommonFilter filterValue={filterValue} updateData={updateData} />
+        {/* <SearchBar
+          placeholder=" Search Lead ..."
+          // value={this.state.value}
+          onChange={(newValue) => setSearched(newValue)}
+        /> */}
         <AddButton handleChange={
           () => {
             setOpenModal(true);

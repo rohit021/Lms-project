@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import ReviewTable from "../../components/table/review-table";
+import PageTitle from "../../components/widget/pagetitle";
 import ReviewFilter from "../../components/filters/review-filter";
 import ReviewModal from '../../components/modals/review-modal'
 import CardGroup from '../../components/cardgroup/cardgroup';
@@ -201,6 +202,7 @@ const RadixReviews = () => {
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
         <BackToTopButton />
+        <PageTitle title="Radix Reviews" nodivider />
         {CardData && <CardGroup data={CardData} />}
         <ReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={

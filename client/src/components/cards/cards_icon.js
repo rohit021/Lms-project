@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) =>({
     },
 }));
 
-const SimpleCard = ({ CardsData }) => {
+const CardWithIcon = ({ CardsData }) => {
     const classes = useStyles();
     return (
         <Grid container spacing={1}>
@@ -76,4 +76,4 @@ const SimpleCard = ({ CardsData }) => {
     );
 }
 
-export default SimpleCard;
+export default CardWithIcon;

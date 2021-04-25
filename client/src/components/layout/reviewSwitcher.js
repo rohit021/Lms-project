@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Grid, FormControl, MenuItem, TextField,makeStyles} from '@material-ui/core';
 import AnardanaPhysicalReviews from "../../pages/physicalreviews/anardana-physical-review";
 import AnardanaReviews from "../../pages/reviews/anardana-reviews";
+import PageTitle from "../widget/pagetitle";
 export const reviewSwitcherOptions = [
     { "key": 'online', "text": 'Online', "value": 'Online' },
     { "key": 'physical', "text": 'Physical', "value": 'Physical' },
@@ -18,10 +19,11 @@ const ReviewSwitcher = () => {
     const { id } = useParams();
     const [value, setValue] = useState(id);
     const history = useHistory();
-    console.log(id)
+    // console.log(id)
         return (
             <React.Fragment>
-                <Grid container spacing={1} >
+                <PageTitle title="Anardana Reviews" nodivider />
+                <Grid container spacing={2} >
                 <Grid item md={2} xs={2} sm={2}>
                     <FormControl className={classes.selectStyle} >
                         <TextField

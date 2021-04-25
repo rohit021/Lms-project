@@ -50,7 +50,13 @@ exports.getAllPhysicalReview = function (req, res) {
     if(data.isNegative)
         matchQuery.isNegative = data.isNegative;
     if(data.startDate && data.endDate)
-        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate) };
+    if(data.search){
+        var regx = new RegExp(data.search, "i");
+        matchQuery.name = {
+            $regex: regx
+        };
+    }        
     // console.log(limit, skip);
     PhysicalReview.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, reviews) {
         if (err) {

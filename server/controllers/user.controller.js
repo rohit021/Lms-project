@@ -278,7 +278,7 @@ const setLastLoginTime = function(user,platform){
     User.findOne({email: user.email}).exec().then(
         function(usr){
             if(platform=='web'){
-                usr.lastLoginTime = new Date(moment().format("YYYY-MM-DD HH:mm:ss")+ "Z");
+                usr.lastLoginTime = new Date(moment().utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss")+ "Z");
             }
             usr.save(function(err){
                 if(err) console.log("user lastlogintime not saved");

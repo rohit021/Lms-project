@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
 import CommonFilter from "../../components/filters/filter";
+import PageTitle from "../../components/widget/pagetitle";
+import TotalLeadCard from "../../components/cards/simple-card";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
 import Alert from "../../components/alert/toaster"
@@ -38,6 +40,7 @@ const RadixLeads = () => {
   const [IsFetching, setIsFetching] = useState(false);
   const [moreData, setmoreData] = useState(false);
   const [skip, setSkip] = useState(0);
+  const [CardData, setCardData] = useState(null);
   const [openmodal, setOpenModal] = useState(false);
   const [FormData, setFormData] = useState({
     name: "",
@@ -135,7 +138,21 @@ const RadixLeads = () => {
   }
 
   useEffect(() => {
+    const fetchLeadData = async () => {
+      await AuthService.getLeadCount(filterValue).then(
+        (data) => {
+          if(data.status)
+          setCardData(data['total records']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      setLoading(false);
+    };
+
     fetchData();
+    fetchLeadData();
   }, [filterValue]);
   
   useEffect(() => {
@@ -191,6 +208,8 @@ const RadixLeads = () => {
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
         <BackToTopButton />
+        <PageTitle title="Woodapple Leads" nodivider />
+        {CardData && <TotalLeadCard title="Total Leads" data={CardData} /> }
         <CommonFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           () => {
