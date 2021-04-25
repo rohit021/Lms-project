@@ -345,7 +345,7 @@ const getPhysicalReviewNps = function (filterValue) {
 
 export default {
   login, register, reset, newpassword, isAuthenticated, signout,
-  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,getTotalLeads,
+  createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,getTotalLeads,getLeadCount,
   createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
   createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById,
   getAnardanaOutletList,getTotalPhysicalReviews,getTotalReviews,getPhysicalReviewNps
