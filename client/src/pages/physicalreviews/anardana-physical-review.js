@@ -12,6 +12,7 @@ import { ReviewSteps } from '../../helpers/utils';
 import AuthService from "../../authServices/apicalls";
 import Alert from "../../components/alert/toaster"
 import BackToTopButton from "../../components/widget/backtoTop";
+import PhysicalCardgroup from '../../components/cardgroup/physicalCardgroup';
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
 const defaultData = {
@@ -31,6 +32,7 @@ const RadixReviews = () => {
   const [limit, setLimit] = useState(30);
   const [IsFetching, setIsFetching] = useState(false);
   const [skip, setSkip] = useState(0);
+  const [CardData, setCardData] = useState(null);
   const [moreData, setmoreData] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [AlertCheck, setAlertCheck] = useState(false);
@@ -139,7 +141,20 @@ const RadixReviews = () => {
     setFilterValue(filters);
   }
   useEffect(() => {
+    const fetchRatingData = async () => {
+        AuthService.getPhysicalReviewNps(filterValue).then(
+          (data) => {
+            setCardData(data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        setLoading(false);
+      };
+    
     fetchData();
+    fetchRatingData();
   }, [filterValue]);
   
   useEffect(() => {
@@ -201,6 +216,7 @@ const RadixReviews = () => {
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
+      {CardData&& <PhysicalCardgroup data={CardData}/>}
         <BackToTopButton />
         <PhysicalReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={

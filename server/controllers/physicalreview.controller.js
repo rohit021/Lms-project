@@ -79,7 +79,122 @@ exports.getAllPhysicalReview = function (req, res) {
     })
 }
 
-// Method to Get a Review Form By ID
+
+
+exports.getPhysicalReviewNps= function(req,res){
+    var data = req.body;
+    var matchQuery = {};
+    if(data.organization)
+        matchQuery.organization = data.organization;
+    if(data.center)
+        matchQuery.center = data.center;
+    if(data.isNegative)
+        matchQuery.isNegative = data.isNegative;
+    if(data.startDate && data.endDate)
+        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
+        PhysicalReview.find(matchQuery).exec(function(err,review){
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: err
+            })
+        }
+        if (review) {
+            // console.log(review.length);
+            let posMusicCount = 0 , negMusicCount = 0, musicNps = 0 ;
+            let posFoodCount = 0 , negFoodCount = 0, foodNps = 0 ;
+            let posCleanCount = 0 , negCleanCount = 0, cleanNps = 0 ;
+            let posPlaceCount = 0 , negPlaceCount = 0, placeNps = 0 ;
+            let posServiceCount = 0 , negServiceCount = 0, serviceNps = 0 ;
+            for(let i= 0; i< review.length; i++){
+                //music
+                if(review[i].starMusic == 4 || review[i].starMusic == 5){
+                    posMusicCount++;
+                }
+                if(review[i].starMusic == 1 || review[i].starMusic == 2){
+                    negMusicCount++;
+                }  
+                //food 
+                if(review[i].starFood == 4 || review[i].starFood == 5){
+                    posFoodCount++;
+                }
+                if(review[i].starFood == 1 || review[i].starFood == 2){
+                    negFoodCount++;
+                }  
+                //clean
+                if(review[i].starClean == 4 || review[i].starClean == 5){
+                    posCleanCount++;
+                }
+                if(review[i].starClean == 1 || review[i].starClean == 2){
+                    negCleanCount++;
+                }       
+                //place
+                if(review[i].starPlace == 4 || review[i].starPlace == 5){
+                    posPlaceCount++;
+                }
+                if(review[i].starPlace == 1 || review[i].starPlace == 2){
+                    negPlaceCount++;
+                }      
+                //Service
+                if(review[i].starService == 4 || review[i].starService == 5){
+                    posServiceCount++;
+                }
+                if(review[i].starService == 1 || review[i].starService == 2){
+                    negServiceCount++;
+                }   
+            }
+            //music Nps
+            musicNps =( posMusicCount - negMusicCount)/review.length *100;
+            musicNps = musicNps ? Math.round(musicNps) : 0;
+            // food Nps
+            foodNps =( posFoodCount - negFoodCount)/review.length *100;
+            foodNps = foodNps ? Math.round(foodNps) : 0;
+            //Clean Nps
+            cleanNps =( posCleanCount - negCleanCount)/review.length *100;
+            cleanNps = cleanNps ? Math.round(cleanNps) : 0;
+            //place nps
+            placeNps =( posPlaceCount - negPlaceCount)/review.length *100;
+            placeNps = placeNps ? Math.round(placeNps) : 0;
+            //Service
+            serviceNps =( posServiceCount - negServiceCount)/review.length *100;
+            serviceNps = serviceNps ? Math.round(serviceNps) : 0;
+            // return res.json(review);
+            return res.json({
+             "Music" : {
+                "posCount" : posMusicCount,
+                "negcount": negMusicCount,
+                 "nps" : musicNps
+                }, 
+               "Food": {
+                    "posCount":posFoodCount,
+                    "negCount": negFoodCount, 
+                    "nps":foodNps
+                },
+               "Clean": {
+                    "posCount":posCleanCount,
+                    "negCount": negCleanCount,
+                    "nps": cleanNps
+                },
+               "Place": {
+                    "posCount":posPlaceCount, 
+                    "negCount": negPlaceCount,
+                    "nps": placeNps
+                },
+               "Service": {
+                  "posCount": posServiceCount, 
+                 "negCount": negServiceCount,
+                 "nps":serviceNps
+                }
+            }
+            
+            )
+        }
+        return res.status(200).send({
+            status: 1,
+            message: 'No review found'
+        })
+    })
+}
 exports.getPhysicalReview = function (req, res) {
     var reviewId = req.params.id;
     PhysicalReview.findOne({ _id: reviewId }).exec(function (err, review) {

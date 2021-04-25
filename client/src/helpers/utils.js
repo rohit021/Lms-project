@@ -59,6 +59,38 @@ export const SourceOptions = [
   { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
 ]
 
+export const RadixSource = [
+  { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+  { "key": 'google', "text": 'Google', "value": 'Google' },
+  { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+  { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+  { "key": 'radix practo', "text": 'Radix Practo', "value": 'Radix Practo' },
+  { "key": 'dental practo', "text": 'Dental Practo', "value": 'Dental Practo' },
+]
+
+export const AnardanaSource = [
+  { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+  { "key": 'google', "text": 'Google', "value": 'Google' },
+  { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+  { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+]
+
+export const WoodappleSource = [
+  { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+  { "key": 'google', "text": 'Google', "value": 'Google' },
+  { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+  { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+]
+
+export const RelpSource = [
+  { "key": 'friends', "text": 'Friends', "value": 'Friends' },
+  { "key": 'google', "text": 'Google', "value": 'Google' },
+  { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
+  { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
+  { "key": 'housing', "text": 'Housing', "value": 'Housing' },
+  { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
+]
+
 export const AnardanaOutlets = [
   { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
   { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },  

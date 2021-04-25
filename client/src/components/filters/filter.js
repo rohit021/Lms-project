@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {DepartmentOptions, SourceOptions, CategoryOptions, AnardanaOutlets, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
+import {DepartmentOptions,RadixSource,AnardanaSource,WoodappleSource,RelpSource, CategoryOptions, AnardanaOutlets, PriorityOptions, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +20,23 @@ const CommonFilters = ({filterValue, updateData}) => {
   const [disabledStatus, setDisabledStatus] = useState(false);
   const [filterData, setFilterData] = useState(filterValue);
   const formattedTodayDate = moment().format("YYYY-MM-DD");
+  let SourceOptions
+  switch(filterData.organization){
+    case 'radix':
+      SourceOptions=RadixSource;
+          break;
+    case 'anardana':
+      SourceOptions=AnardanaSource;
+          break;
+   case 'woodapple':
+      SourceOptions=WoodappleSource;
+          break;
+   case 'relp':
+      SourceOptions=RelpSource;
+          break; 
+    default:
+  }
+  
 
   // console.log(filterData);
   const handleChange = (prop) => (event) => {
