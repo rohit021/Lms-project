@@ -301,10 +301,23 @@ const getAnardanaOutletList = function () {
     });
 };
 
+const getPhysicalReviewNps = function (filterValue) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/physical-review/rating", filterValue, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+
+
 export default {
   login, register, reset, newpassword, isAuthenticated, signout,
   createNewLead, getLeadById, getAllLeads, updateLeadById, deleteLeadById,getTotalLeads,
   createNewReview, getReviewById, getAllReviews, getReviewRatings, updateReviewById, deleteReviewById,
   createNewPhysicalReview, getPhysicalReviewById, getAllPhysicalReview, updatePhysicalReviewById, deletePhysicalReviewById,
-  getAnardanaOutletList,getTotalPhysicalReviews,getTotalReviews
+  getAnardanaOutletList,getTotalPhysicalReviews,getTotalReviews,getPhysicalReviewNps
 };

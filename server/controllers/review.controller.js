@@ -198,7 +198,7 @@ exports.deleteAllReviews = function (req, res) {
     })
 }
 
-exports.getratingReviews= function(req,res){
+exports.getReviewNps= function(req,res){
     var data = req.body;
     var matchQuery = {};
     if(data.organization)

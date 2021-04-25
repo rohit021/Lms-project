@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import { SourceOptions } from "../../helpers/utils";
+import { RadixSource, AnardanaSource, WoodappleSource, RelpSource } from "../../helpers/utils";
 const useStyles = makeStyles((theme) => ({
   Button: {
     margin: "10px auto",
@@ -34,6 +34,23 @@ const ValidationSchema = yup.object().shape({
 })
 
 const UserDetailsModal = ({ FormData, setFormData, handleNext }) => {
+  let SourceOptions
+  switch(FormData.organization){
+    case 'radix':
+      SourceOptions=RadixSource;
+          break;
+    case 'anardana':
+      SourceOptions=AnardanaSource;
+          break;
+   case 'woodapple':
+      SourceOptions=WoodappleSource;
+          break;
+   case 'relp':
+      SourceOptions=RelpSource;
+          break; 
+    default:
+  }
+  
   const classes = useStyles();
   return (
     <React.Fragment>
