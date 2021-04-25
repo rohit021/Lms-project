@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, Form } from "formik";
 import * as yup from "yup";
 import {Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
-import { PlatfromOptions} from "../../helpers/utils";
+import { PlatformOptions} from "../../helpers/utils";
 import { Rating } from "@material-ui/lab";
 const useStyles = makeStyles((theme) => ({
   Button: {
@@ -133,7 +133,7 @@ const ReviewModal = ({ edit, FormData, setFormData, handleNext }) => {
                       errors.platform && touched.platform ? errors.platform : ""
                     }
                   >
-                    {PlatfromOptions.map((option, index) => (<MenuItem key={index} value={option.value}>{option.text}</MenuItem>))}
+                    {PlatformOptions.map((option, index) => (<MenuItem key={index} value={option.value}>{option.text}</MenuItem>))}
                   </TextField>
                 </FormControl>
               </Grid>              

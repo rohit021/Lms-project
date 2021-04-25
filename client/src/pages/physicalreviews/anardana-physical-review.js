@@ -12,6 +12,7 @@ import { ReviewSteps } from '../../helpers/utils';
 import AuthService from "../../authServices/apicalls";
 import Alert from "../../components/alert/toaster"
 import BackToTopButton from "../../components/widget/backtoTop";
+import PhysicalCardgroup from '../../components/cardgroup/physicalCardgroup';
 const formattedTodayDate = moment().format("YYYY-MM-DD");
 
 const defaultData = {
@@ -31,6 +32,8 @@ const RadixReviews = () => {
   const [limit, setLimit] = useState(30);
   const [IsFetching, setIsFetching] = useState(false);
   const [skip, setSkip] = useState(0);
+  const [CardData, setCardData] = useState(null);
+  const [moreData, setmoreData] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [AlertCheck, setAlertCheck] = useState(false);
   const [AlertType, setAlertType] = useState('');
@@ -69,9 +72,9 @@ const RadixReviews = () => {
     setIsFetching(true);      
 }
 
-const previousPage = () => {
-    setSkip(skip - limit)
-}
+  // const previousPage = () => {
+  //     setSkip(skip - limit)
+  // }
 
   const handleNext = () => {
     // console.log(activeStep);
@@ -138,7 +141,20 @@ const previousPage = () => {
     setFilterValue(filters);
   }
   useEffect(() => {
+    const fetchRatingData = async () => {
+        AuthService.getPhysicalReviewNps(filterValue).then(
+          (data) => {
+            setCardData(data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        setLoading(false);
+      };
+    
     fetchData();
+    fetchRatingData();
   }, [filterValue]);
   
   useEffect(() => {
@@ -147,21 +163,38 @@ const previousPage = () => {
     }    
   }, [IsFetching]);
 
-  const FetchMoreData=()=>{
-    setIsFetching(true);
+  const fetchData = async () => {
+    setLoading(true);
     AuthService.getAllPhysicalReview(filterValue, limit, skip).then(
       (data) => {
-        for (var i = 0; i < data.reviews.length; i++) {
-          var newData = data.reviews[i];
-          setReviewData(currentArray => [...currentArray, newData]);
-        }       
-        setIsFetching(false);        
+        setReviewData(data.reviews);                    
       },
       (error) => {
         console.log(error);
       }
     );
-  }
+    setLoading(false);    
+  };
+
+  const FetchMoreData=()=>{
+    setIsFetching(true);
+    AuthService.getAllPhysicalReview(filterValue, limit, skip).then(
+      (data) => {
+        if(data.reviews){
+          setmoreData(true);
+          for (var i = 0; i < data.reviews.length; i++) {
+            var newData = data.reviews[i];
+            setReviewData(currentArray => [...currentArray, newData]);
+          }       
+          setmoreData(false);         
+        }        
+        setIsFetching(false);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  } 
 
   onscroll=()=> {
     const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
@@ -169,7 +202,7 @@ const previousPage = () => {
     const html = document.documentElement;
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
-    if (windowBottom >= docHeight-500) {
+    if (windowBottom >= docHeight-10) {
       nextPage();
     } else {    
     // x
@@ -177,26 +210,13 @@ const previousPage = () => {
     // console.log("window height",windowHeight)
     // console.log("doc",docHeight)
     }
-  }
-  
+  } 
   // http://blog.sodhanalibrary.com/2016/08/detect-when-user-scrolls-to-bottom-of.html#.YHcYe-gzbmd
-
-  const fetchData = async () => {
-    setLoading(true);
-    AuthService.getAllPhysicalReview(filterValue, limit, skip).then(
-      (data) => {
-        setReviewData(data.reviews);
-        setLoading(false);                
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  };
 
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
+      {CardData&& <PhysicalCardgroup data={CardData}/>}
         <BackToTopButton />
         <PhysicalReviewFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
@@ -224,9 +244,9 @@ const previousPage = () => {
           !loading && ReviewData &&
           <PhysicalReviewTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={ReviewData} updateData={updateData} fetchData={fetchData} />
         }
-        {IsFetching && (
+        {IsFetching && !moreData && (
           <h2>Fetching More Data ...</h2>
-        )}        
+        )}  
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}

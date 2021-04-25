@@ -19,6 +19,9 @@ router.route('/datas')
 //getting rating
 // router.route('/rating')
 //       .get(authenticatateJWT, physicalreviewcontroller.getratingPhysicalReviews)
+
+router.route('/rating')
+.post(authenticatateJWT, physicalreviewcontroller.getPhysicalReviewNps)
  
 router.route('/total_physical_reviews')
       .get(physicalreviewcontroller.getTotalPhysicalReviews)   

@@ -43,10 +43,11 @@ const EditModal = ({id, edit, reload, openModal, organization, closeModal}) => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
       };
     
-      const handleReset = () => {
-        // setFormData("");
-        setActiveStep(0);
-      };
+      // const handleReset = () => {
+      //   // setFormData("");
+      //   setActiveStep(0);
+      // };
+      
       const handleSubmit = ()=>{
         AuthService.updateReviewById(FormData)
         .then(function (response) {

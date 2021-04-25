@@ -17,7 +17,11 @@ router.route('/datas')
       .delete(authenticatateJWT, leadcontroller.deleteAllLeads)     
 
 router.route('/total_leads')
-      .get(leadcontroller.getTotalLeads)   
+      .get(authenticatateJWT, leadcontroller.getTotalLeads)  
+
+router.route('/total_lead_count')
+      .post(leadcontroller.getTotalCount)
+      // .post(authenticatateJWT, leadcontroller.getTotalCount)
 
 module.exports = router;
 

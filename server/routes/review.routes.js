@@ -18,9 +18,9 @@ router.route('/datas')
 
 //getting rating
 router.route('/rating')
-      .post(authenticatateJWT, reviewcontroller.getratingReviews)
+      .post(authenticatateJWT, reviewcontroller.getReviewNps)
 
 router.route('/total_reviews')
-      .get(reviewcontroller.getTotalReviews)   
+      .get(reviewcontroller.getTotalReviews) 
 
 module.exports = router;

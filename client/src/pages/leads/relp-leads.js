@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
+import PageTitle from "../../components/widget/pagetitle";
+import TotalLeadCard from "../../components/cards/simple-card";
 import CommonFilter from "../../components/filters/filter";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
@@ -11,6 +13,7 @@ import RelpModal from '../../components/modals/relp-modal';
 import LeadModal from '../../components/modals/lead-modal';
 import ConfirmModal from '../../components/modals/confirm-modal';
 import NotFound from "../../components/widget/notfound";
+import BackToTopButton from "../../components/widget/backtoTop";
 import { Steps, CommonLeadHeadCells } from '../../helpers/utils';
 import moment from "moment";
 const formattedTodayDate = moment().format("YYYY-MM-DD");
@@ -32,6 +35,11 @@ const RelpLeads = () => {
   const [AlertCheck, setAlertCheck] = useState(false);
   const [AlertType, setAlertType] = useState('');
   const [AlertMsg, setAlertMsg] = useState('');
+  const [limit, setLimit] = useState(30);
+  const [IsFetching, setIsFetching] = useState(false);
+  const [moreData, setmoreData] = useState(false);
+  const [skip, setSkip] = useState(0);
+  const [CardData, setCardData] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
   const [openmodal, setOpenModal] = useState(false);
   const [FormData, setFormData] = useState({
@@ -124,17 +132,45 @@ const RelpLeads = () => {
     }
   }
 
+  const nextPage = () => {
+    setSkip(skip + limit);
+    setLimit(10);
+    setIsFetching(true);      
+  }
+  
   function updateData(filters) {
+    setSkip(0);
+    setLimit(30);
     setFilterValue(filters);
   }
 
   useEffect(() => {
+    const fetchLeadData = async () => {
+      await AuthService.getLeadCount(filterValue).then(
+        (data) => {
+          if(data.status)
+          setCardData(data['total records']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      setLoading(false);
+    };
+
     fetchData();
+    fetchLeadData();
   }, [filterValue]);
+  
+  useEffect(() => {
+    if(IsFetching){
+      FetchMoreData();
+    }    
+  }, [IsFetching]);
 
   const fetchData = async () => {
     setLoading(true);
-    AuthService.getAllLeads(filterValue).then(
+    await AuthService.getAllLeads(filterValue, limit, skip).then(
       (data) => {
         setleadData(data.leads);
       },
@@ -145,9 +181,42 @@ const RelpLeads = () => {
     setLoading(false);
   };
 
+  const FetchMoreData=()=>{
+    AuthService.getAllLeads(filterValue, limit, skip).then(
+      (data) => {
+        if(data.leads){
+          setmoreData(true);
+          for (var i = 0; i < data.leads.length; i++) {
+            var newData = data.leads[i];
+            setleadData(currentArray => [...currentArray, newData]);
+          }
+          setmoreData(false);
+        }
+        setIsFetching(false);  
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  
+  onscroll=()=> {
+    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight-10) {
+      nextPage();
+    }
+  };
+
   return (
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
+        <BackToTopButton />
+        <PageTitle title="Relp Leads" nodivider />
+        {CardData && <TotalLeadCard title="Total Leads" data={CardData} /> }
         <CommonFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           () => {
@@ -174,6 +243,9 @@ const RelpLeads = () => {
           !loading && leadData &&
           <CommonTable filterValue={filterValue} LeadHeadCells={CommonLeadHeadCells} tableData={leadData} updateData={updateData} fetchData={fetchData} />
         }
+        {IsFetching && !moreData && (
+          <h2>Fetching More Data ...</h2>
+        )}  
         {loading && (
           <CircularProgress color="primary" size={30} thickness={4} />
         )}

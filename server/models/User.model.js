@@ -34,6 +34,9 @@ var UserSchema = new Schema({
     expireToken:{
         type:Date,
     },
+    lastLoginTime: { //web
+        type: Date
+    },
     created_at: {
         type: Date,
         default: Date.now

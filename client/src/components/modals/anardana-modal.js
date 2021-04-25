@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React from "react";
 import {Formik, Form} from 'formik';
 import * as yup from 'yup';
 import { Grid, Button, Typography, TextField, FormControl, MenuItem, makeStyles } from "@material-ui/core";
@@ -25,7 +25,6 @@ const ValidationSchema = yup.object().shape({
   
 const AnardanaDetailsModal = ({FormData, setFormData, handleBack, handleNext}) => {
   const classes = useStyles();
-  const [direction, setDirection] = useState('back');
 
   return (
     <React.Fragment>
