@@ -25,7 +25,7 @@ const CommonFilters = ({filterValue, updateData}) => {
   // console.log(filterData);
   const handleChange = (prop) => (event) => {
     const key = event.target.name;
-    console.log(key);
+    // console.log(key, event.target.value);
     setFilterData({ ...filterData, [key]: event.target.value });
   }
 
@@ -86,10 +86,10 @@ const CommonFilters = ({filterValue, updateData}) => {
   }
 
   return (
-    <Widget header="Search Filters">
+    <Widget header="Search Filters" label="Search Review" filterData handleChange={handleChange} >
       <Grid container spacing={1} className={classes.gridContainer}>
         { filterData.organization==="anardana" ? 
-        <Grid item md={1} xs={6} sm={3}>
+        <Grid item md={1} xs={6} sm={6}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -119,7 +119,7 @@ const CommonFilters = ({filterValue, updateData}) => {
             </TextField>
           </FormControl>
         </Grid>
-        <Grid item md={1} xs={1} sm={1}>
+        <Grid item md={1} xs={6} sm={4}>
           <FormControlLabel
             control={
               <Checkbox
@@ -132,7 +132,7 @@ const CommonFilters = ({filterValue, updateData}) => {
             label="Is Negative"
           />
         </Grid>
-        <Grid item md={1} xs={6} sm={4}>
+        <Grid item md={1} xs={8} sm={4}>
             <Typography id="discrete-slider" >
                 Ratings
             </Typography>

@@ -21,6 +21,6 @@ router.route('/rating')
       .post(authenticatateJWT, reviewcontroller.getratingReviews)
 
 router.route('/total_reviews')
-      .get(reviewcontroller.getTotalReviews)   
+      .get(reviewcontroller.getTotalReviews) 
 
 module.exports = router;

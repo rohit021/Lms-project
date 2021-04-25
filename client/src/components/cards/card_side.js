@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) =>({
     },
 }));
 
-const SimpleCard = ({ CardsData }) => {
+const CardWithSide = ({ CardsData }) => {
     const classes = useStyles();
     
     return (
@@ -93,4 +93,4 @@ const SimpleCard = ({ CardsData }) => {
     );
 }
 
-export default SimpleCard;
+export default CardWithSide;

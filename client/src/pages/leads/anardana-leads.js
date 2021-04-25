@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Grid, Stepper, Step, StepLabel, CircularProgress } from "@material-ui/core";
 import CommonTable from "../../components/table/table";
 import CommonFilter from "../../components/filters/filter";
+import PageTitle from "../../components/widget/pagetitle";
+import TotalLeadCard from "../../components/cards/simple-card";
 import AuthService from "../../authServices/apicalls";
 import AddButton from '../../components/addbutton/addbutton'
 import Modal from '../../components/modals/modal';
@@ -37,6 +39,7 @@ const AnardanaLeads = () => {
   const [IsFetching, setIsFetching] = useState(false);
   const [moreData, setmoreData] = useState(false);
   const [skip, setSkip] = useState(0);
+  const [CardData, setCardData] = useState(null);
   const [AlertType, setAlertType] = useState('');
   const [AlertMsg, setAlertMsg] = useState('');
   const [FormData, setFormData] = useState({
@@ -134,7 +137,21 @@ const AnardanaLeads = () => {
   }
 
   useEffect(() => {
+    const fetchLeadData = async () => {
+      await AuthService.getLeadCount(filterValue).then(
+        (data) => {
+          if(data.status)
+          setCardData(data['total records']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      setLoading(false);
+    };
+
     fetchData();
+    fetchLeadData();
   }, [filterValue]);
   
   useEffect(() => {
@@ -190,6 +207,8 @@ const AnardanaLeads = () => {
     <Grid container spacing={4}>
       <Grid item md={12} xs={12} sm={12}>
         <BackToTopButton />
+        <PageTitle title="Anardana Leads" nodivider />
+        {CardData && <TotalLeadCard title="Total Leads" data={CardData} /> }
         <CommonFilter filterValue={filterValue} updateData={updateData} />
         <AddButton handleChange={
           () => {

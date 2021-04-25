@@ -135,6 +135,18 @@ const getTotalLeads = function () {
     });
 };
 
+const getLeadCount = function (filterValue) {
+  axios.defaults.headers.common = {
+    Authorization: "Bearer " + getCookie("authToken"),
+  };
+  return axios
+    .post(API_URL + "/api/leads/total_lead_count", filterValue, config)
+    .then((response) => {
+      return response.data;
+    });
+};
+
+
 const updateLeadById = function (data) {
   axios.defaults.headers.common = {
     Authorization: "Bearer " + getCookie("authToken"),
@@ -328,6 +340,7 @@ export default {
   createNewLead,
   getLeadById,
   getAllLeads,
+  getLeadCount,
   updateLeadById,
   deleteLeadById,
   getTotalLeads,

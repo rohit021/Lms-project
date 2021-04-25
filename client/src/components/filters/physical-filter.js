@@ -79,7 +79,7 @@ const CommonFilters = ({filterValue, updateData}) => {
   }
 
   return (
-    <Widget header="Search Filters">
+    <Widget header="Search Filters"label="Search Physical Review" filterData handleChange={handleChange} >
       <Grid container spacing={1} className={classes.gridContainer}>
         { filterData.organization==="anardana" ? 
         <Grid item md={2} xs={6} sm={3}>
