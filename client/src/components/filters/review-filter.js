@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControl, Slider, FormControlLabel, Checkbox, MenuItem, Button, ButtonGroup,Typography, TextField, makeStyles} from '@material-ui/core';
-import {PlatfromOptions, AnardanaOutlets, DateFilterOptions} from "../../helpers/utils";
+import {PlatformOptions, AnardanaOutlets, DateFilterOptions} from "../../helpers/utils";
 import Widget from '../widget/widget';
 import moment from 'moment';
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const CommonFilters = ({filterValue, updateData}) => {
   // console.log(filterData);
   const handleChange = (prop) => (event) => {
     const key = event.target.name;
-    console.log(key);
+    // console.log(key, event.target.value);
     setFilterData({ ...filterData, [key]: event.target.value });
   }
 
@@ -86,10 +86,10 @@ const CommonFilters = ({filterValue, updateData}) => {
   }
 
   return (
-    <Widget header="Search Filters">
+    <Widget header="Search Filters" label="Search Review" filterData handleChange={handleChange} >
       <Grid container spacing={1} className={classes.gridContainer}>
         { filterData.organization==="anardana" ? 
-        <Grid item md={2} xs={6} sm={3}>
+        <Grid item md={1} xs={6} sm={6}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -103,7 +103,7 @@ const CommonFilters = ({filterValue, updateData}) => {
           </FormControl>
         </Grid>
         :""}
-        <Grid item md={2} xs={6} sm={3}>
+        <Grid item md={1} xs={6} sm={3}>
           <FormControl className={classes.selectStyle}>
             <TextField
               size="small"
@@ -115,11 +115,11 @@ const CommonFilters = ({filterValue, updateData}) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {PlatfromOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
+              {PlatformOptions.map((option, index) => <MenuItem key={index} value={option.value}>{option.text}</MenuItem>)}
             </TextField>
           </FormControl>
         </Grid>
-        <Grid item md={1} xs={1} sm={1}>
+        <Grid item md={1} xs={6} sm={4}>
           <FormControlLabel
             control={
               <Checkbox
@@ -132,7 +132,7 @@ const CommonFilters = ({filterValue, updateData}) => {
             label="Is Negative"
           />
         </Grid>
-        <Grid item md={1} xs={6} sm={4}>
+        <Grid item md={1} xs={8} sm={4}>
             <Typography id="discrete-slider" >
                 Ratings
             </Typography>

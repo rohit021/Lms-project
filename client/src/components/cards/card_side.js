@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Grid, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import { Card, Grid, CardActions, CardContent, Typography } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -18,16 +19,25 @@ const useStyles = makeStyles((theme) =>({
         color:theme.palette.primary.blue,
         fontSize:"20px"
     },
+    TextStyle:{
+        color: "#fff",
+        fontWeight: "bold",  
+        "&:nth-child(odd)": {
+            borderRight:"2px solid black",
+        },
+        "&:hover": {
+            backgroundColor:theme.palette.primary.dark,
+            opacity:"0.8"
+        },
+    },
     ButtonStyle: {
         backgroundColor:theme.palette.primary.blue,
         fontWeight: "bold",  
-        display: "flex",
-        justifyContent:"center",
-        color: "#fff"
+        width: "100%",
     },
 }));
 
-const SimpleCard = ({ CardsData }) => {
+const CardWithSide = ({ CardsData }) => {
     const classes = useStyles();
     
     return (
@@ -42,24 +52,39 @@ const SimpleCard = ({ CardsData }) => {
                             <Grid container spacing={1}>
                                 <Grid item md={6} xs={6} sm={6} >
                                     <Typography variant="h3" component="h2">
-                                        {data.leadsvalue}
+                                        {data.leadsvalue ? data.leadsvalue: 0}
                                     </Typography>
                                     <Typography>
-                                       Leads
+                                    Leads
                                     </Typography>
                                 </Grid>
                                 <Grid item md={6} xs={6} sm={6}>
                                     <Typography variant="h3" component="h2">
-                                        {data.reviewvalue}
+                                        {data.reviewvalue ? data.reviewvalue: 0}
                                     </Typography>
                                     <Typography>
-                                       Reviews
+                                    Reviews
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </CardContent>
                         <CardActions className={classes.ButtonStyle} >
-                            <Button size="small" className={classes.ButtonStyle} >Show More</Button>
+                            <Grid container spacing={2} >
+                                <Grid item md={6} xs={6} sm={6} className={classes.TextStyle} >
+                                    <Link to={data.leadlink}>
+                                        <Typography variant="h5" component="h2" style={{color:"#fff"}}>
+                                            Show More
+                                        </Typography>
+                                    </Link>
+                                </Grid>
+                                <Grid item md={6} xs={6} sm={6} className={classes.TextStyle}>
+                                    <Link to={data.reviewlink}>
+                                        <Typography variant="h5" component="h2" style={{color:"#fff"}}>
+                                            Show More
+                                        </Typography>
+                                    </Link>
+                                </Grid>    
+                            </Grid>                        
                         </CardActions>
                     </Card>
                 ))
@@ -68,4 +93,4 @@ const SimpleCard = ({ CardsData }) => {
     );
 }
 
-export default SimpleCard;
+export default CardWithSide;

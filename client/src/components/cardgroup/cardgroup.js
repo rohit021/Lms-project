@@ -22,7 +22,7 @@ const CardGroup = ({data}) => {
   return (
     <Paper className={classes.paper}>
            <Grid container spacing={1} className={classes.gridContainer}>
-                <Grid item md={4} xs={6} sm={6}>
+                <Grid item md={4} xs={4} sm={4}>
                     <Typography>
                         Positive Review
                     </Typography>
@@ -30,7 +30,7 @@ const CardGroup = ({data}) => {
                        {data.posCount}
                     </Typography>
                 </Grid>
-                <Grid item md={4} xs={6} sm={6}>
+                <Grid item md={4} xs={4} sm={4}>
                     <Typography>
                         Negative Review
                     </Typography>
@@ -38,7 +38,7 @@ const CardGroup = ({data}) => {
                         {data.negCount}
                     </Typography>
                 </Grid>
-                <Grid item md={4} xs={6} sm={6}>
+                <Grid item md={4} xs={4} sm={4}>
                     <Typography>
                         NPS
                     </Typography>

@@ -1,6 +1,10 @@
 import React from "react";
-import {Paper, Typography} from "@material-ui/core";
+import {Paper, TextField, Grid, Typography} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/Search";
+
 
 const useStyles = makeStyles(theme=>({
   paper: {
@@ -9,31 +13,49 @@ const useStyles = makeStyles(theme=>({
     boxShadow: '1px 3px 5px 3px #d4d0d0',
     padding: 5,
     flexGrow: 1,
-    overflow: "auto",
+    overflow: "hidden",
   },
   widgetHeader: {
-    padding: theme.spacing(2),
-    paddingBottom: theme.spacing(1),
     fontFamily: "Poppins-Regular",
     display: "flex",
-    justifyContent: "space-between",
     alignItems: "center",
   },
 }));
 
-export default function Widget({
-  children,
-  header,
-  ...props
+export default function Widget({children, header, label, filterData, handleChange 
 }) {
   var classes = useStyles();
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
-        <Typography variant="h5" color="textSecondary" noWrap className={classes.widgetHeader}>
-          {header}
-        </Typography>
-        {children}
+        <Grid container spacing={1}>
+          <Grid item md={3} xs={6} sm={5} className={classes.widgetHeader}>
+            <Typography variant="h5" color="textSecondary" noWrap className={classes.widgetHeader}>
+              {header}
+            </Typography>
+          </Grid>
+          <Grid item md={6} xs={12} sm={6}>
+            <TextField
+              label={label}
+              name="search"
+              style={{  minWidth: '100%'}}
+              value={filterData.search}
+              onChange={handleChange()}
+              InputProps={{
+                endAdornment: (
+                <InputAdornment >
+                <IconButton>
+                <SearchIcon />
+                </IconButton>
+                </InputAdornment>
+                )
+              }}
+            />
+          </Grid>
+          <Grid item md={12} xs={12} sm={12}>
+          {children}
+          </Grid>
+        </Grid>
       </Paper>
     </React.Fragment>
   );

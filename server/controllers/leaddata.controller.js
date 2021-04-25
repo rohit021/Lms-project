@@ -36,7 +36,8 @@ exports.createLead = function (req, res) {
 // Method to Get all Forms
 exports.getAllLeads = function (req, res) {
     var data = req.body;
-    // console.log(req.body);
+    const limit = parseInt(req.query.limit);
+    const skip = parseInt(req.query.skip);
     var sort = {}, matchQuery ={};
     var sort_parameter = data.orderBy;
     var order = data.order;
@@ -59,11 +60,18 @@ exports.getAllLeads = function (req, res) {
     if(data.status)
         matchQuery.priority = data.status;    
     if(data.startDate && data.endDate)
-        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate) };
+    if(data.search){
+        var regx = new RegExp(data.search, "i");
+        matchQuery.name = {
+            $regex: regx
+        };
+    }
     // console.log(sort);
     // console.log(matchQuery);
-    // return;  
-   Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
+    // console.log(limit, skip, searched);
+    // return
+    Lead.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, leads) {
     // Lead.aggregate(
     //     [{
     //         "$project": {
@@ -286,6 +294,51 @@ exports.getTotalLeads = function(req, res){
             status: 1,
             "total count": totalCount,
             "lead Detail": leads
+        })
+    })
+};
+
+exports.getTotalCount = function (req, res) {
+    var data = req.body;
+    var sort = {}, matchQuery ={};
+    var sort_parameter = data.orderBy;
+    var order = data.order;
+    var sort_order = 1;
+    if (order == "desc") {
+        sort_order = -1;
+    }
+    sort[sort_parameter] = sort_order;
+    sort['_id'] = sort_order ==1? -1 : 1;    
+    if(data.radixDepartment)
+        matchQuery.radixDepartment = data.radixDepartment;
+    if(data.organization)
+        matchQuery.organization = data.organization;
+    if(data.source)
+        matchQuery.source = data.source;
+    if(data.center)
+        matchQuery.center = data.center;
+    if(data.category)
+        matchQuery.category = data.category;
+    if(data.status)
+        matchQuery.priority = data.status;    
+    if(data.startDate && data.endDate)
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate)};
+    Lead.find(matchQuery).sort(sort).exec(function (err, leads) {
+        if (err) {
+            return res.status(400).send({
+                status: 0,
+                message: "Something went wrong"
+            })
+        }
+        if (leads.length) {
+            return res.json({
+                status: 1,
+                "total records": leads.length,
+            });
+        }
+        return res.status(200).send({
+            status: 1,
+            message: 'No Data found'
         })
     })
 };

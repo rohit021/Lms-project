@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 var Review = require('../models/Review.model'),
-    Lead = require('../models/Lead.model'),
     moment = require('moment'),
+    async = require("async"),
     errorHandler = require('../helpers/dbErrorHandler');
 
 // Method to Create Review
@@ -37,6 +37,8 @@ exports.createReview = function (req, res) {
 // method to get all reviews
 exports.getAllReview = function (req, res) {
     var data = req.body;
+    const limit = parseInt(req.query.limit); // Make sure to parse the limit to number
+    const skip = parseInt(req.query.skip);
     var sort_parameter = data.orderBy;
     var order = data.order;
     var sort_order = 1;
@@ -55,12 +57,19 @@ exports.getAllReview = function (req, res) {
         matchQuery.center = data.center;
     if(data.isNegative)
         matchQuery.isNegative = data.isNegative;
-    if( data.minValue)
+    if(data.minValue)
         matchQuery.rating = { $gte: data.minValue, $lte: data.maxValue };
     if(data.startDate && data.endDate)
-        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
-    console.log(matchQuery);
-    Review.find(matchQuery).sort(sort).exec(function (err, reviews) {
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate) };
+    if(data.search){
+        var regx = new RegExp(data.search, "i");
+        matchQuery.name = {
+            $regex: regx
+        };
+    }
+    // console.log(matchQuery, sort);
+    // return
+    Review.find(matchQuery).sort(sort).skip(skip).limit(limit).exec(function (err, reviews) {
         if (err) {
             return res.status(400).send({
                 status: 0,
@@ -208,7 +217,13 @@ exports.getReviewNps= function(req,res){
     if(data.isNegative)
         matchQuery.isNegative = data.isNegative;
     if(data.startDate && data.endDate)
-        matchQuery.date = { $gte: data.startDate, $lte: data.endDate };
+        matchQuery.date = { $gte: new Date(data.startDate), $lte: new Date(data.endDate) };
+    if(data.search){
+        var regx = new RegExp(data.search, "i");
+        matchQuery.name = {
+            $regex: regx
+        };
+    }
     Review.find(matchQuery).exec(function(err,review){
         if (err) {
             return res.status(400).send({

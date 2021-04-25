@@ -4,7 +4,7 @@ import {
     AssignmentOutlined as AssignmentIcon,
     FiberManualRecord as DotIcon,
     Stars as StarsIcon,
-    Receipt as ReceiptIcon 
+    // Receipt as ReceiptIcon 
     // FormatSize as TypographyIcon,
     // FilterNone as UIElementsIcon,
     // BorderAll as TableIcon,
@@ -41,11 +41,13 @@ export const mainListItems = [
     // {'text': 'Reviews', 'link': '/reviews', 'page': 'review', 'icon': <ThumbUpAlt />},
     // {'text': 'Physical Review', 'link': '/physical-reviews', 'page': 'physicalreview', 'icon': <ThumbUpAlt />},
 ]
+
 export const OrganizationOptions = [
   { "key": 'radix', "text": 'Radix Healthcare', "value": 'radix' },
   { "key": 'anardana', "text": 'Anardana', "value": 'anardana' },
   { "key": 'relp', "text": 'RELP', "value": 'relp' },
 ]
+
 export const SourceOptions = [
   { "key": 'friends', "text": 'Friends', "value": 'Friends' },
   { "key": 'google', "text": 'Google', "value": 'Google' },
@@ -56,6 +58,7 @@ export const SourceOptions = [
   { "key": 'housing', "text": 'Housing', "value": 'Housing' },
   { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
 ]
+
 export const RadixSource = [
   { "key": 'friends', "text": 'Friends', "value": 'Friends' },
   { "key": 'google', "text": 'Google', "value": 'Google' },
@@ -64,18 +67,21 @@ export const RadixSource = [
   { "key": 'radix practo', "text": 'Radix Practo', "value": 'Radix Practo' },
   { "key": 'dental practo', "text": 'Dental Practo', "value": 'Dental Practo' },
 ]
+
 export const AnardanaSource = [
   { "key": 'friends', "text": 'Friends', "value": 'Friends' },
   { "key": 'google', "text": 'Google', "value": 'Google' },
   { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
   { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
 ]
+
 export const WoodappleSource = [
   { "key": 'friends', "text": 'Friends', "value": 'Friends' },
   { "key": 'google', "text": 'Google', "value": 'Google' },
   { "key": 'social', "text": 'Social Media', "value": 'Social Media' },
   { "key": 'email', "text": 'Email Marketing', "value": 'Email Marketing' },
 ]
+
 export const RelpSource = [
   { "key": 'friends', "text": 'Friends', "value": 'Friends' },
   { "key": 'google', "text": 'Google', "value": 'Google' },
@@ -84,15 +90,18 @@ export const RelpSource = [
   { "key": 'housing', "text": 'Housing', "value": 'Housing' },
   { "key": '99 acres', "text": '99 acres', "value": '99 acres' },
 ]
+
 export const AnardanaOutlets = [
   { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
   { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },  
 ]
+
 export const DateFilterOptions = [
   { key: 'week', text: 'WEEKLY', value: 'week' },
   { key: 'month', text: 'MONTHLY', value: 'month' },
   { key: 'year', text: 'YEARLY', value: 'year' },
 ]
+
 export const CommonLeadHeadCells = [
   { id: 'date', disablePadding: false, label: 'Date' },
   { id: 'name', disablePadding: true, label: 'Name' },    
@@ -100,17 +109,7 @@ export const CommonLeadHeadCells = [
   { id: 'source', disablePadding: false, label: 'Source' },
   // { id: 'status', disablePadding: false, label: 'Status' },
 ];
-export const ReviewHeadCells = [
-  { id: 'date', disablePadding: false, label: 'Date' },
-  { id: 'rating', disablePadding: true, label: 'Rating' },    
-];
-export const CenterOptions = [
-  { "key": 'nirman Vihar', "text": 'Nirman Vihar', "value": 'Nirman Vihar' },
-  { "key": 'preet vihar', "text": 'Preet Vihar', "value": 'Preet Vihar' },
-  { "key": 'janakpuri', "text": 'Janakpuri', "value": 'Janakpuri' },
-  { "key": 'vikasmarg', "text": 'Vikas Marg', "value": 'Vikas Marg' },
-  { "key": 'chandigarh', "text": 'Chandigarh', "value": 'Chandigarh' },  
-]
+
 export const PropertyNameOptions = [
   { "key": '1704', "text": 'Amrapali B-1704', "value": 'Amrapali B-1704' },
   { "key": '1204', "text": 'Amrapali G-1204', "value": 'Amrapali G-1204' },
@@ -120,7 +119,7 @@ export const PropertyNameOptions = [
   { "key": 'ramprastha', "text": 'Ramprastha Plot', "value": 'Ramprastha Plot' },
 ]
 
-export const PlatfromOptions=[
+export const PlatformOptions=[
   { "key": 'zomato', "text": 'Zomato ', "value": 'Zomato' },
   { "key": 'google', "text": 'Google ', "value": 'Google' },
   { "key": 'facebook', "text": 'Facebook ', "value": 'Facebook' },
@@ -136,6 +135,7 @@ export const CategoryOptions= [
   { "key": 'banquet', "text": 'Banquet ', "value": 'Banquet' },
   { "key": 'room', "text": 'Room ', "value": 'Room' },
 ]
+
 export const DepartmentOptions = [
   { "key": 'medicine', "text": 'Medicine', "value": 'Medicine' },
   { "key": 'orthopaedics', "text": 'Orthopaedics', "value": 'Orthopaedics' },
@@ -161,6 +161,7 @@ export const DepartmentOptions = [
   { "key": 'paediatric', "text": 'Paediatric', "value": 'Paediatric' },
   { "key": 'others', "text": 'Others', "value": 'Others' },
 ]
+
 export const DoctorOptions = [
 { "key": 'ravimalik', "text": 'Dr.Ravi Malik', "value": 'Dr.Ravi Malik', "dept":"Paediatric" },
 { "key": 'renumalik', "text": 'Dr.Renu Malik', "value": 'Dr.Renu Malik',"dept":"Gynaecology" },
